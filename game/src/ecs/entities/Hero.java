@@ -34,6 +34,7 @@ public class Hero extends Entity {
         PlayableComponent pc = new PlayableComponent(this);
         setupFireballSkill();
         pc.setSkillSlot1(firstSkill);
+        // test
     }
 
     private void setupVelocityComponent() {
