@@ -66,6 +66,8 @@ Aus Vorlesung: Methoden Referenzen, Lamda, Git, Javadoc, Streams
 
 Vlt Pattern Strategy
 
+---
+
 ### AISystem Erklären
 Um ein Monster eine AI zu geben, muss man folgendes festsetzen:
 - FightAI
@@ -74,7 +76,7 @@ Um ein Monster eine AI zu geben, muss man folgendes festsetzen:
     - `MeleeAI`: Benutzt den gegebenen Skill, wenn der Spieler in einer gegebenen Range ist
 - IdleAI
   - Wie sich das Monster verhält, wenn kein Spieler in der Nähe ist
-    - `PatrouilleWalk`: Wandert um n viele Punkte in einem Umkreis
+    - `PatrouilleWalk`: Wandert um n viele Punkte in einem Radius
     - `RadiusWalk`: Wandert in einem Radius. Der Startpunkt kann sich dabei ändern
     - `StaticRadiusWalk`: Wander in einem Radius. Der Startpunkt ist fest
 - TransitionAI
@@ -82,6 +84,7 @@ Um ein Monster eine AI zu geben, muss man folgendes festsetzen:
       - `RangeTransition`: Das Monster wird aggresiv, wenn der Spiele in einem gegebenen Radius ist
       - `SelfDefendTransition`: Das Monster wird nur aggresiv, wenn es schaden erleidet
 
+---
 
 ### Spawning "System"
 
