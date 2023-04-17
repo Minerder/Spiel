@@ -15,8 +15,8 @@ import graphic.Animation;
 public class Hero extends Entity {
 
     private final int fireballCoolDown = 1;
-    private final float xSpeed = 0.3f;
-    private final float ySpeed = 0.3f;
+    private final float xSpeed = 0.2f;
+    private final float ySpeed = 0.2f;
 
     private final String pathToIdleLeft = "knight/idleLeft";
     private final String pathToIdleRight = "knight/idleRight";
@@ -34,7 +34,6 @@ public class Hero extends Entity {
         PlayableComponent pc = new PlayableComponent(this);
         setupFireballSkill();
         pc.setSkillSlot1(firstSkill);
-        // test moooin
     }
 
     private void setupVelocityComponent() {
