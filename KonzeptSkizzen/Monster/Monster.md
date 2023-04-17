@@ -67,8 +67,34 @@ Aus Vorlesung: Methoden Referenzen, Lamda, Git, Javadoc, Streams
 Vlt Pattern Strategy
 
 ### AISystem Erklären
+Um ein Monster eine AI zu geben, muss man folgendes festsetzen:
+- FightAI
+  - Wie sich das Monster verhalten soll, wenn es den Spieler angreifen soll
+    - `CollideAI`: Rennt den Spieler an bis es in einer gegebenen Range ist
+    - `MeleeAI`: Benutzt den gegebenen Skill, wenn der Spieler in einer gegebenen Range ist
+- IdleAI
+  - Wie sich das Monster verhält, wenn kein Spieler in der Nähe ist
+    - `PatrouilleWalk`: Wandert um n viele Punkte in einem Umkreis
+    - `RadiusWalk`: Wandert in einem Radius. Der Startpunkt kann sich dabei ändern
+    - `StaticRadiusWalk`: Wander in einem Radius. Der Startpunkt ist fest
+- TransitionAI
+    - Ab wann das Monster aggresiv wird
+      - `RangeTransition`: Das Monster wird aggresiv, wenn der Spiele in einem gegebenen Radius ist
+      - `SelfDefendTransition`: Das Monster wird nur aggresiv, wenn es schaden erleidet
+
 
 ### Spawning "System"
+
+In der Klasse `game/src/starter/Game.java` existiert eine Methode `onLevelLoad()`
+die jedes Mal ausgeführt wird wenn ein Neues Level geladen wird. Dort können wir den Code einbauen, der
+eine Zufällige anzahl und typen an Monster Spawnen lässt. Dabei soll die Stärke und Häufigkeit der Monster
+abhängig von der Tiefe sein.
+
+Für die Tiefe müssen wir eine neue Variable einfügen die Hochzählt jedes Mal wenn die Mehtode `onLevelLoad()`
+in `Game.java` ausgeführt wird.
+
+Mithilfe der Methode `addEntity(Entity entity)` in `Game.java` können alle Monster hinzufügt werden die im Level erscheinen sollen.
+
 
 ---
 
