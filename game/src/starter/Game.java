@@ -21,7 +21,6 @@ import ecs.components.ai.fight.MeleeAI;
 import ecs.components.skill.Skill;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
-import ecs.entities.TestGegner;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
