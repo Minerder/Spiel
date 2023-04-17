@@ -13,9 +13,15 @@ import configuration.KeyboardConfig;
 import controller.AbstractController;
 import controller.SystemController;
 import ecs.components.MissingComponentException;
+import ecs.components.PlayableComponent;
 import ecs.components.PositionComponent;
+import ecs.components.ai.AIComponent;
+import ecs.components.ai.fight.IFightAI;
+import ecs.components.ai.fight.MeleeAI;
+import ecs.components.skill.Skill;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
+import ecs.entities.TestGegner;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
@@ -30,6 +36,7 @@ import level.elements.tile.Tile;
 import level.generator.IGenerator;
 import level.generator.postGeneration.WallGenerator;
 import level.generator.randomwalk.RandomWalkGenerator;
+import level.tools.LevelElement;
 import level.tools.LevelSize;
 import tools.Constants;
 import tools.Point;
@@ -97,6 +104,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         frame();
         clearScreen();
         levelAPI.update();
+        reduceSkillCooldowns();
         controller.forEach(AbstractController::update);
         camera.update();
     }
@@ -147,6 +155,28 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         }
         entitiesToRemove.clear();
         entitiesToAdd.clear();
+    }
+
+    /** Reduces the cool-downs for all Skills for each entity */
+    public void reduceSkillCooldowns() {
+        for (Entity entity : entities) {
+            PlayableComponent entityPlayableComponent =
+                    (PlayableComponent) entity.getComponent(PlayableComponent.class).orElse(null);
+            if (entityPlayableComponent != null) {
+                entityPlayableComponent.getSkillSlot1().ifPresent(Skill::reduceCoolDown);
+                entityPlayableComponent.getSkillSlot2().ifPresent(Skill::reduceCoolDown);
+                continue;
+            }
+
+            AIComponent entityAIComponent =
+                    (AIComponent) entity.getComponent(AIComponent.class).orElse(null);
+            if (entityAIComponent != null) {
+                IFightAI entityFightAI = entityAIComponent.getFightAI();
+                if (entityFightAI.getClass() == MeleeAI.class) {
+                    ((MeleeAI) entityFightAI).getFightSkill().reduceCoolDown();
+                }
+            }
+        }
     }
 
     private void setCameraFocus() {
