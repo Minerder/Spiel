@@ -75,7 +75,9 @@ Ebenen System. Desto tiefer desto schwerer. Mehr Monster stärkere Monster
 |------------|-------------|-----------------------|---------------------|
 | Ratten 0-2 | Geister 1-2 | Skelette und 1-2 Imps | Imps und Chorts 1-4 |
 
+
 ---
+
 
 ## Methoden und Techniken
 
@@ -92,6 +94,8 @@ Methoden Referenzen und Lambda-Ausdrücke sind in vielen Teilen des vorhandenen 
 Techniken kürzlich neu durch die Vorlesungen eingeführt worden sind und sie somit noch nicht ausführlich angewendet
 werden konnten, wird sich in der Implementierungsphase herrausstellen ob sie in den Aufgaben Monster, Nahkampf und Fernkampf
 eine sinvolle Anwendung finden.
+
+
 ---
 
 ### AISystem Erklärung
@@ -111,6 +115,7 @@ Um einem Monster eine AI zu geben, muss man folgendes festlegen:
       - `RangeTransition`: Das Monster wird aggresiv, wenn der Spieler in einem gegebenen Radius ist
       - `SelfDefendTransition`: Das Monster wird nur aggresiv, wenn es schaden erleidet
 
+
 ---
 
 ### Spawnen der Monster
@@ -126,6 +131,8 @@ in `Game.java` ausgeführt wird.
 Damit die Monster im Spiel erscheinen muss ein Objekt des Monsters in der Methode `onLevelLoad()` erstellt werden,
 die Klasse `Entity.java` übernimmt das hinzufügen des Entity zum Game und der `PositionComponent.java` übernimmt
 den Spawnpunkt im Level.
+
+
 ---
 
 ## Ansatz und Modellierung
