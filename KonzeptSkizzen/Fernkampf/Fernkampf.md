@@ -1,49 +1,48 @@
-Titel: Konzeptskizze für Zyklus
+#### Titel: Konzeptskizze für Zyklus 1
 
-Author: Bent Schöne, Marvin Petschulat, Edwin Dik
+#### Author: Bent Schöne, Marvin Petschulat, Edwin Dik
 
 ---
+
 ## Beschreibung der Aufgabe
 
-In dieser Aufgabe implementieren Sie Projektile für den Fernkampf, damit der Held gegen die Monster auf Distanz kämpfen kann.
+Das Dungeon soll um die folgenden 2 Projektile erweitert werden:
+- Pfeil
+- Magic Missile
 
 ---
 
 ## Beschreibung der Lösung
 
-Neue Skill Componente:
-- Pfeil von Wänden abprallt
-- Magic missile mit auto aim. Auf held oder monster
+Neue Skill Components:
+- Pfeil der von Wänden abprallt
+- Magic Missile welche automatisch auf den Hero oder ein Monster aimt und darauf zufliegt
 
-Damit bestimmte projektile die wände berühren auch abprallen oder projektile ihr ziel im flug ändern sollen.
-Müssen wir das System für Projektile bearbeiten
+Damit bestimmte Projektile welche die Wände berühren auch abprallen oder Projektile ihr Ziel im Flug ändern können,
+müssen wir das bereits bestehende System für Projektile überarbeiten.
 
 ---
 
 ## Methoden und Techniken
 
-Javadoc
-
-Methoden-Referenzen
-
 Um das Ziel vom Skill festzulegen, können wir eine Methoden-Referenz auf die Klasse `SkillTools`
-auf die Methode `getCursorPositionAsPoint` benutzen.
+und die Methode `getCursorPositionAsPoint` benutzen.
 
 
-### Projektil "System" erklären
+### Erklärung des Projektil Systems
 
-Jeder Skill der damage machen soll, kann die Klasse `DamageProjectileSkill` benutzen.
+Jeder Skill der Damage machen soll, kann die Klasse `DamageProjectileSkill` benutzen.
 Wenn man ein neuen Skill erstellt muss dieser von der Klasse abgeleitet werden. Die neue Skill
-klasse benötigt Texturen, Projektil geschwindigkeit, projektil schaden, projektil Hitbox größe,
-ein Ziel und projektil range. Mit dieser Klasse kann man Ranged und Meele Skills erstellen.
-Diesen neuen Skill kann man dann Entweder den Helden in der `PlayableComponent` klasse oder
-einem NPC in der `MeleeAI` geben.
+Klasse benötigt Texturen, Projektil-Geschwindigkeit, Projektil-Schaden, Projektil-Hitbox,
+Projektil-Range und ein Ziel. Mit dieser Klasse kann man Ranged und Melee Skills erstellen.
+Den neuen Skill kann man dann entweder dem Helden in der `PlayableComponent` Klasse oder
+einem NPC in der `MeleeAI` Klasse geben.
 
-### Knockback beim treffen
+### Knockback nach einem Treffer
 
-In der Klasse `DamageProjectileSkill` existiert ein Lamda ausdruck der beschreibt was passiert wenn
-eine Entität getroffen wird. Dort können wir einfügen, dass die Velocity von der getorffenen Entität
-je nach richtung erhöht wird
+In der Klasse `DamageProjectileSkill` steht ein Lambda Ausdruck der entscheidet, was passiert wenn
+eine Entität getroffen wird. Dort können wir einfügen, dass die Velocity von der getroffenen Entität
+je nachdem von wo die Entität getroffen wird, erhöht oder verringert wird.
 
 ---
 
