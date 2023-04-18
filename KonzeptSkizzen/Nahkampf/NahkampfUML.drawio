@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net" modified="2023-04-18T12:53:19.547Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36 OPR/97.0.0.0" etag="F9l67onYIzxJWjYvPtVD" version="21.1.8">
+  <diagram name="Seite-1" id="koYCksM2G45ItbOFObBV">
+    <mxGraphModel dx="1161" dy="632" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="saxExuk2gletovmnnJZW-2" value="DamageProjectileSkill" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="363.75" y="150" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="saxExuk2gletovmnnJZW-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;jumpSize=6;endSize=15;" edge="1" parent="1" source="saxExuk2gletovmnnJZW-3" target="saxExuk2gletovmnnJZW-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="saxExuk2gletovmnnJZW-3" value="MeeleSwordSkill" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="270" width="317.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="saxExuk2gletovmnnJZW-5" value="+ MeeleSwordSkill(targetSelection: ITargetSelection): void" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="300" width="317.5" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

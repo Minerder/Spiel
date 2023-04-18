@@ -4,28 +4,45 @@ Author: Bent Schöne, Marvin Petschulat, Edwin Dik
 
 ---
 ## Beschreibung der Aufgabe
-
+In dieser Aufgabe implementieren Sie ein einfaches Nahkampfkonzept, damit der Held gegen die
+Monster kämpfen kann.
 
 
 ---
 
 ## Beschreibung der Lösung
 
-- Hero hat ein schwer (Texturen vorhanden)
-- Hero hat ein schild dash viel knock-back. monster in löcher im boden werfen und töten
-- hero hält ein schild das projectile reflektiert
-- alle Meele angriffe animation?
+Schwertschlag (Texturen vorhanden, 0.3f geschwindigkeit, 1DMG, 0.5f,0.5f größe, Ziel maus, 0.5f range)
 
 ---
 
 ## Methoden und Techniken
 
+Javadoc
+
+Methoden-Referenzen
+
+Um das Ziel vom Skill festzulegen, können wir eine Methoden-Referenz auf die Klasse `SkillTools`
+auf die Methode `getCursorPositionAsPoint` benutzen.
+
+### Projektil "System" erklären
+
+Jeder Skill der damage machen soll, kann die Klasse `DamageProjectileSkill` benutzen.
+Wenn man ein neuen Skill erstellt muss dieser von der Klasse abgeleitet werden. Die neue Skill
+klasse benötigt Texturen, Projektil geschwindigkeit, projektil schaden, projektil Hitbox größe,
+ein Ziel und projektil range. Mit dieser Klasse kann man Ranged und Meele Skills erstellen.
+Diesen neuen Skill kann man dann Entweder den Helden in der `PlayableComponent` klasse oder
+einem NPC in der `MeleeAI` geben.
 
 ---
 
-## Ansatz und Modellierung
+### Knockback beim treffen
 
+In der Klasse `DamageProjectileSkill` existiert ein Lamda ausdruck der beschreibt was passiert wenn
+eine Entität getroffen wird. Dort können wir einfügen, dass die Velocity von der getorffenen Entität
+je nach richtung erhöht wird
 
 ---
 
 ## UML
+![NahkampfUML](NahkampfUML.png)
