@@ -28,7 +28,7 @@ Skeleton
 
 | Verhalten | Leben | Geschwindigkeit | Angriff           | Schaden | Wander Verhalten        |
 |-----------|-------|-----------------|-------------------|---------|-------------------------|
-| Aggresiv  | 3HP   | 0.5             | Fernkampf (Bogen) | 1HP     | in einem kleinen Radius |
+| Aggresiv  | 3HP   | 0.05            | Fernkampf (Bogen) | 1HP     | in einem kleinen Radius |
 
 
 Imp

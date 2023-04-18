@@ -12,6 +12,7 @@ import configuration.Configuration;
 import configuration.KeyboardConfig;
 import controller.AbstractController;
 import controller.SystemController;
+import ecs.components.Component;
 import ecs.components.MissingComponentException;
 import ecs.components.PlayableComponent;
 import ecs.components.PositionComponent;
@@ -25,9 +26,11 @@ import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
 import graphic.hud.PauseMenu;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
+
 import level.IOnLevelLoader;
 import level.LevelAPI;
 import level.elements.ILevel;
@@ -35,12 +38,13 @@ import level.elements.tile.Tile;
 import level.generator.IGenerator;
 import level.generator.postGeneration.WallGenerator;
 import level.generator.randomwalk.RandomWalkGenerator;
-import level.tools.LevelElement;
 import level.tools.LevelSize;
 import tools.Constants;
 import tools.Point;
 
-/** The heart of the framework. From here all strings are pulled. */
+/**
+ * The heart of the framework. From here all strings are pulled.
+ */
 public class Game extends ScreenAdapter implements IOnLevelLoader {
 
     private final LevelSize LEVELSIZE = LevelSize.SMALL;
@@ -51,28 +55,42 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
      */
     protected SpriteBatch batch;
 
-    /** Contains all Controller of the Dungeon */
+    /**
+     * Contains all Controller of the Dungeon
+     */
     protected List<AbstractController<?>> controller;
 
     public static DungeonCamera camera;
-    /** Draws objects */
+    /**
+     * Draws objects
+     */
     protected Painter painter;
 
     protected LevelAPI levelAPI;
-    /** Generates the level */
+    /**
+     * Generates the level
+     */
     protected IGenerator generator;
 
     private boolean doSetup = true;
     private static boolean paused = false;
 
-    /** All entities that are currently active in the dungeon */
+    /**
+     * All entities that are currently active in the dungeon
+     */
     private static final Set<Entity> entities = new HashSet<>();
-    /** All entities to be removed from the dungeon in the next frame */
+    /**
+     * All entities to be removed from the dungeon in the next frame
+     */
     private static final Set<Entity> entitiesToRemove = new HashSet<>();
-    /** All entities to be added from the dungeon in the next frame */
+    /**
+     * All entities to be added from the dungeon in the next frame
+     */
     private static final Set<Entity> entitiesToAdd = new HashSet<>();
 
-    /** List of all Systems in the ECS */
+    /**
+     * List of all Systems in the ECS
+     */
     public static SystemController systems;
 
     public static ILevel currentLevel;
@@ -103,12 +121,14 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         frame();
         clearScreen();
         levelAPI.update();
-        reduceSkillCooldowns();
+        manageSkillCooldowns();
         controller.forEach(AbstractController::update);
         camera.update();
     }
 
-    /** Called once at the beginning of the game. */
+    /**
+     * Called once at the beginning of the game.
+     */
     protected void setup() {
         doSetup = false;
         controller = new ArrayList<>();
@@ -128,7 +148,9 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         createSystems();
     }
 
-    /** Called at the beginning of each frame. Before the controllers call <code>update</code>. */
+    /**
+     * Called at the beginning of each frame. Before the controllers call <code>update</code>.
+     */
     protected void frame() {
         setCameraFocus();
         manageEntitiesSets();
@@ -156,39 +178,38 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         entitiesToAdd.clear();
     }
 
-    /** Reduces the cool-downs for all Skills for each entity */
-    public void reduceSkillCooldowns() {
-        for (Entity entity : entities) {
-            PlayableComponent entityPlayableComponent =
-                    (PlayableComponent) entity.getComponent(PlayableComponent.class).orElse(null);
-            if (entityPlayableComponent != null) {
-                entityPlayableComponent.getSkillSlot1().ifPresent(Skill::reduceCoolDown);
-                entityPlayableComponent.getSkillSlot2().ifPresent(Skill::reduceCoolDown);
-                continue;
-            }
+    /**
+     * Reduces the cool-downs for all Skills for each entity
+     */
+    public void manageSkillCooldowns() {
+        // Reduces the skills of the hero
+        PlayableComponent pc = (PlayableComponent) hero.getComponent(PlayableComponent.class).orElse(null);
+        if (pc != null) {
+            pc.getSkillSlot1().ifPresent(Skill::reduceCoolDown);
+            pc.getSkillSlot2().ifPresent(Skill::reduceCoolDown);
+        }
+        // reduces the skills of all NPCs
+        entities.stream().filter(entity -> entity.getComponent(AIComponent.class).isPresent()).map(entity -> (AIComponent) entity.getComponent(AIComponent.class).orElse(null)).filter(Objects::nonNull).forEach(this::reduceSkillCooldown);
+    }
 
-            AIComponent entityAIComponent =
-                    (AIComponent) entity.getComponent(AIComponent.class).orElse(null);
-            if (entityAIComponent != null) {
-                IFightAI entityFightAI = entityAIComponent.getFightAI();
-                if (entityFightAI.getClass() == MeleeAI.class) {
-                    ((MeleeAI) entityFightAI).getFightSkill().reduceCoolDown();
-                }
-            }
+    private void reduceSkillCooldown(AIComponent entityAIComponent) {
+        IFightAI entityFightAI = entityAIComponent.getFightAI();
+        if (entityFightAI.getClass() == MeleeAI.class) {
+            ((MeleeAI) entityFightAI).getFightSkill().reduceCoolDown();
         }
     }
 
     private void setCameraFocus() {
         if (getHero().isPresent()) {
             PositionComponent pc =
-                    (PositionComponent)
-                            getHero()
-                                    .get()
-                                    .getComponent(PositionComponent.class)
-                                    .orElseThrow(
-                                            () ->
-                                                    new MissingComponentException(
-                                                            "PositionComponent"));
+                (PositionComponent)
+                    getHero()
+                        .get()
+                        .getComponent(PositionComponent.class)
+                        .orElseThrow(
+                            () ->
+                                new MissingComponentException(
+                                    "PositionComponent"));
             camera.setFocusPoint(pc.getPosition());
 
         } else camera.setFocusPoint(new Point(0, 0));
@@ -200,10 +221,10 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
     private boolean isOnEndTile(Entity entity) {
         PositionComponent pc =
-                (PositionComponent)
-                        entity.getComponent(PositionComponent.class)
-                                .orElseThrow(
-                                        () -> new MissingComponentException("PositionComponent"));
+            (PositionComponent)
+                entity.getComponent(PositionComponent.class)
+                    .orElseThrow(
+                        () -> new MissingComponentException("PositionComponent"));
         Tile currentTile = currentLevel.getTileAt(pc.getPosition().toCoordinate());
         return currentTile.equals(currentLevel.getEndTile());
     }
@@ -211,14 +232,16 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     private void placeOnLevelStart(Entity hero) {
         entities.add(hero);
         PositionComponent pc =
-                (PositionComponent)
-                        hero.getComponent(PositionComponent.class)
-                                .orElseThrow(
-                                        () -> new MissingComponentException("PositionComponent"));
+            (PositionComponent)
+                hero.getComponent(PositionComponent.class)
+                    .orElseThrow(
+                        () -> new MissingComponentException("PositionComponent"));
         pc.setPosition(currentLevel.getStartTile().getCoordinate().toPoint());
     }
 
-    /** Toggle between pause and run */
+    /**
+     * Toggle between pause and run
+     */
     public static void togglePause() {
         paused = !paused;
         if (systems != null) {
