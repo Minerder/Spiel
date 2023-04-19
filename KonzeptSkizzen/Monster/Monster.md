@@ -34,7 +34,6 @@ Skelett
 |-----------|-------|-----------------|-------------------|---------|--------------------------------|
 | Aggressiv | 3HP   | 0.05            | Fernkampf (Bogen) | 1HP     | in einem kleinen Radius (fest) |
 
-
 Imp
 
 | Verhalten | Leben | Geschwindigkeit | Angriff                | Schaden | Wander Verhalten               |
@@ -63,7 +62,6 @@ Geist
 #### Wander Verhalten
 - Damit das Monster durch das ganze Level patrouillieren kann benutzt es `PatrouilleWalk` mit einem großen Radius
 - Monster die nur in einem kleinen Radius wandern sollen benutzen `StaticRadiusWalk`
-
 
 ### Spawnen der Monster
 
@@ -111,12 +109,6 @@ Um einem Monster eine AI zu geben, muss man folgendes festlegen:
     - Ab wann das Monster aggressiv wird
         - `RangeTransition`: Das Monster wird aggressiv, wenn der Spieler in einem gegebenen Radius ist
         - `SelfDefendTransition`: Das Monster wird nur aggressiv, wenn es schaden erleidet
-
-### Neue IdleAI: SpleepingAI
-
-SleepingAI
-- bleibt auf einer stelle bis ein Monster oder der held in einen gegebenen Radius kommt und wacht dann auf
-- nach dem aufwachen benutzt es eine andere idleAI
 
 ---
 
