@@ -15,6 +15,8 @@ Das Dungeon soll um folgende 5 Gegner erweitert werden:
 Die Monster haben bestimmte Eigenschaften und bewegen sich mithilfe von unterschiedlichen AI's
 im Dungeon herum.
 
+Außerdem wird das Dungeon um eine IdleAI-Strategie erweitert, die SleepingAI.
+
 ---
 
 ## Beschreibung der Lösung
@@ -81,6 +83,13 @@ den Spawnpunkt im Level.
 | ab Ebene 1 | ab Ebene 3  | ab Ebene 6            | ab Ebene 10         |
 |------------|-------------|-----------------------|---------------------|
 | Ratten 0-2 | Geister 1-2 | Skelette und 1-2 Imps | Imps und Chorts 1-4 |
+
+
+### Neue IdleAI-Strategie: SpleepingAI
+
+Bei der SleepingAI bleibt ein Monster in einer Art Ruhezustand auf einer Stelle stehen, bis der Held
+einen bestimmten Radius betritt, danach wacht das Monster auf und wechselt auf eine andere IdleAI um sich
+wieder zu bewegen.
 
 
 ### AISystem Erklärung
