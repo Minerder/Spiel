@@ -103,6 +103,11 @@ Um einem Monster eine AI zu geben, muss man folgendes festlegen:
         - `RangeTransition`: Das Monster wird aggressiv, wenn der Spieler in einem gegebenen Radius ist
         - `SelfDefendTransition`: Das Monster wird nur aggressiv, wenn es schaden erleidet
 
+### Neue IdleAI: SpleepingAI
+
+SleepingAI
+- bleibt auf einer stelle bis ein Monster oder der held in einen gegebenen Radius kommt und wacht dann auf
+- nach dem aufwachen benutzt es eine andere idleAI
 
 ---
 

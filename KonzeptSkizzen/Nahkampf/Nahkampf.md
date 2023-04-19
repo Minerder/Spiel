@@ -4,43 +4,35 @@ Author: Bent Schöne, Marvin Petschulat, Edwin Dik
 
 ---
 ## Beschreibung der Aufgabe
-In dieser Aufgabe implementieren Sie ein einfaches Nahkampfkonzept, damit der Held gegen die
-Monster kämpfen kann.
+Der Held bekommt einen Schwertschlag.
 
 
 ---
 
 ## Beschreibung der Lösung
 
-Schwertschlag (Texturen vorhanden, 0.3f geschwindigkeit, 1DMG, 0.5f,0.5f größe, Ziel maus, 0.5f range)
+Schwertschlag
+
+| Texturen  | Geschwindigkeit | Schaden | Größe     | Ziel |
+|-----------|-----------------|---------|-----------|------|
+| Vorhanden | 0.3             | 1DMG    | 0.5 x 0.5 | Maus |
+
+### Erklärung des Projektil Systems
+
+Wie das Projektil System funktioniert wurde in der Konzeptskizze Fernkampf schon erklärt.
+
+
+### Knockback nach einem Treffer
+
+Wie das Knockback System implementiert wird, wurde in der Konzeptskizze Fernkampf schon erklärt.
+
 
 ---
 
 ## Methoden und Techniken
 
-Javadoc
-
-Methoden-Referenzen
-
 Um das Ziel vom Skill festzulegen, können wir eine Methoden-Referenz auf die Klasse `SkillTools`
 auf die Methode `getCursorPositionAsPoint` benutzen.
-
-### Projektil "System" erklären
-
-Jeder Skill der damage machen soll, kann die Klasse `DamageProjectileSkill` benutzen.
-Wenn man ein neuen Skill erstellt muss dieser von der Klasse abgeleitet werden. Die neue Skill
-klasse benötigt Texturen, Projektil geschwindigkeit, projektil schaden, projektil Hitbox größe,
-ein Ziel und projektil range. Mit dieser Klasse kann man Ranged und Meele Skills erstellen.
-Diesen neuen Skill kann man dann Entweder den Helden in der `PlayableComponent` klasse oder
-einem NPC in der `MeleeAI` geben.
-
----
-
-### Knockback beim treffen
-
-In der Klasse `DamageProjectileSkill` existiert ein Lamda ausdruck der beschreibt was passiert wenn
-eine Entität getroffen wird. Dort können wir einfügen, dass die Velocity von der getorffenen Entität
-je nach richtung erhöht wird
 
 ---
 
