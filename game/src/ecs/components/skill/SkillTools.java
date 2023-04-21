@@ -78,12 +78,15 @@ public class SkillTools {
         Point nearestEntityPoint = startingEntitypc.getPosition();
         double max = 999d;
         for (Entity targetEntitys : Game.getEntities()) {
+            // continue only if the Entity has a Healthcomponent and Positioncomponent
             if (targetEntitys.getComponent(HealthComponent.class).orElse(null) == null || targetEntitys.getComponent(PositionComponent.class).orElse(null) == null)
                 continue;
+
             PositionComponent targetEntitypc = (PositionComponent) targetEntitys.getComponent(PositionComponent.class).orElseThrow();
             Point startingEntityPoint = startingEntitypc.getPosition();
             Point targetEntityPoint = targetEntitypc.getPosition();
             Double distance = calculateDistance(startingEntityPoint.x, startingEntityPoint.y, targetEntityPoint.x, targetEntityPoint.y);
+
             if (distance < max && distance >= 0.1d) {
                 max = distance;
                 nearestEntityPoint = targetEntityPoint;
