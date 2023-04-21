@@ -12,14 +12,11 @@ import configuration.Configuration;
 import configuration.KeyboardConfig;
 import controller.AbstractController;
 import controller.SystemController;
-import ecs.components.Component;
-import ecs.components.MissingComponentException;
-import ecs.components.PlayableComponent;
-import ecs.components.PositionComponent;
+import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.fight.IFightAI;
 import ecs.components.ai.fight.MeleeAI;
-import ecs.components.skill.Skill;
+import ecs.components.skill.*;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.systems.*;
@@ -154,6 +151,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     protected void frame() {
         setCameraFocus();
         manageEntitiesSets();
+        updateMeleeSkills();
         getHero().ifPresent(this::loadNextLevelIfEntityIsOnEndTile);
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) togglePause();
     }
@@ -196,6 +194,17 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         IFightAI entityFightAI = entityAIComponent.getFightAI();
         if (entityFightAI.getClass() == MeleeAI.class) {
             ((MeleeAI) entityFightAI).getFightSkill().reduceCoolDown();
+        }
+    }
+
+    /**
+     * Updates all MeleeSkills for each entity that has one
+     */
+    private void updateMeleeSkills() {
+        List<Entity> l = Game.entities.stream().filter(en -> en.getComponent(MeleeComponent.class).orElse(null) != null).toList();
+        for (Entity en : l) {
+            MeleeComponent mc = (MeleeComponent) en.getComponent(MeleeComponent.class).orElseThrow();
+            mc.getSkill().update(en);
         }
     }
 

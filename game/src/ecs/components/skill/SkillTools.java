@@ -12,12 +12,12 @@ public class SkillTools {
      * calculates the last position in range regardless of aimed position
      *
      * @param startPoint position to start the calculation
-     * @param aimPoint point to aim for
-     * @param range range from start to
+     * @param aimPoint   point to aim for
+     * @param range      range from start to
      * @return last position in range if you follow the directon from startPoint to aimPoint
      */
     public static Point calculateLastPositionInRange(
-            Point startPoint, Point aimPoint, float range) {
+        Point startPoint, Point aimPoint, float range) {
 
         // calculate distance from startPoint to aimPoint
         float dx = aimPoint.x - startPoint.x;
@@ -56,7 +56,26 @@ public class SkillTools {
      */
     public static Point getCursorPositionAsPoint() {
         Vector3 mousePosition =
-                Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         return new Point(mousePosition.x, mousePosition.y);
+    }
+
+    /**
+     * Calculates a new Point that represents the direction limited by 1
+     *
+     * @param entity start point
+     * @param target target point
+     * @return a new Point with values of -1 - 1
+     */
+    public static Point getMeleeSkillOffsetPositon(Point entity, Point target) {
+        float newx = target.x - entity.x;
+        float newy = target.y - entity.y;
+        float offset = 1;
+        if (newx > offset) newx = offset;
+        if (newx < (offset * -1)) newx = (offset * -1);
+        if (newy > offset) newy = offset;
+        if (newy < (offset * -1)) newy = (offset * -1);
+
+        return new Point(newx, newy);
     }
 }
