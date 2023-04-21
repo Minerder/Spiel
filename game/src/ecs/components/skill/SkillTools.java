@@ -70,13 +70,15 @@ public class SkillTools {
     }
 
     /**
-     * @param startingEntity as the starting Point
-     * @return
+     * Gets the position from the nearest entity to a starting entity
+     *
+     * @param startingEntity as the starting point
+     * @return position of the nearest entity as a point
      */
     public static Point getNearestEntityPosition(Entity startingEntity) {
         PositionComponent startingEntitypc = (PositionComponent) startingEntity.getComponent(PositionComponent.class).orElseThrow();
         Point nearestEntityPoint = startingEntitypc.getPosition();
-        double max = 999d;
+        float max = 999f;
         for (Entity targetEntitys : Game.getEntities()) {
             // continue only if the Entity has a Healthcomponent and Positioncomponent
             if (targetEntitys.getComponent(HealthComponent.class).orElse(null) == null || targetEntitys.getComponent(PositionComponent.class).orElse(null) == null)
@@ -85,7 +87,7 @@ public class SkillTools {
             PositionComponent targetEntitypc = (PositionComponent) targetEntitys.getComponent(PositionComponent.class).orElseThrow();
             Point startingEntityPoint = startingEntitypc.getPosition();
             Point targetEntityPoint = targetEntitypc.getPosition();
-            Double distance = calculateDistance(startingEntityPoint.x, startingEntityPoint.y, targetEntityPoint.x, targetEntityPoint.y);
+            float distance = Point.calculateDistance(startingEntityPoint, targetEntityPoint);
 
             if (distance < max && distance >= 0.1d) {
                 max = distance;
@@ -95,7 +97,4 @@ public class SkillTools {
         return nearestEntityPoint;
     }
 
-    protected static Double calculateDistance(float x1, float y1, float x2, float y2) {
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-    }
 }
