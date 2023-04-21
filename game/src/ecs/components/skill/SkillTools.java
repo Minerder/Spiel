@@ -3,6 +3,9 @@ package ecs.components.skill;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import ecs.components.HealthComponent;
+import ecs.components.PositionComponent;
+import ecs.entities.Entity;
 import starter.Game;
 import tools.Point;
 
@@ -12,12 +15,12 @@ public class SkillTools {
      * calculates the last position in range regardless of aimed position
      *
      * @param startPoint position to start the calculation
-     * @param aimPoint point to aim for
-     * @param range range from start to
+     * @param aimPoint   point to aim for
+     * @param range      range from start to
      * @return last position in range if you follow the directon from startPoint to aimPoint
      */
     public static Point calculateLastPositionInRange(
-            Point startPoint, Point aimPoint, float range) {
+        Point startPoint, Point aimPoint, float range) {
 
         // calculate distance from startPoint to aimPoint
         float dx = aimPoint.x - startPoint.x;
@@ -56,7 +59,40 @@ public class SkillTools {
      */
     public static Point getCursorPositionAsPoint() {
         Vector3 mousePosition =
-                Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         return new Point(mousePosition.x, mousePosition.y);
+    }
+
+    public static Point getHeroPosition() {
+        Entity h = Game.getHero().orElseThrow();
+        PositionComponent pc = (PositionComponent) h.getComponent(PositionComponent.class).orElseThrow();
+        return pc.getPosition();
+    }
+
+    /**
+     * @param startingEntity as the starting Point
+     * @return
+     */
+    public static Point getNearestEntityPosition(Entity startingEntity) {
+        PositionComponent startingEntitypc = (PositionComponent) startingEntity.getComponent(PositionComponent.class).orElseThrow();
+        Point nearestEntityPoint = startingEntitypc.getPosition();
+        double max = 999d;
+        for (Entity targetEntitys : Game.getEntities()) {
+            if (targetEntitys.getComponent(HealthComponent.class).orElse(null) == null || targetEntitys.getComponent(PositionComponent.class).orElse(null) == null)
+                continue;
+            PositionComponent targetEntitypc = (PositionComponent) targetEntitys.getComponent(PositionComponent.class).orElseThrow();
+            Point startingEntityPoint = startingEntitypc.getPosition();
+            Point targetEntityPoint = targetEntitypc.getPosition();
+            Double distance = calculateDistance(startingEntityPoint.x, startingEntityPoint.y, targetEntityPoint.x, targetEntityPoint.y);
+            if (distance < max && distance >= 0.1d) {
+                max = distance;
+                nearestEntityPoint = targetEntityPoint;
+            }
+        }
+        return nearestEntityPoint;
+    }
+
+    protected static Double calculateDistance(float x1, float y1, float x2, float y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 }

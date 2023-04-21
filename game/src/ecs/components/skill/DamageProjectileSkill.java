@@ -18,6 +18,8 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
     private Damage projectileDamage;
     private Point projectileHitboxSize;
 
+    private int bounceAmount;
+
     private ITargetSelection selectionFunction;
 
     public DamageProjectileSkill(
@@ -26,13 +28,30 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
             Damage projectileDamage,
             Point projectileHitboxSize,
             ITargetSelection selectionFunction,
-            float projectileRange) {
+            float projectileRange, int bounceAmount) {
         this.pathToTexturesOfProjectile = pathToTexturesOfProjectile;
         this.projectileDamage = projectileDamage;
         this.projectileSpeed = projectileSpeed;
         this.projectileRange = projectileRange;
         this.projectileHitboxSize = projectileHitboxSize;
         this.selectionFunction = selectionFunction;
+        this.bounceAmount = bounceAmount;
+    }
+
+    public DamageProjectileSkill(
+        String pathToTexturesOfProjectile,
+        float projectileSpeed,
+        Damage projectileDamage,
+        Point projectileHitboxSize,
+        ITargetSelection selectionFunction,
+        float projectileRange) {
+        this.pathToTexturesOfProjectile = pathToTexturesOfProjectile;
+        this.projectileDamage = projectileDamage;
+        this.projectileSpeed = projectileSpeed;
+        this.projectileRange = projectileRange;
+        this.projectileHitboxSize = projectileHitboxSize;
+        this.selectionFunction = selectionFunction;
+        this.bounceAmount = 0;
     }
 
     @Override
@@ -56,7 +75,7 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
                 SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
         VelocityComponent vc =
                 new VelocityComponent(projectile, velocity.x, velocity.y, animation, animation);
-        new ProjectileComponent(projectile, epc.getPosition(), targetPoint);
+        new ProjectileComponent(projectile, epc.getPosition(), targetPoint, bounceAmount);
         ICollide collide =
                 (a, b, from) -> {
                     if (b != entity) {

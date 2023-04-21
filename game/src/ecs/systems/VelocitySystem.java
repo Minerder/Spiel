@@ -27,16 +27,22 @@ public class VelocitySystem extends ECS_System {
         float newX = vsd.pc.getPosition().x + vsd.vc.getCurrentXVelocity();
         float newY = vsd.pc.getPosition().y + vsd.vc.getCurrentYVelocity();
         Point newPosition = new Point(newX, newY);
+        ProjectileComponent projectileComponent = (ProjectileComponent) vsd.e.getComponent(ProjectileComponent.class).orElse(null);
         if (Game.currentLevel.getTileAt(newPosition.toCoordinate()).isAccessible()) {
             vsd.pc.setPosition(newPosition);
             movementAnimation(vsd.e);
         }
-
         // remove projectiles that hit the wall or other non-accessible
-        // tiles
-        else if (vsd.e.getComponent(ProjectileComponent.class).isPresent())
-            Game.removeEntity(vsd.e);
+        // tiles unless the ProjectileComponent.bounceAmount is > than 0
+        else if (projectileComponent != null){
+            if (projectileComponent.getBounceAmount() > 0){
+                bounceProjectile(vsd, projectileComponent, newX, newY);
+            }
+            else {
+                Game.removeEntity(vsd.e);
+            }
 
+        }
         vsd.vc.setCurrentYVelocity(0);
         vsd.vc.setCurrentXVelocity(0);
 
@@ -81,5 +87,23 @@ public class VelocitySystem extends ECS_System {
 
     private static MissingComponentException missingPC() {
         return new MissingComponentException("PositionComponent");
+    }
+
+    private void bounceProjectile(VSData vsd, ProjectileComponent projectileComponent, float newX, float newY){
+        VelocityComponent v = (VelocityComponent) vsd.e.getComponent(VelocityComponent.class).orElse(null);
+        if (Game.currentLevel.getTileAt(new Point(newX, newY).toCoordinate()).isAccessible()) {
+            v.setYVelocity(v.getYVelocity() * -1);
+            v.setXVelocity(v.getXVelocity() * -1);
+        }
+        else if (Game.currentLevel.getTileAt(new Point(newX, vsd.pc.getPosition().y).toCoordinate()).isAccessible()){
+            v.setYVelocity(v.getYVelocity() * -1);
+        } else if (Game.currentLevel.getTileAt(new Point(vsd.pc.getPosition().x, newY).toCoordinate()).isAccessible()) {
+            v.setXVelocity(v.getXVelocity() * -1);
+        }
+        else {
+            v.setYVelocity(v.getYVelocity() * -1);
+            v.setXVelocity(v.getXVelocity() * -1);
+        }
+        projectileComponent.setBounceAmount(projectileComponent.getBounceAmount()-1);
     }
 }
