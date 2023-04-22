@@ -9,7 +9,7 @@ import ecs.components.skill.*;
 import graphic.Animation;
 
 /**
- * The Hero is the player character. It's entity in the ECS. This class helps to setup the hero with
+ * The Hero is the player character. It's entity in the ECS. This class helps to set up the hero with
  * all its components and attributes .
  */
 public class Hero extends Entity {
