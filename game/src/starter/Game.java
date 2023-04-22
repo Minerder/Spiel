@@ -22,6 +22,7 @@ import ecs.components.ai.fight.MeleeAI;
 import ecs.components.skill.Skill;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
+import ecs.entities.monster.*;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
@@ -98,6 +99,8 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     private static Entity hero;
     private Logger gameLogger;
 
+    private int depth;
+
     public static void main(String[] args) {
         // start the game
         try {
@@ -160,9 +163,34 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
     @Override
     public void onLevelLoad() {
+        depth++;
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
+        for(int i = 0; i < (int)(Math.random()*3); i++) { // 0-2 Rats
+            new Rat();
+        }
+        if(depth >= 3){
+            for(int i = 0; i < (int)(Math.random()*2+1); i++){
+              new Ghost();
+            }
+            if(depth >= 6){
+                for(int i = 0; i < (int)(Math.random()*2+1); i++) {
+                    new Skeleton();
+                }
+                for(int i = 0; i < (int)(Math.random()*2+1); i++) {
+                    new Imp();
+                }
+                if(depth >= 10){
+                    for(int i = 0; i < (int)(Math.random()*2+1); i++) { // 2 imps nur weil vorher auch 2 generiert werden können
+                        new Imp();
+                    }
+                    for(int i = 0; i < (int)(Math.random()*4+1); i++) {
+                        new Chort();
+                    }
+                }
+            }
+        }
     }
 
     private void manageEntitiesSets() {
