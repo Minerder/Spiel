@@ -1,8 +1,9 @@
-package ecs.entities;
+package ecs.entities.monster;
 
 import ecs.components.skill.Skill;
+import ecs.entities.Entity;
 
-public abstract class Monster {
+public abstract class Monster extends Entity {
     protected int hitPoints;
     protected Skill skill;
     protected float xSpeed;
@@ -11,6 +12,12 @@ public abstract class Monster {
     Monster(int hitPoints, Skill skill, float xSpeed, float ySpeed) {
         this.hitPoints = hitPoints;
         this.skill = skill;
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
+    }
+
+    Monster(int hitPoints, float xSpeed, float ySpeed) {
+        this.hitPoints = hitPoints;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
     }
