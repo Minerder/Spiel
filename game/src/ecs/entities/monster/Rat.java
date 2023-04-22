@@ -4,6 +4,7 @@ import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.idle.PatrouilleWalk;
+import ecs.components.ai.idle.SleepingAI;
 import ecs.components.ai.transition.SelfDefendTransition;
 import graphic.Animation;
 
@@ -45,8 +46,10 @@ public class Rat extends Monster {
     @Override
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new PatrouilleWalk(100,5,3, PatrouilleWalk.MODE.RANDOM));
+        PatrouilleWalk pat = new PatrouilleWalk(100,5,3, PatrouilleWalk.MODE.RANDOM);
         ai.setTransitionAI(new SelfDefendTransition());
+        ai.setIdleAI(new SleepingAI<PatrouilleWalk>(pat,this,ai));
+
 
     }
 
