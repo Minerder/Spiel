@@ -10,6 +10,7 @@ import graphic.PainterConfig;
 import java.util.HashMap;
 import java.util.Map;
 import starter.Game;
+import tools.Point;
 
 /** used to draw entities */
 public class DrawSystem extends ECS_System {
@@ -43,7 +44,7 @@ public class DrawSystem extends ECS_System {
             configs.put(currentAnimationTexture, new PainterConfig(currentAnimationTexture));
         }
         painter.draw(
-                dsd.pc.getPosition(),
+                new Point(dsd.pc.getPosition().x - 0.5f,dsd.pc.getPosition().y - 0.2f),
                 currentAnimationTexture,
                 configs.get(currentAnimationTexture));
     }
