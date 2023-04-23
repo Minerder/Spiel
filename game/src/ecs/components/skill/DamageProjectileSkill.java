@@ -75,7 +75,8 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
                 SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
         VelocityComponent vc =
                 new VelocityComponent(projectile, velocity.x, velocity.y, animation, animation);
-        new ProjectileComponent(projectile, epc.getPosition(), targetPoint, bounceAmount);
+        ProjectileComponent pc =
+                new ProjectileComponent(projectile, epc.getPosition(), targetPoint, bounceAmount);
         ICollide collide =
                 (a, b, from) -> {
                     if (b != entity) {
@@ -83,6 +84,7 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
                                 .ifPresent(
                                         hc -> {
                                             ((HealthComponent) hc).receiveHit(projectileDamage);
+                                            recieveKnockback(pc, b);
                                             Game.removeEntity(projectile);
                                         });
                     }
@@ -91,4 +93,19 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
         new HitboxComponent(
                 projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
     }
+
+    private void recieveKnockback(ProjectileComponent pc, Entity entity) {
+        PositionComponent epc = (PositionComponent) entity.getComponent(PositionComponent.class).orElseThrow();
+        Point entityPosition = epc.getPosition();
+        Point projectileStartPosition = pc.getStartPosition();
+        Point direction = Point.getUnitDirectionalVector(entityPosition, projectileStartPosition);
+
+        entity.getComponent(VelocityComponent.class)
+                .ifPresent(
+                    vc -> {
+                        ((VelocityComponent) vc).setCurrentXVelocity(direction.x * 3f);
+                        ((VelocityComponent) vc).setCurrentYVelocity(direction.y * 3f);
+                    });
+    }
+
 }
