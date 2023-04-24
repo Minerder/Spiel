@@ -62,7 +62,7 @@ public class SkillTools {
             Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         return new Point(mousePosition.x, mousePosition.y);
     }
-    
+
     /**
      * Calculates a new Point that represents the direction limited by 1
      *
@@ -80,6 +80,7 @@ public class SkillTools {
         if (newy < (offset * -1)) newy = (offset * -1);
 
         return new Point(newx, newy);
+    }
 
     public static Point getHeroPosition() {
         Entity h = Game.getHero().orElseThrow();
