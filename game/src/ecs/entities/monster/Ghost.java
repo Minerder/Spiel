@@ -3,26 +3,23 @@ package ecs.entities.monster;
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
-import ecs.components.ai.fight.MeleeAI;
 import ecs.components.ai.idle.GhostWalk;
-import ecs.components.ai.idle.PatrouilleWalk;
-import ecs.components.ai.idle.StaticRadiusWalk;
 import ecs.components.ai.transition.RangeTransition;
-import ecs.components.ai.transition.SelfDefendTransition;
 import graphic.Animation;
 
 
 public class Ghost extends Monster {
 
     public Ghost(){
-        super(2,0.25f, 0.25f);
+        super(2, 0.15f, 0.15f);
         setupPositionComponent();
         setupVelocityComponent();
+        setupHealthComponent();
         setupAnimationComponent();
         setupAIComponent();
         setupHitBoxComponent();
-        setupHealthComponent();
     }
+
     @Override
     protected void setupPositionComponent() {
         new PositionComponent(this);
@@ -51,19 +48,12 @@ public class Ghost extends Monster {
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
         ai.setIdleAI(new GhostWalk(30,5,3,GhostWalk.MODE.RANDOM));
-        //PatrouilleWalk pat =new PatrouilleWalk(100,5,3, PatrouilleWalk.MODE.RANDOM);
-        //ai.setIdleAI(new SleepingAI<PatrouilleWalk>(pat));
-        ai.setTransitionAI(new RangeTransition(0.1f));
-        //new MeleeAI();
+        ai.setTransitionAI(new RangeTransition(3f));
     }
 
 
     @Override
     protected void setupHitBoxComponent() {
-        new HitboxComponent(
-            this,
-            (you, other, direction) -> System.out.println("heroCollisionEnter"),
-            (you, other, direction) -> System.out.println("heroCollisionLeave"));
         new HitboxComponent(this);
     }
 }

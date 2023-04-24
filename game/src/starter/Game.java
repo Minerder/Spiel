@@ -12,7 +12,6 @@ import configuration.Configuration;
 import configuration.KeyboardConfig;
 import controller.AbstractController;
 import controller.SystemController;
-import ecs.components.Component;
 import ecs.components.MissingComponentException;
 import ecs.components.PlayableComponent;
 import ecs.components.PositionComponent;
@@ -98,7 +97,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     private static PauseMenu<Actor> pauseMenu;
     private static Entity hero;
     private Logger gameLogger;
-
     private int depth;
 
     public static void main(String[] args) {
@@ -167,7 +165,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
-        for(int i = 0; i < (int)(Math.random()*3); i++) { // 0-2 Rats
+        for(int i = 0; i < (int)(Math.random()*3); i++) {
             new Rat();
         }
         if(depth >= 3){
@@ -182,7 +180,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
                     new Imp();
                 }
                 if(depth >= 10){
-                    for(int i = 0; i < (int)(Math.random()*2+1); i++) { // 2 imps nur weil vorher auch 2 generiert werden können
+                    for(int i = 0; i < (int)(Math.random()*2+1); i++) {
                         new Imp();
                     }
                     for(int i = 0; i < (int)(Math.random()*4+1); i++) {

@@ -4,7 +4,7 @@ import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.idle.PatrouilleWalk;
-import ecs.components.ai.transition.SelfDefendTransition;
+import ecs.components.ai.idle.SleepingAI;
 import graphic.Animation;
 
 public class Rat extends Monster {
@@ -13,11 +13,12 @@ public class Rat extends Monster {
         super(1, 0.1f, 0.1f);
         setupPositionComponent();
         setupVelocityComponent();
+        setupHealthComponent();
         setupAnimationComponent();
         setupAIComponent();
         setupHitBoxComponent();
-        setupHealthComponent();
     }
+
     @Override
     protected void setupPositionComponent() {
         new PositionComponent(this);
@@ -45,17 +46,11 @@ public class Rat extends Monster {
     @Override
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new PatrouilleWalk(100,5,3, PatrouilleWalk.MODE.RANDOM));
-        ai.setTransitionAI(new SelfDefendTransition());
-
+        ai.setIdleAI(new SleepingAI<>(new PatrouilleWalk(100, 6, 3, PatrouilleWalk.MODE.RANDOM)));
     }
 
     @Override
     protected void setupHitBoxComponent() {
-        new HitboxComponent(
-            this,
-            (you, other, direction) -> System.out.println("heroCollisionEnter"),
-            (you, other, direction) -> System.out.println("heroCollisionLeave"));
         new HitboxComponent(this);
     }
 }

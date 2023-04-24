@@ -3,7 +3,6 @@ package ecs.entities.monster;
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
-import ecs.components.ai.fight.MeleeAI;
 import ecs.components.ai.idle.PatrouilleWalk;
 import ecs.components.ai.transition.RangeTransition;
 import graphic.Animation;
@@ -12,14 +11,15 @@ import graphic.Animation;
 public class Chort extends Monster {
 
     public Chort(){
-        super(4,0.15f, 0.15f);
+        super(4, 0.15f, 0.15f);
         setupPositionComponent();
         setupVelocityComponent();
+        setupHealthComponent();
         setupAnimationComponent();
         setupAIComponent();
         setupHitBoxComponent();
-        setupHealthComponent();
     }
+
     @Override
     protected void setupPositionComponent() {
         new PositionComponent(this);
@@ -47,17 +47,12 @@ public class Chort extends Monster {
     @Override
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new PatrouilleWalk(100,5,3, PatrouilleWalk.MODE.RANDOM));
-        ai.setTransitionAI(new RangeTransition(1));
+        ai.setIdleAI(new PatrouilleWalk(100,6,3, PatrouilleWalk.MODE.RANDOM));
+        ai.setTransitionAI(new RangeTransition(3));
     }
-
 
     @Override
     protected void setupHitBoxComponent() {
-        /*new HitboxComponent(
-            this,
-            (you, other, direction) -> System.out.println("heroCollisionEnter"),
-            (you, other, direction) -> System.out.println("heroCollisionLeave"));*/
         new HitboxComponent(this);
     }
 }

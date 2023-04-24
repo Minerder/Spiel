@@ -5,22 +5,20 @@ import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.idle.StaticRadiusWalk;
 import ecs.components.ai.transition.RangeTransition;
-import ecs.components.skill.FireballSkill;
-import ecs.components.skill.Skill;
-import ecs.components.skill.SkillTools;
 import graphic.Animation;
 
 public class Skeleton extends Monster {
 
     public Skeleton(){
-        super(3,0.05f, 0.05f);
+        super(3, 0.05f, 0.05f);
         setupPositionComponent();
         setupVelocityComponent();
+        setupHealthComponent();
         setupAnimationComponent();
         setupAIComponent();
         setupHitBoxComponent();
-        setupHealthComponent();
     }
+
     @Override
     protected void setupPositionComponent() {
         new PositionComponent(this);
@@ -48,17 +46,12 @@ public class Skeleton extends Monster {
     @Override
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new StaticRadiusWalk(5,1));
-        ai.setTransitionAI(new RangeTransition(5));
-        //new MeleeAI();
+        ai.setIdleAI(new StaticRadiusWalk(4,2));
+        ai.setTransitionAI(new RangeTransition(3));
     }
 
     @Override
     protected void setupHitBoxComponent() {
-        /*new HitboxComponent(
-            this,
-            (you, other, direction) -> System.out.println("heroCollisionEnter"),
-            (you, other, direction) -> System.out.println("heroCollisionLeave"));*/
         new HitboxComponent(this);
     }
 }

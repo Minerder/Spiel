@@ -3,30 +3,26 @@ package ecs.entities.monster;
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
-import ecs.components.ai.idle.PatrouilleWalk;
-import ecs.components.ai.idle.SleepingAI;
 import ecs.components.ai.idle.StaticRadiusWalk;
 import ecs.components.ai.transition.RangeTransition;
 import ecs.components.skill.FireballSkill;
 import ecs.components.skill.Skill;
 import ecs.components.skill.SkillTools;
 import graphic.Animation;
-import starter.Game;
 
 public class Imp extends Monster {
 
-    private Skill firstSkill;
-    private int fireballCoolDown = 1;
     public Imp(){
-        super(2,0.15f, 0.15f);
+        super(2, 0.15f, 0.15f);
         setupPositionComponent();
         setupVelocityComponent();
-        setupFireballSkill();
+        setupHealthComponent();
         setupAnimationComponent();
         setupAIComponent();
+        setupFireballSkill();
         setupHitBoxComponent();
-        setupHealthComponent();
     }
+
     @Override
     protected void setupPositionComponent() {
         new PositionComponent(this);
@@ -54,25 +50,18 @@ public class Imp extends Monster {
     @Override
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
-       ai.setIdleAI(new StaticRadiusWalk(5,1));
-        //PatrouilleWalk pat =new PatrouilleWalk(100,5,3, PatrouilleWalk.MODE.RANDOM);
-        //ai.setIdleAI(new SleepingAI<PatrouilleWalk>(pat));
-        ai.setTransitionAI(new RangeTransition(5));
-        //new MeleeAI();
+        ai.setIdleAI(new StaticRadiusWalk(4,2));
+        ai.setTransitionAI(new RangeTransition(3));
     }
 
     private void setupFireballSkill() {
-        firstSkill =
+        skill =
             new Skill(
-                new FireballSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
+                new FireballSkill(SkillTools::getCursorPositionAsPoint), 1);
     }
 
     @Override
     protected void setupHitBoxComponent() {
-        /*new HitboxComponent(
-            this,
-            (you, other, direction) -> System.out.println("heroCollisionEnter"),
-            (you, other, direction) -> System.out.println("heroCollisionLeave"));*/
         new HitboxComponent(this);
     }
 }

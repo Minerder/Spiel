@@ -9,14 +9,7 @@ public abstract class Monster extends Entity {
     protected float xSpeed;
     protected float ySpeed;
 
-    Monster(int hitPoints, Skill skill, float xSpeed, float ySpeed) {
-        this.hitPoints = hitPoints;
-        this.skill = skill;
-        this.xSpeed = xSpeed;
-        this.ySpeed = ySpeed;
-    }
-
-    Monster(int hitPoints, float xSpeed, float ySpeed) {
+    public Monster(int hitPoints, float xSpeed, float ySpeed) {
         this.hitPoints = hitPoints;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
