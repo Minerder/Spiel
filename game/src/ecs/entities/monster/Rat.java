@@ -10,7 +10,7 @@ import graphic.Animation;
 
 public class Rat extends Monster {
 
-    public Rat(){
+    public Rat() {
         super(1, 0.1f, 0.1f);
         setupPositionComponent();
         setupVelocityComponent();
@@ -47,7 +47,7 @@ public class Rat extends Monster {
     @Override
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new SleepingAI(new PatrouilleWalk(100, 6, 3, PatrouilleWalk.MODE.RANDOM),5));
+        ai.setIdleAI(new SleepingAI(new PatrouilleWalk(100, 6, 3, PatrouilleWalk.MODE.RANDOM), 5));
         ai.setTransitionAI(new SelfDefendTransition());
     }
 

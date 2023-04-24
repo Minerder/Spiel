@@ -9,7 +9,7 @@ import graphic.Animation;
 
 public class Skeleton extends Monster {
 
-    public Skeleton(){
+    public Skeleton() {
         super(3, 0.05f, 0.05f);
         setupPositionComponent();
         setupVelocityComponent();
@@ -33,7 +33,9 @@ public class Skeleton extends Monster {
 
     @Override
     protected void setupHealthComponent() {
-        new HealthComponent(this);
+        HealthComponent hc = new HealthComponent(this);
+        hc.setMaximalHealthpoints(3);
+        hc.setCurrentHealthpoints(3);
     }
 
     @Override
@@ -45,8 +47,9 @@ public class Skeleton extends Monster {
 
     @Override
     protected void setupAIComponent() {
+        // TODO add meeleAi after Fernkampf merge
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new StaticRadiusWalk(4,2));
+        ai.setIdleAI(new StaticRadiusWalk(4, 2));
         ai.setTransitionAI(new RangeTransition(3));
     }
 

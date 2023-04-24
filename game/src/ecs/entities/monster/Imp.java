@@ -5,21 +5,17 @@ import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.idle.StaticRadiusWalk;
 import ecs.components.ai.transition.RangeTransition;
-import ecs.components.skill.FireballSkill;
-import ecs.components.skill.Skill;
-import ecs.components.skill.SkillTools;
 import graphic.Animation;
 
 public class Imp extends Monster {
 
-    public Imp(){
+    public Imp() {
         super(2, 0.15f, 0.15f);
         setupPositionComponent();
         setupVelocityComponent();
         setupHealthComponent();
         setupAnimationComponent();
         setupAIComponent();
-        setupFireballSkill();
         setupHitBoxComponent();
     }
 
@@ -37,7 +33,9 @@ public class Imp extends Monster {
 
     @Override
     protected void setupHealthComponent() {
-        new HealthComponent(this);
+        HealthComponent hc = new HealthComponent(this);
+        hc.setMaximalHealthpoints(2);
+        hc.setCurrentHealthpoints(2);
     }
 
     @Override
@@ -49,15 +47,10 @@ public class Imp extends Monster {
 
     @Override
     protected void setupAIComponent() {
+        // TODO add meeleAi after fernkampf merge
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new StaticRadiusWalk(4,2));
+        ai.setIdleAI(new StaticRadiusWalk(4, 2));
         ai.setTransitionAI(new RangeTransition(3));
-    }
-
-    private void setupFireballSkill() {
-        skill =
-            new Skill(
-                new FireballSkill(SkillTools::getCursorPositionAsPoint), 1);
     }
 
     @Override

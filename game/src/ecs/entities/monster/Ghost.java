@@ -10,7 +10,7 @@ import graphic.Animation;
 
 public class Ghost extends Monster {
 
-    public Ghost(){
+    public Ghost() {
         super(2, 0.15f, 0.15f);
         setupPositionComponent();
         setupVelocityComponent();
@@ -34,7 +34,9 @@ public class Ghost extends Monster {
 
     @Override
     protected void setupHealthComponent() {
-        new HealthComponent(this);
+        HealthComponent hc = new HealthComponent(this);
+        hc.setMaximalHealthpoints(2);
+        hc.setCurrentHealthpoints(2);
     }
 
     @Override
@@ -46,15 +48,21 @@ public class Ghost extends Monster {
 
     @Override
     protected void setupAIComponent() {
+        //TODO ghostwalk doesnt work
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new GhostWalk(30,5,3,GhostWalk.MODE.RANDOM));
+        ai.setIdleAI(new GhostWalk(30, 5, 3, GhostWalk.MODE.RANDOM));
         ai.setTransitionAI(new RangeTransition(3f));
     }
 
-
     @Override
     protected void setupHitBoxComponent() {
-        new HitboxComponent(this);
+        new HitboxComponent(this, (a, b, from) -> {
+            if (b.getComponent(PlayableComponent.class).isPresent()) {
+                b.getComponent(HealthComponent.class).ifPresent((hc) -> ((HealthComponent) hc).setCurrentHealthpoints(((HealthComponent) hc).getCurrentHealthpoints() - 1));
+                System.out.println("dmg");
+            }
+        },
+            null);
     }
 }
 
