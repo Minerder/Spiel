@@ -65,7 +65,7 @@ public class SkillTools {
      *
      * @param entity start point
      * @param target target point
-     * @return a new Point with values of -1 - 1
+     * @return a new Point with values ranging from -1 to 1
      */
     public static Point getMeleeSkillOffsetPositon(Point entity, Point target) {
         float newx = target.x - entity.x;

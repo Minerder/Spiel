@@ -18,7 +18,7 @@ public class MeleeComponent extends Component {
         return entity;
     }
 
-    public DamageMeleeSkill getSkill() {
+    public DamageMeleeSkill getMeleeSkill() {
         return skill;
     }
 }

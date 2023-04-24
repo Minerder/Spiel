@@ -204,7 +204,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         List<Entity> l = Game.entities.stream().filter(en -> en.getComponent(MeleeComponent.class).orElse(null) != null).toList();
         for (Entity en : l) {
             MeleeComponent mc = (MeleeComponent) en.getComponent(MeleeComponent.class).orElseThrow();
-            mc.getSkill().update(en);
+            mc.getMeleeSkill().update(en);
         }
     }
 
