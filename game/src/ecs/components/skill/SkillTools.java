@@ -3,6 +3,9 @@ package ecs.components.skill;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import ecs.components.HealthComponent;
+import ecs.components.PositionComponent;
+import ecs.entities.Entity;
 import starter.Game;
 import tools.Point;
 
@@ -59,7 +62,7 @@ public class SkillTools {
             Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         return new Point(mousePosition.x, mousePosition.y);
     }
-
+    
     /**
      * Calculates a new Point that represents the direction limited by 1
      *
@@ -77,5 +80,44 @@ public class SkillTools {
         if (newy < (offset * -1)) newy = (offset * -1);
 
         return new Point(newx, newy);
+
+    public static Point getHeroPosition() {
+        Entity h = Game.getHero().orElseThrow();
+        PositionComponent pc =
+            (PositionComponent) h.getComponent(PositionComponent.class).orElseThrow();
+        return pc.getPosition();
+    }
+
+    /**
+     * Gets the position from the nearest entity to a starting entity
+     *
+     * @param startingEntity as the starting point
+     * @return position of the nearest entity as a point
+     */
+    public static Point getNearestEntityPosition(Entity startingEntity) {
+        PositionComponent startingEntitypc =
+            (PositionComponent)
+                startingEntity.getComponent(PositionComponent.class).orElseThrow();
+        Point nearestEntityPoint = SkillTools.getCursorPositionAsPoint();
+        float max = 999f;
+        for (Entity targetEntitys : Game.getEntities()) {
+            // continue only if the Entity has a Healthcomponent and Positioncomponent
+            if (targetEntitys.getComponent(HealthComponent.class).orElse(null) == null
+                || targetEntitys.getComponent(PositionComponent.class).orElse(null) == null)
+                continue;
+
+            PositionComponent targetEntitypc =
+                (PositionComponent)
+                    targetEntitys.getComponent(PositionComponent.class).orElseThrow();
+            Point startingEntityPoint = startingEntitypc.getPosition();
+            Point targetEntityPoint = targetEntitypc.getPosition();
+            float distance = Point.calculateDistance(startingEntityPoint, targetEntityPoint);
+
+            if (distance < max && distance >= 0.1d) {
+                max = distance;
+                nearestEntityPoint = targetEntityPoint;
+            }
+        }
+        return nearestEntityPoint;
     }
 }

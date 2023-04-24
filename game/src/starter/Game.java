@@ -12,7 +12,9 @@ import configuration.Configuration;
 import configuration.KeyboardConfig;
 import controller.AbstractController;
 import controller.SystemController;
-import ecs.components.*;
+import ecs.components.MissingComponentException;
+import ecs.components.PlayableComponent;
+import ecs.components.PositionComponent;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.fight.IFightAI;
 import ecs.components.ai.fight.MeleeAI;
@@ -181,13 +183,18 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
      */
     public void manageSkillCooldowns() {
         // Reduces the skills of the hero
-        PlayableComponent pc = (PlayableComponent) hero.getComponent(PlayableComponent.class).orElse(null);
+        PlayableComponent pc =
+            (PlayableComponent) hero.getComponent(PlayableComponent.class).orElse(null);
         if (pc != null) {
             pc.getSkillSlot1().ifPresent(Skill::reduceCoolDown);
             pc.getSkillSlot2().ifPresent(Skill::reduceCoolDown);
         }
         // reduces the skills of all NPCs
-        entities.stream().filter(entity -> entity.getComponent(AIComponent.class).isPresent()).map(entity -> (AIComponent) entity.getComponent(AIComponent.class).orElse(null)).filter(Objects::nonNull).forEach(this::reduceSkillCooldown);
+        entities.stream()
+            .filter(entity -> entity.getComponent(AIComponent.class).isPresent())
+            .map(entity -> (AIComponent) entity.getComponent(AIComponent.class).orElse(null))
+            .filter(Objects::nonNull)
+            .forEach(this::reduceSkillCooldown);
     }
 
     private void reduceSkillCooldown(AIComponent entityAIComponent) {

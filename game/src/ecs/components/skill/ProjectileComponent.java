@@ -6,13 +6,24 @@ import tools.Point;
 
 public class ProjectileComponent extends Component {
 
-    private Point goalLocation;
-    private Point startPosition;
+    private final Point goalLocation;
+    private final Point startPosition;
+
+    private int bounceAmount;
+
+    public ProjectileComponent(
+        Entity entity, Point startPosition, Point goalLocation, int bounceAmount) {
+        super(entity);
+        this.goalLocation = goalLocation;
+        this.startPosition = startPosition;
+        this.bounceAmount = bounceAmount;
+    }
 
     public ProjectileComponent(Entity entity, Point startPosition, Point goalLocation) {
         super(entity);
         this.goalLocation = goalLocation;
         this.startPosition = startPosition;
+        this.bounceAmount = 0;
     }
 
     /**
@@ -31,5 +42,13 @@ public class ProjectileComponent extends Component {
      */
     public Point getStartPosition() {
         return startPosition;
+    }
+
+    public int getBounceAmount() {
+        return bounceAmount;
+    }
+
+    public void setBounceAmount(int bounceAmount) {
+        this.bounceAmount = bounceAmount;
     }
 }
