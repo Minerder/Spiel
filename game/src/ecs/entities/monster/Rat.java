@@ -5,6 +5,7 @@ import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.idle.PatrouilleWalk;
 import ecs.components.ai.idle.SleepingAI;
+import ecs.components.ai.transition.SelfDefendTransition;
 import graphic.Animation;
 
 public class Rat extends Monster {
@@ -47,6 +48,7 @@ public class Rat extends Monster {
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
         ai.setIdleAI(new SleepingAI<>(new PatrouilleWalk(100, 6, 3, PatrouilleWalk.MODE.RANDOM)));
+        ai.setTransitionAI(new SelfDefendTransition());
     }
 
     @Override
