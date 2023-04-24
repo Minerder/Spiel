@@ -47,7 +47,7 @@ public class Rat extends Monster {
     @Override
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new SleepingAI<>(new PatrouilleWalk(100, 6, 3, PatrouilleWalk.MODE.RANDOM)));
+        ai.setIdleAI(new SleepingAI(new PatrouilleWalk(100, 6, 3, PatrouilleWalk.MODE.RANDOM),5));
         ai.setTransitionAI(new SelfDefendTransition());
     }
 
