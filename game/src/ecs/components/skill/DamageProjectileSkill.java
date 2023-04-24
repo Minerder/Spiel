@@ -11,24 +11,25 @@ import tools.Point;
 
 public abstract class DamageProjectileSkill implements ISkillFunction {
 
-    private String pathToTexturesOfProjectile;
-    private float projectileSpeed;
+    private final String pathToTexturesOfProjectile;
+    private final float projectileSpeed;
 
-    private float projectileRange;
-    private Damage projectileDamage;
-    private Point projectileHitboxSize;
+    private final float projectileRange;
+    private final Damage projectileDamage;
+    private final Point projectileHitboxSize;
 
-    private int bounceAmount;
+    private final int bounceAmount;
 
-    private ITargetSelection selectionFunction;
+    private final ITargetSelection selectionFunction;
 
     public DamageProjectileSkill(
-            String pathToTexturesOfProjectile,
-            float projectileSpeed,
-            Damage projectileDamage,
-            Point projectileHitboxSize,
-            ITargetSelection selectionFunction,
-            float projectileRange, int bounceAmount) {
+        String pathToTexturesOfProjectile,
+        float projectileSpeed,
+        Damage projectileDamage,
+        Point projectileHitboxSize,
+        ITargetSelection selectionFunction,
+        float projectileRange,
+        int bounceAmount) {
         this.pathToTexturesOfProjectile = pathToTexturesOfProjectile;
         this.projectileDamage = projectileDamage;
         this.projectileSpeed = projectileSpeed;
@@ -58,10 +59,11 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
     public void execute(Entity entity) {
         Entity projectile = new Entity();
         PositionComponent epc =
-                (PositionComponent)
-                        entity.getComponent(PositionComponent.class)
-                                .orElseThrow(
-                                        () -> new MissingComponentException("PositionComponent"));
+            (PositionComponent)
+                entity.getComponent(PositionComponent.class)
+                    .orElseThrow(
+                        () -> new MissingComponentException("PositionComponent"));
+
         new PositionComponent(projectile, epc.getPosition());
 
         Animation animation = AnimationBuilder.buildAnimation(pathToTexturesOfProjectile);
@@ -69,12 +71,12 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
 
         Point aimedOn = selectionFunction.selectTargetPoint();
         Point targetPoint =
-                SkillTools.calculateLastPositionInRange(
-                        epc.getPosition(), aimedOn, projectileRange);
+            SkillTools.calculateLastPositionInRange(
+                epc.getPosition(), aimedOn, projectileRange);
         Point velocity =
                 SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
-        VelocityComponent vc =
-                new VelocityComponent(projectile, velocity.x, velocity.y, animation, animation);
+
+        new VelocityComponent(projectile, velocity.x, velocity.y, animation, animation);
         ProjectileComponent pc =
                 new ProjectileComponent(projectile, epc.getPosition(), targetPoint, bounceAmount);
         ICollide collide =
@@ -91,7 +93,7 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
                 };
 
         new HitboxComponent(
-                projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
+            projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
     }
 
     private void recieveKnockback(ProjectileComponent pc, Entity entity) {

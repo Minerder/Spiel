@@ -9,8 +9,8 @@ import ecs.components.skill.*;
 import graphic.Animation;
 
 /**
- * The Hero is the player character. It's entity in the ECS. This class helps to setup the hero with
- * all its components and attributes .
+ * The Hero is the player character. It's entity in the ECS. This class helps to set up the hero
+ * with all its components and attributes .
  */
 public class Hero extends Entity {
 
@@ -24,7 +24,9 @@ public class Hero extends Entity {
     private final String pathToRunRight = "knight/runRight";
     private Skill firstSkill;
 
-    /** Entity with Components */
+    /**
+     * Entity with Components
+     */
     public Hero() {
         super();
         new PositionComponent(this);
@@ -50,14 +52,14 @@ public class Hero extends Entity {
 
     private void setupFireballSkill() {
         firstSkill =
-                new Skill(
-                        new FireballSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
+            new Skill(
+                new FireballSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
     }
 
     private void setupHitboxComponent() {
         new HitboxComponent(
-                this,
-                (you, other, direction) -> System.out.println("heroCollisionEnter"),
-                (you, other, direction) -> System.out.println("heroCollisionLeave"));
+            this,
+            (you, other, direction) -> System.out.println("heroCollisionEnter"),
+            (you, other, direction) -> System.out.println("heroCollisionLeave"));
     }
 }
