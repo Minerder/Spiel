@@ -3,8 +3,12 @@ package ecs.entities.monster;
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
+import ecs.components.ai.fight.MeleeAI;
 import ecs.components.ai.idle.StaticRadiusWalk;
 import ecs.components.ai.transition.RangeTransition;
+import ecs.components.skill.FireballSkill;
+import ecs.components.skill.Skill;
+import ecs.components.skill.SkillTools;
 import graphic.Animation;
 
 public class Imp extends Monster {
@@ -47,10 +51,10 @@ public class Imp extends Monster {
 
     @Override
     protected void setupAIComponent() {
-        // TODO add meeleAi after fernkampf merge
-        AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new StaticRadiusWalk(4, 2));
-        ai.setTransitionAI(new RangeTransition(3));
+        new AIComponent(this,
+            new MeleeAI(3, new Skill(new FireballSkill(SkillTools::getHeroPosition), 2)),
+            new StaticRadiusWalk(3f, 3),
+            new RangeTransition(3));
     }
 
     @Override

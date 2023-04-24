@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import ecs.components.HealthComponent;
 import ecs.components.PositionComponent;
+import ecs.components.VelocityComponent;
 import ecs.entities.Entity;
 import starter.Game;
 import tools.Point;
@@ -114,11 +115,24 @@ public class SkillTools {
             Point targetEntityPoint = targetEntitypc.getPosition();
             float distance = Point.calculateDistance(startingEntityPoint, targetEntityPoint);
 
-            if (distance < max && distance >= 0.1d) {
+            if (distance < max && distance >= 0.1 && distance < 10) {
                 max = distance;
                 nearestEntityPoint = targetEntityPoint;
             }
         }
         return nearestEntityPoint;
+    }
+
+    public static void recieveKnockback(Point projectileStartPosition, Entity entity) {
+        PositionComponent epc = (PositionComponent) entity.getComponent(PositionComponent.class).orElseThrow();
+        Point entityPosition = epc.getPosition();
+        Point direction = Point.getUnitDirectionalVector(entityPosition, projectileStartPosition);
+
+        entity.getComponent(VelocityComponent.class)
+            .ifPresent(
+                vc -> {
+                    ((VelocityComponent) vc).setCurrentXVelocity(direction.x * 0.4f);
+                    ((VelocityComponent) vc).setCurrentYVelocity(direction.y * 0.4f);
+                });
     }
 }

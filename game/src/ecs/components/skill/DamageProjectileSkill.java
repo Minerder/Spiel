@@ -86,7 +86,7 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
                                 .ifPresent(
                                         hc -> {
                                             ((HealthComponent) hc).receiveHit(projectileDamage);
-                                            recieveKnockback(pc, b);
+                                            SkillTools.recieveKnockback(pc.getStartPosition(), b);
                                             Game.removeEntity(projectile);
                                         });
                     }
@@ -95,19 +95,4 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
         new HitboxComponent(
             projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
     }
-
-    private void recieveKnockback(ProjectileComponent pc, Entity entity) {
-        PositionComponent epc = (PositionComponent) entity.getComponent(PositionComponent.class).orElseThrow();
-        Point entityPosition = epc.getPosition();
-        Point projectileStartPosition = pc.getStartPosition();
-        Point direction = Point.getUnitDirectionalVector(entityPosition, projectileStartPosition);
-
-        entity.getComponent(VelocityComponent.class)
-                .ifPresent(
-                    vc -> {
-                        ((VelocityComponent) vc).setCurrentXVelocity(direction.x * 0.3f);
-                        ((VelocityComponent) vc).setCurrentYVelocity(direction.y * 0.3f);
-                    });
-    }
-
 }

@@ -7,7 +7,6 @@ import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.skill.*;
 import graphic.Animation;
-import tools.Point;
 
 /**
  * The Hero is the player character. It's entity in the ECS. This class helps to set up the hero
@@ -24,6 +23,7 @@ public class Hero extends Entity {
     private final String pathToRunLeft = "knight/runLeft";
     private final String pathToRunRight = "knight/runRight";
     private Skill firstSkill;
+    private Skill secondSkill;
 
     /**
      * Entity with Components
@@ -37,6 +37,7 @@ public class Hero extends Entity {
         PlayableComponent pc = new PlayableComponent(this);
         setupFireballSkill();
         pc.setSkillSlot1(firstSkill);
+        pc.setSkillSlot2(secondSkill);
     }
 
     private void setupVelocityComponent() {
@@ -52,9 +53,8 @@ public class Hero extends Entity {
     }
 
     private void setupFireballSkill() {
-        firstSkill =
-            new Skill(
-                new MeeleSwordSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
+        firstSkill = new Skill(new MeeleSwordSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
+        secondSkill = new Skill(new HomingSparkSkill(() -> SkillTools.getNearestEntityPosition(this)), fireballCoolDown);
     }
 
     private void setupHitboxComponent() {

@@ -16,9 +16,9 @@ public class DamageMeleeSkill implements ISkillFunction {
     private final Damage projectileDamage;
     private final Point projectileHitboxSize;
     private final ITargetSelection selectionFunction;
-    private final int holdingTimeInSeconds = 1;
-    private int currentHoldingTimeInFrames;
-    private int hitCooldownInFrames;
+    private final float holdingTimeInSeconds = 0.5f;
+    private float currentHoldingTimeInFrames;
+    private float hitCooldownInFrames;
     private Entity ownedBy;
     private Point offSet;
     private PositionComponent projectilepc;
@@ -60,7 +60,8 @@ public class DamageMeleeSkill implements ISkillFunction {
                         .ifPresent(
                             hc -> {
                                 ((HealthComponent) hc).receiveHit(projectileDamage);
-                                this.hitCooldownInFrames = Constants.FRAME_RATE;
+                                SkillTools.recieveKnockback(epc.getPosition(), b);
+                                this.hitCooldownInFrames = 15;
                             });
                 }
             };
