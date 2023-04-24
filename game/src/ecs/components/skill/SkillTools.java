@@ -62,6 +62,24 @@ public class SkillTools {
             Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         return new Point(mousePosition.x, mousePosition.y);
     }
+    
+    /**
+     * Calculates a new Point that represents the direction limited by 1
+     *
+     * @param entity start point
+     * @param target target point
+     * @return a new Point with values ranging from -1 to 1
+     */
+    public static Point getMeleeSkillOffsetPositon(Point entity, Point target) {
+        float newx = target.x - entity.x;
+        float newy = target.y - entity.y;
+        float offset = 1;
+        if (newx > offset) newx = offset;
+        if (newx < (offset * -1)) newx = (offset * -1);
+        if (newy > offset) newy = offset;
+        if (newy < (offset * -1)) newy = (offset * -1);
+
+        return new Point(newx, newy);
 
     public static Point getHeroPosition() {
         Entity h = Game.getHero().orElseThrow();
