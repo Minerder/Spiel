@@ -17,6 +17,8 @@ public class PatrouilleWalk implements IIdleAI {
 
     private static final Random random = new Random();
 
+
+
     public enum MODE {
         /** Walks to a random checkpoint. */
         RANDOM,
