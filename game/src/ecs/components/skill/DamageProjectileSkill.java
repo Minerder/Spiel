@@ -103,8 +103,8 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
         entity.getComponent(VelocityComponent.class)
                 .ifPresent(
                     vc -> {
-                        ((VelocityComponent) vc).setCurrentXVelocity(direction.x * 3f);
-                        ((VelocityComponent) vc).setCurrentYVelocity(direction.y * 3f);
+                        ((VelocityComponent) vc).setCurrentXVelocity(direction.x * 0.3f);
+                        ((VelocityComponent) vc).setCurrentYVelocity(direction.y * 0.3f);
                     });
     }
 
