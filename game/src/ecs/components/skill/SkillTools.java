@@ -65,7 +65,8 @@ public class SkillTools {
 
     public static Point getHeroPosition() {
         Entity h = Game.getHero().orElseThrow();
-        PositionComponent pc = (PositionComponent) h.getComponent(PositionComponent.class).orElseThrow();
+        PositionComponent pc =
+            (PositionComponent) h.getComponent(PositionComponent.class).orElseThrow();
         return pc.getPosition();
     }
 
@@ -76,15 +77,20 @@ public class SkillTools {
      * @return position of the nearest entity as a point
      */
     public static Point getNearestEntityPosition(Entity startingEntity) {
-        PositionComponent startingEntitypc = (PositionComponent) startingEntity.getComponent(PositionComponent.class).orElseThrow();
+        PositionComponent startingEntitypc =
+            (PositionComponent)
+                startingEntity.getComponent(PositionComponent.class).orElseThrow();
         Point nearestEntityPoint = startingEntitypc.getPosition();
         float max = 999f;
         for (Entity targetEntitys : Game.getEntities()) {
             // continue only if the Entity has a Healthcomponent and Positioncomponent
-            if (targetEntitys.getComponent(HealthComponent.class).orElse(null) == null || targetEntitys.getComponent(PositionComponent.class).orElse(null) == null)
+            if (targetEntitys.getComponent(HealthComponent.class).orElse(null) == null
+                || targetEntitys.getComponent(PositionComponent.class).orElse(null) == null)
                 continue;
 
-            PositionComponent targetEntitypc = (PositionComponent) targetEntitys.getComponent(PositionComponent.class).orElseThrow();
+            PositionComponent targetEntitypc =
+                (PositionComponent)
+                    targetEntitys.getComponent(PositionComponent.class).orElseThrow();
             Point startingEntityPoint = startingEntitypc.getPosition();
             Point targetEntityPoint = targetEntitypc.getPosition();
             float distance = Point.calculateDistance(startingEntityPoint, targetEntityPoint);
@@ -96,5 +102,4 @@ public class SkillTools {
         }
         return nearestEntityPoint;
     }
-
 }
