@@ -15,8 +15,8 @@ public class Rat extends Monster {
         setupPositionComponent();
         setupVelocityComponent();
         setupHealthComponent();
-        setupAnimationComponent();
         setupAIComponent();
+        setupAnimationComponent();
         setupHitBoxComponent();
     }
 
@@ -27,7 +27,7 @@ public class Rat extends Monster {
 
     @Override
     protected void setupVelocityComponent() {
-        Animation moveRight = AnimationBuilder.buildAnimation("character/monster/rat/run/left");
+        Animation moveRight = AnimationBuilder.buildAnimation("character/monster/rat/run/right");
         Animation moveLeft = AnimationBuilder.buildAnimation("character/monster/rat/run/left");
         new VelocityComponent(this, xSpeed, ySpeed, moveLeft, moveRight);
     }
@@ -39,15 +39,19 @@ public class Rat extends Monster {
 
     @Override
     protected void setupAnimationComponent() {
-        Animation idleRight = AnimationBuilder.buildAnimation("character/monster/rat/idle/left");
-        Animation idleLeft = AnimationBuilder.buildAnimation("character/monster/rat/idle/left");
+        Animation idleRight = AnimationBuilder.buildAnimation("character/monster/rat/sleep/right");
+        Animation idleLeft = AnimationBuilder.buildAnimation("character/monster/rat/sleep/left");
         new AnimationComponent(this, idleLeft, idleRight);
     }
 
     @Override
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new SleepingAI(new PatrouilleWalk(100, 6, 3, PatrouilleWalk.MODE.RANDOM), 5));
+
+        Animation idleRight = AnimationBuilder.buildAnimation("character/monster/rat/idle/right");
+        Animation idleLeft = AnimationBuilder.buildAnimation("character/monster/rat/idle/left");
+
+        ai.setIdleAI(new SleepingAI(new PatrouilleWalk(20, 6, 2000, PatrouilleWalk.MODE.RANDOM), 1.5f,new AnimationComponent(this, idleLeft, idleRight)));
         ai.setTransitionAI(new SelfDefendTransition());
     }
 

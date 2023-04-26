@@ -7,7 +7,7 @@ import tools.Point;
 public class HomingSparkSkill extends DamageProjectileSkill {
     public HomingSparkSkill(ITargetSelection selectionFunction) {
         super(
-                "game/assets/animation",
+                "skills/spark/right",
                 0.5f,
                 new Damage(1, DamageType.MAGIC, null),
                 new Point(0.5f, 0.5f),
