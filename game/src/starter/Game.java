@@ -166,29 +166,26 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
-        for(int i = 0; i < (int)(Math.random()*3); i++) {
+        for (int i = 0; i < (int) (Math.random() * 3); i++) {
             new Rat();
         }
-        if(depth >= 3){
-            for(int i = 0; i < (int)(Math.random()*2+1); i++){
-              new Ghost();
+
+        if (depth >= 6) {
+            for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
+                new Skeleton();
             }
-            if(depth >= 6){
-                for(int i = 0; i < (int)(Math.random()*2+1); i++) {
-                    new Skeleton();
-                }
-                for(int i = 0; i < (int)(Math.random()*2+1); i++) {
+            for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
+                new Imp();
+            }
+            if (depth >= 10) {
+                for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
                     new Imp();
                 }
-                if(depth >= 10){
-                    for(int i = 0; i < (int)(Math.random()*2+1); i++) {
-                        new Imp();
-                    }
-                    for(int i = 0; i < (int)(Math.random()*4+1); i++) {
-                        new Chort();
-                    }
+                for (int i = 0; i < (int) (Math.random() * 4 + 1); i++) {
+                    new Chort();
                 }
             }
+
         }
     }
 
