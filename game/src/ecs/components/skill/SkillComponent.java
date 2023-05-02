@@ -1,6 +1,7 @@
 package ecs.components.skill;
 
 import ecs.components.Component;
+import ecs.components.skill.skills.Skill;
 import ecs.entities.Entity;
 import java.util.HashSet;
 import java.util.Set;

@@ -1,5 +1,7 @@
-package ecs.components.skill;
+package ecs.components.skill.skills;
 
+import ecs.components.skill.DamageProjectileSkill;
+import ecs.components.skill.ITargetSelection;
 import ecs.damage.Damage;
 import ecs.damage.DamageType;
 import tools.Point;

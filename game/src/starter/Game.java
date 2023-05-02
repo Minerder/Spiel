@@ -19,6 +19,7 @@ import ecs.components.ai.AIComponent;
 import ecs.components.ai.fight.IFightAI;
 import ecs.components.ai.fight.MeleeAI;
 import ecs.components.skill.*;
+import ecs.components.skill.skills.Skill;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.entities.monster.*;

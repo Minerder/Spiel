@@ -1,6 +1,6 @@
 package ecs.components;
 
-import ecs.components.skill.Skill;
+import ecs.components.skill.skills.Skill;
 import ecs.entities.Entity;
 import java.util.Optional;
 import java.util.logging.Logger;

@@ -6,8 +6,8 @@ import ecs.components.ai.AIComponent;
 import ecs.components.ai.fight.MeleeAI;
 import ecs.components.ai.idle.StaticRadiusWalk;
 import ecs.components.ai.transition.RangeTransition;
-import ecs.components.skill.BouncingArrowSkill;
-import ecs.components.skill.Skill;
+import ecs.components.skill.skills.BouncingArrowSkill;
+import ecs.components.skill.skills.Skill;
 import ecs.components.skill.SkillTools;
 import graphic.Animation;
 

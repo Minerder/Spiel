@@ -2,7 +2,7 @@ package ecs.components.ai.fight;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import ecs.components.ai.AITools;
-import ecs.components.skill.Skill;
+import ecs.components.skill.skills.Skill;
 import ecs.entities.Entity;
 import level.elements.tile.Tile;
 import tools.Constants;

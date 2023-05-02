@@ -1,6 +1,6 @@
 package ecs.entities.monster;
 
-import ecs.components.skill.Skill;
+import ecs.components.skill.skills.Skill;
 import ecs.entities.Entity;
 
 public abstract class Monster extends Entity {

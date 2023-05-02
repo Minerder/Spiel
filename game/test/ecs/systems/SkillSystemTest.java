@@ -3,8 +3,8 @@ package ecs.systems;
 import static org.junit.Assert.*;
 
 import controller.SystemController;
-import ecs.components.skill.ISkillFunction;
-import ecs.components.skill.Skill;
+import ecs.components.skill.skills.ISkillFunction;
+import ecs.components.skill.skills.Skill;
 import ecs.components.skill.SkillComponent;
 import ecs.entities.Entity;
 import org.junit.Test;

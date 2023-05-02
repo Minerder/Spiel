@@ -1,4 +1,4 @@
-package ecs.components.skill;
+package ecs.components.skill.skills;
 
 import ecs.entities.Entity;
 

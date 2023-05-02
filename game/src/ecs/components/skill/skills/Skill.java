@@ -1,12 +1,11 @@
-package ecs.components.skill;
-
+package ecs.components.skill.skills;
 import ecs.entities.Entity;
 import tools.Constants;
 
 public class Skill {
 
-    private ISkillFunction skillFunction;
-    private int coolDownInFrames;
+    private final ISkillFunction skillFunction;
+    private final int coolDownInFrames;
     private int currentCoolDownInFrames;
 
     /**

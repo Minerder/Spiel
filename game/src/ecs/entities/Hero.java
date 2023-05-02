@@ -6,6 +6,9 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.skill.*;
+import ecs.components.skill.skills.HomingSparkSkill;
+import ecs.components.skill.skills.MeeleSwordSkill;
+import ecs.components.skill.skills.Skill;
 import graphic.Animation;
 
 /**
