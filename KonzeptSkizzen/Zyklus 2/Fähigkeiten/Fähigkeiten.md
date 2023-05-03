@@ -34,54 +34,50 @@ Gravity Storm:
 
 Neue hotkeys werden in dungeon_configs.json hinzugefügt.
 
-XXXXXXXXXXXXXXXXXXXXXXXXX
 
 ### Mana Implementierung
 
-In der Klasse SkillComponent werden neue Variablen `int maxMana, int currentMana` hinzugefügt. Diese werden
-für Skills benutzt. Jede sekunde wird 1 Mana regeneriert. `maxMana` Skaliert mit dem Hero level.
+In der Klasse SkillComponent werden zwei neue Variablen `int maxMana` und `int currentMana` hinzugefügt. Diese werden
+für alle Skills benutzt. Jede sekunde wird 1 Mana regeneriert. `maxMana` Skaliert mit dem Hero level.
 
-Wir haben uns überlegt das alle Skills wie Feuerball und Spark auch Mana kosten bekommen
-(Feuerball = 1MP, Spark = 3MP).
+Wir haben uns überlegt das alle Skills wie Feuerball und Spark auch Ressourcenkosten bekommen.
+(Feuerball = 1 MP, Spark = 3 MP).
 
 ### XP-System
 
 Das XP-System holt sich von allen Entities im Spiel dessen XPComponent. Ist von einem
-Entity das benötigte XP erreicht, um einen LevelUp durchzuführen, so wird die
+Entity die benötigte XP erreicht, um einen LevelUp durchzuführen, so wird die
 performLevelUP() Methode im XP-System aufgerufen.
 
-In dieser Methode wird das level von der Entity erhöht. Danach wird die XP vom Entity auf
+In dieser Methode wird das level von dem Entity erhöht. Danach wird die XP vom Entity auf
 `xpLeft` gesetzt. Als Letztes wird die LevelUp Methode von der Entity aufgerufen.
 
 ### XP-Component
 
-Das XP-Component verwaltet, wie viel XP ein Entity braucht, um in das nächste Level (nicht
-das Dungeon Level gemeint) zu steigen oder wie viel XP ein Entity "fallen lässt", wenn es
-besiegt wird. Bei einem LevelUp wird mit der Formel:
-`neededXP = 0.5 * level^2 + 100` die für das nächste Level benötigte Anzahl an XP berechnet.
+Der XP-Component verwaltet, wie viel XP ein Entity braucht, um in das nächste Level (Hero Level nicht Dungeon Level)
+aufzusteigen oder wie viel XP ein Entity "fallen lässt", wenn er besiegt wird. Bei einem LevelUp wird mit der Formel:
+`neededXP = 0.5 * currentLevel^2 + 100` die für das nächste Level benötigte Anzahl an XP berechnet.
 
 Wenn ein Entity besiegt wird, dann wird mit der Methode getLootXP() die Anzahl an XP
-über gegeben. Wurde kein Wert für den zu übergebenden XP gesetzt (lootXP == -1), dann
-wird die Hälfte der Menge an XP, die das Entity enthält, übergeben.
+übergegeben die dieser Entity fallen gelassen hat. Wenn der Entity keine XP fallen lässt (lootXP == -1),
+dann wird die Hälfte der `currentXP` des Helden übergeben.
 
 ---
 
 ### Skill-System
 
-In der klasse SkillSystem wird jeden Frame die Methode update() ausgeführt.
-Diese methode reduziert alle cool-downs für alle Skills für jede Entity die ein
-SkillComponent haben.
+In der Klasse SkillSystem wird jeden Frame die Methode update() ausgeführt. Diese methode reduziert alle cooldowns
+für alle Skills.
 
 ### Skill-Component
 
-In der Klasse SkillComponent wird eine Liste aus Skills gespeichert. Diese Liste kann man mit get, add und remove
-manipulieren.
-Von allen Skills wird der Cooldown von SkillSystem reduziert mithilfe der Methode reduceAllCoolDowns() in
-SkillComponent.
+In der Klasse SkillComponent wird eine Liste aus Skills gespeichert. Diese Liste kann mit der Methode `addSkill`
+um einen Skill erweitert werden oder mit `removeSkill` um einen Skill verringert werden. Von allen Skills wird der
+cooldown mit hilfe der Methode reduceAllCoolDowns() in SkillComponent vom SkillSystem reduziert.
 
 #### Beispiel Skill: Feuerball
 
-Um ein FireballSkill zu erstellt wird in dem Konstruktor der Oberklasse DamageProjectileSkill:
+Um den FireballSkill zu erstellen, wird in dem Konstruktor der Oberklasse DamageProjectileSkill:
 
 - Der Path der Texturen
 - Die Geschwindigkeit
@@ -91,14 +87,6 @@ Um ein FireballSkill zu erstellt wird in dem Konstruktor der Oberklasse DamagePr
 - Die Reichweite
 
 des FireballSkills übergeben.
-
-???
-
-Dieser Skill wird nicht wie erwartet in einem SkillComponent geschpeichert sondern
-in der PlayableComponent vom Helden
-
-???
-
 
 ---
 
@@ -110,29 +98,28 @@ Keine Pattern. logger ?
 
 ## Ansatz und Modellierung
 
-In PlayableComponent und in der MeleeAI gibt es Skill Variablen die festhalten welche skills die Entitäten haben.
-Wir haben uns überlegt diese variablen zu entfernen dafür ein SkillComponent hinzuzufügen der alle skills speichert.
+Im PlayableComponent und in der MeleeAI gibt es Skill Variablen die speichern welche Skills die Entitäten haben.
+Wir haben uns überlegt diese variablen zu entfernen, und dafür ein SkillComponent hinzuzufügen der alle Skills speichert.
 
-
-Weil beide unserer Skills und manche zukünftigen skills jeden Frame geupdated werden müssen haben wir uns überlegt
+Weil beide unserer Skills und potentielle zukünftige Skills jeden Frame geupdated werden müssen haben wir uns überlegt
 in dem Interface `ISkillFuncion` eine update() Methode hinzuzufügen. Diese Methode wird dann in der Game Klasse
 jeden Frame aufgerufen.
 
 Back Hole System:
 - execute()
-  - neues Projektil erstellt
+  - neues Projektil erstellen
 - update()
-  - alle entities in der Nähe ran gezogen
+  - alle Entities in der nähe an sich ran ziehen
 
 Frost Nova System:
 
 - execute()
-  - Neue Entity erstellt mit einer Hitbox
-  - Bei onHitboxEnter wird die Entity ge-slowed und in eine Liste gespeichert
-  - Bei onHitboxLeave wird die Entity schneller gemacht und aus der Liste entfernt
+  - Neuen Entity mit Hitbox erstellen
+  - Bei iCollideEnter wird die Entity ge-slowed und in einer Liste gespeichert
+  - Bei iCollideLeave wird die Entity wieder schneller gemacht und aus der Liste entfernt
 - update()
   - Eine Variable die bestimmt wie lange die Frostnova existiert. Diese wird jeden Frame
-    reduziert. Wenn sie bei 0 angekommen ist, werden alle entities in der liste schneller gemacht
+    reduziert. Wenn sie bei 0 angekommen ist, werden alle Entities in der Liste schneller gemacht
     und die Frost Nova entfernt
 
 ---
