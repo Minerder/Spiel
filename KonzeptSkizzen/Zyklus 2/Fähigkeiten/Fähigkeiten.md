@@ -22,23 +22,25 @@ analysiert und ihre Funktionalitäten erläutert werden.
 
 Gravity Storm / Black hole:
 
-| Kosten | Cooldown | Freigeschalten ab | Verhalten               | Effekt               | Hotkey | Aussehen? |
-|--------|----------|-------------------|-------------------------|----------------------|--------|-----------|
-| 5 MP   | 30 sec   | LVL 10?           | Langsam fliegender ball | Zieht gegner in sich |        |           |
+| Kosten | Cooldown | Freigeschalten ab | Verhalten               | Effekt               | Hotkey |
+|--------|----------|-------------------|-------------------------|----------------------|--------|
+| 5 MP   | 30 sec   | LVL 10            | Langsam fliegender ball | Zieht gegner in sich | 2      |
 
 Frost Nova:
 
-| Kosten | Cooldown | Freigeschalten ab | Verhalten                   | Effekt             | Hotkey | Aussehen? |
-|--------|----------|-------------------|-----------------------------|--------------------|--------|-----------|
-| 2 MP   | 10 sec   | LVL 3?            | Kreis aus Eis unterm Helden | Verlangsamt um 30% |        |           |
+| Kosten | Cooldown | Freigeschalten ab | Verhalten                   | Effekt             | Hotkey |
+|--------|----------|-------------------|-----------------------------|--------------------|--------|
+| 2 MP   | 10 sec   | LVL 5             | Kreis aus Eis unterm Helden | Verlangsamt um 30% | 1      |
 
-Neue tastenbelegung in dungeon_configs.json
+Neue tastenbelegung werden in dungeon_configs.json festgelegt.
 
-zahlen 1,2,3,4,5 ?
+### Mana implementierung
 
-popup mit Hotkeys ?? (GUI)
+In der Klasse SkillComponent werden neue Variablen `int maxMana, int currentMana` hinzugefügt. Diese werden
+für Skills benutzt. Jede sekunde wird 1 Mana regeneriert. `maxMana` Skaliert mit dem Hero level.
 
-Mana implementierung. Skaliert mit Level. in XPComponent? Alle Skills Kosten ?
+Wir haben uns überlegt das alle Skills wie Feuerball und Spark auch Mana kosten bekommen
+(Feuerball = 1MP, Spark = 3MP).
 
 ### XP-System
 
@@ -52,7 +54,7 @@ In dieser Methode wird das level von der Entity erhöht. Danach wird die XP vom 
 ### XP-Component
 
 Das XP-Component verwaltet, wie viel XP ein Entity braucht, um in das nächste Level (nicht
-das Dungeon Level gemeint) zu steigen oder wie viel XP ein Entity "fallen lässt”, wenn es
+das Dungeon Level gemeint) zu steigen oder wie viel XP ein Entity "fallen lässt", wenn es
 besiegt wird. Bei einem LevelUp wird mit der Formel:
 `neededXP = 0.5 * level^2 + 100` die für das nächste Level benötigte Anzahl an XP berechnet.
 
@@ -100,41 +102,37 @@ in der PlayableComponent vom Helden
 
 ## Methoden und Techniken
 
-Keine Pattern
+Keine Pattern. logger ?
 
 ---
 
 ## Ansatz und Modellierung
 
-ISkillfunktion update() hinzufügen update wird jeden frame aufgerufen in Game ``skillFunktion.update(entity)``
-
-SkillTools neue methode getEntitysInRange
-
-````
-Blackhole extends Damageprojektileskill implements ISkillfunciton:
-    execute():
-        super(0 dmg rest schon)
-    update():
-        list = getEntitysInRange
-        ??? cooldown
-        foreach list:
-            v = unidirectionalVector(this,list)
-            list.setcurrentvelocity(list.getcurrentvelocity + v)
+In PlayableComponent und in der MeleeAI gibt es Skill Variablen die festhalten welche skills die Entitäten haben.
+Wir haben uns überlegt diese variablen zu entfernen dafür ein SkillComponent hinzuzufügen der alle skills speichert.
 
 
-FrostNova extents Entity implements ISkillFunktion:
-    list<Entity> list
-    execte():
-        neue Entity mit Hitbox
-        Hitboxenter: slow alle entity und speichert in array
-        Hitboxleave: slow weg machen und löscht aus array
-    update():
-        wie lange es existert reduzieren
-        wenn 0 und array remove
-        sonst alle entities im array schneller machen dann remove
+Weil beide unserer Skills und manche zukünftigen skills jeden Frame geupdated werden müssen haben wir uns überlegt
+in dem Interface `ISkillFuncion` eine update() Methode hinzuzufügen. Diese Methode wird dann in der Game Klasse
+jeden Frame aufgerufen.
 
-Problem: hitbox is square vlt fällt es nicht auf
-````
+Back Hole:
+- execute()
+  - neues Projektil erstellt
+- update()
+  - alle entities in der Nähe ran gezogen
+
+Frost Nova:
+
+- execute()
+  - Neue Entity erstellt mit einer Hitbox
+  - Bei onHitboxEnter wird die Entity ge-slowed und in eine Liste gespeichert
+  - Bei onHitboxLeave wird die Entity schneller gemacht und aus der Liste entfernt
+- update()
+  - Eine Variable die bestimmt wie lange die Frostnova existiert. Diese wird jeden Frame
+    reduziert. Wenn sie bei 0 angekommen ist, werden alle entities in der liste schneller gemacht
+    und die Frost Nova entfernt
+
 ---
 
 ## UML

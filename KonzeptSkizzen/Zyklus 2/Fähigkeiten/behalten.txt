@@ -1,0 +1,26 @@
+
+````
+Blackhole extends Damageprojektileskill implements ISkillfunciton:
+    execute():
+        super(0 dmg rest schon)
+    update():
+        list = getEntitysInRange
+        ??? cooldown
+        foreach list:
+            v = unidirectionalVector(this,list)
+            list.setcurrentvelocity(list.getcurrentvelocity + v)
+
+
+FrostNova extents Entity implements ISkillFunktion:
+    list<Entity> list
+    execte():
+        neue Entity mit Hitbox
+        Hitboxenter: slow alle entity und speichert in array
+        Hitboxleave: slow weg machen und löscht aus array
+    update():
+        wie lange es existert reduzieren
+        wenn 0 und array remove
+        sonst alle entities im array schneller machen dann remove
+
+Problem: hitbox is square vlt fällt es nicht auf
+````
