@@ -118,13 +118,13 @@ Weil beide unserer Skills und manche zukünftigen skills jeden Frame geupdated w
 in dem Interface `ISkillFuncion` eine update() Methode hinzuzufügen. Diese Methode wird dann in der Game Klasse
 jeden Frame aufgerufen.
 
-Back Hole:
+Back Hole System:
 - execute()
   - neues Projektil erstellt
 - update()
   - alle entities in der Nähe ran gezogen
 
-Frost Nova:
+Frost Nova System:
 
 - execute()
   - Neue Entity erstellt mit einer Hitbox
