@@ -10,9 +10,9 @@ Author: Bent Schöne, Marvin Petschulat, Edwin Dik
 
 Implementierung von zwei Fähigkeiten/Zaubersprüchen, welche der Spieler nutzen kann. Die Fähigkeiten/Zauber sollen
 keinen Schaden verursachen, sondern Monster anderweitig manipulieren. Die Fähigkeiten sollen außerdem eine Form von
-Ressourcenkosten haben, wie z.B. Lebenspunkte, Ausdauerpunkte oder Mana-Punkte.
+Ressourcenkosten haben, wie z.B. Lebenspunkte, Ausdauer punkte oder Mana-Punkte.
 
-Abgesehen davon soll noch der Levelaufstieg mit dem bereits vorgegebenen XP-System implementiert werden. Mit jedem Level
+Abgesehen davon soll noch der Level aufstieg mit dem bereits vorgegebenen XP-System implementiert werden. Mit jedem Level
 sollen die Charakterwerte des Helden erhöht werden und der Held soll weitere Zaubersprüche/Fähigkeiten erlernen können.
 
 Zusätzlich soll das bereits vorhandene Skill-System, der Feuerball-Skill und das XP-System
@@ -45,6 +45,8 @@ für alle Skills benutzt. Jede sekunde wird 1 Mana regeneriert. `maxMana` Skalie
 Wir haben uns überlegt das alle Skills wie Feuerball und Spark auch Ressourcenkosten bekommen.
 (Feuerball = 1 MP, Spark = 3 MP).
 
+---
+
 ### XP-System
 
 Das XP-System holt sich von allen Entities im Spiel dessen XPComponent. Ist von einem
@@ -60,9 +62,8 @@ Der XP-Component verwaltet, wie viel XP ein Entity braucht, um in das nächste L
 aufzusteigen oder wie viel XP ein Entity "fallen lässt", wenn er besiegt wird. Bei einem LevelUp wird mit der Formel:
 `neededXP = 0.5 * currentLevel^2 + 100` die für das nächste Level benötigte Anzahl an XP berechnet.
 
-Wenn ein Entity besiegt wird, dann wird mit der Methode getLootXP() die Anzahl an XP
-übergegeben die dieser Entity fallen gelassen hat. Wenn der Entity keine XP fallen lässt (lootXP == -1),
-dann wird die Hälfte der `currentXP` des Helden übergeben.
+Wenn ein Entity besiegt wird, wird mit der Methode getLootXP() die Anzahl an gedroppter XP dem Helden übergeben.
+Wenn der Entity keine XP fallen lässt (lootXP == -1), dann wird die Hälfte der `currentXP` des Helden übergeben.
 
 ---
 
@@ -75,7 +76,7 @@ für alle Skills.
 
 In der Klasse SkillComponent wird eine Liste aus Skills gespeichert. Diese Liste kann mit der Methode `addSkill`
 um einen Skill erweitert werden oder mit `removeSkill` um einen Skill verringert werden. Von allen Skills wird der
-cooldown mit hilfe der Methode reduceAllCoolDowns() in SkillComponent vom SkillSystem reduziert.
+cooldown mit Hilfe der Methode reduceAllCoolDowns() in SkillComponent vom SkillSystem reduziert.
 
 #### Beispiel Skill: Feuerball
 
@@ -97,20 +98,20 @@ des FireballSkills übergeben.
 Im PlayableComponent und in der MeleeAI gibt es Skill Variablen die speichern welche Skills die Entitäten haben.
 Wir haben uns überlegt diese variablen zu entfernen, und dafür ein SkillComponent hinzuzufügen der alle Skills speichert.
 
-Weil beide unserer Skills und potentielle zukünftige Skills jeden Frame geupdated werden müssen haben wir uns überlegt
+Weil beide unserer Skills und potenzielle zukünftige Skills jeden Frame geupdated werden müssen haben wir uns überlegt
 in dem Interface `ISkillFuncion` eine update() Methode hinzuzufügen. Diese Methode wird dann in der Game Klasse
 jeden Frame aufgerufen.
 
 Back Hole System:
 - execute()
-  - neues Projektil erstellen
+  - Neues Projektil wird erstellt
 - update()
-  - alle Entities in der nähe an sich ran ziehen
+  - Zieht alle Entities in der Nähe zu sich
 
 Frost Nova System:
 
 - execute()
-  - Neuen Entity mit Hitbox erstellen
+  - Erstellt eine neue Entity mit einer Hitbox
   - Bei iCollideEnter wird die Entity ge-slowed und in einer Liste gespeichert
   - Bei iCollideLeave wird die Entity wieder schneller gemacht und aus der Liste entfernt
 - update()
