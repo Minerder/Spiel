@@ -39,6 +39,9 @@ wie: JPanel, JButtons, Größe des Fensters usw.
 HeroOnDeath benutzt die Klasse dann in der Funktion onDeath,
 wo dann der Hero drauf zugreift wenn er stirbt.
 
+Den Neustart könnte man mit der Setup Methode aus der Klasse Game realisieren, um das Spiel neuzustarten.
+
+
 
 
 
