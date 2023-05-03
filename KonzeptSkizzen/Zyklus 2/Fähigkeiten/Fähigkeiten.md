@@ -6,35 +6,37 @@ Author: Bent Schöne, Marvin Petschulat, Edwin Dik
 
 ## Beschreibung der Aufgabe
 
-Implementierung von zwei Fähigkeiten, welche der Spieler nutzen kann. Der Spieler soll mit
-den Zaubern/Fähigkeiten keinen Schaden verursachen. Die Fähigkeiten sollen von
-Ressourcen wie Lebenspunkte (HP), Mana (MP) oder Ausdauer abhängig sein.
+Implementierung von zwei Fähigkeiten/Zaubersprüchen, welche der Spieler nutzen kann. Die Fähigkeiten/Zauber sollen
+keinen Schaden verursachen, sondern Monster anderweitig manipulieren. Die Fähigkeiten sollen außerdem eine Form von
+Ressourcenkosten haben, wie z.B. Lebenspunkte, Ausdauerpunkte oder Mana-Punkte.
 
-Bei jedem Level aufstieg sollen die Charakterwerte des Helden erhöht werden und der Held
-soll die Zaubersprüche/Fähigkeiten erlernen können.
+Abgesehen davon soll noch der Levelaufstieg mit dem bereits vorgegebenen XP-System implementiert werden. Mit jedem Level
+sollen die Charakterwerte des Helden erhöht werden und der Held soll weitere Zaubersprüche/Fähigkeiten erlernen können.
 
-Zusätzlich soll das bereits vorhandene Skill-System, Feuerball-Skill und XP-System
-analysiert und ihre Funktionalitäten erläutert werden.
+Zusätzlich soll das bereits vorhandene Skill-System, der Feuerball-Skill und das XP-System
+analysiert und die Funktionalität erklärt werden.
 
 ---
 
 ## Beschreibung der Lösung
 
-Gravity Storm / Black hole:
-
-| Kosten | Cooldown | Freigeschalten ab | Verhalten               | Effekt               | Hotkey |
-|--------|----------|-------------------|-------------------------|----------------------|--------|
-| 5 MP   | 30 sec   | LVL 10            | Langsam fliegender ball | Zieht gegner in sich | 2      |
-
 Frost Nova:
 
-| Kosten | Cooldown | Freigeschalten ab | Verhalten                   | Effekt             | Hotkey |
-|--------|----------|-------------------|-----------------------------|--------------------|--------|
-| 2 MP   | 10 sec   | LVL 5             | Kreis aus Eis unterm Helden | Verlangsamt um 30% | 1      |
+| Kosten      | Cooldown | Freigeschaltet ab | Verhalten                  | Effekt             | Hotkey |
+|-------------|----------|-------------------|----------------------------|--------------------|--------|
+| 2 Mana (MP) | 10 sec   | LVL 5             | Eis Kreis unter dem Helden | Verlangsamt um 30% | 1      |
 
-Neue tastenbelegung werden in dungeon_configs.json festgelegt.
+Gravity Storm:
 
-### Mana implementierung
+| Kosten      | Cooldown | Freigeschaltet ab | Verhalten                | Effekt               | Hotkey |
+|-------------|----------|-------------------|--------------------------|----------------------|--------|
+| 5 Mana (MP) | 30 sec   | LVL 10            | Langsam fliegender Sturm | Zieht Gegner in sich | 2      |
+
+Neue hotkeys werden in dungeon_configs.json hinzugefügt.
+
+XXXXXXXXXXXXXXXXXXXXXXXXX
+
+### Mana Implementierung
 
 In der Klasse SkillComponent werden neue Variablen `int maxMana, int currentMana` hinzugefügt. Diese werden
 für Skills benutzt. Jede sekunde wird 1 Mana regeneriert. `maxMana` Skaliert mit dem Hero level.
