@@ -1,3 +1,5 @@
+# Fähigkeiten
+
 Titel: Konzeptskizze für Zyklus 2
 
 Author: Bent Schöne, Marvin Petschulat, Edwin Dik
@@ -89,7 +91,6 @@ Um den FireballSkill zu erstellen, wird in dem Konstruktor der Oberklasse Damage
 des FireballSkills übergeben.
 
 ---
-
 
 ## Ansatz und Modellierung
 
