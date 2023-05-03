@@ -90,11 +90,6 @@ des FireballSkills übergeben.
 
 ---
 
-## Methoden und Techniken
-
-Keine Pattern. logger ?
-
----
 
 ## Ansatz und Modellierung
 
