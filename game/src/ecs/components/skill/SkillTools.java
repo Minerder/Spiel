@@ -123,7 +123,13 @@ public class SkillTools {
         return nearestEntityPoint;
     }
 
-    public static void recieveKnockback(Point projectileStartPosition, Entity entity) {
+    /**
+     * Pushes an entity back by a set factor after being hit
+     *
+     * @param projectileStartPosition position from where the projectile which hit the entity started
+     * @param entity the entity which should receive knockback
+     */
+    public static void receiveKnockback(Point projectileStartPosition, Entity entity) {
         PositionComponent epc = (PositionComponent) entity.getComponent(PositionComponent.class).orElseThrow();
         Point entityPosition = epc.getPosition();
         Point direction = Point.getUnitDirectionalVector(entityPosition, projectileStartPosition);

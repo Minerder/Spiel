@@ -4,20 +4,18 @@ import ecs.components.Component;
 import ecs.entities.Entity;
 
 public class MeleeComponent extends Component {
-    private final Entity entity;
     private final DamageMeleeSkill skill;
 
     public MeleeComponent(Entity entity, DamageMeleeSkill skill) {
         super(entity);
-        this.entity = entity;
         this.skill = skill;
     }
 
-    @Override
-    public Entity getEntity() {
-        return entity;
-    }
-
+    /**
+     * Gets the DamageMeleeSkill object of a melee skill
+     *
+     * @return the DamageMeleeSkill object of a melee skill
+     */
     public DamageMeleeSkill getMeleeSkill() {
         return skill;
     }

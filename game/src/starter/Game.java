@@ -204,7 +204,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     }
 
     /**
-     * Reduces the cool-downs for all Skills for each entity
+     * Reduces the cooldowns for all Skills for each entity
      */
     public void manageSkillCooldowns() {
         // Reduces the skills of the hero

@@ -63,7 +63,7 @@ public class DamageMeleeSkill implements ISkillFunction {
                                 ((HealthComponent) hc).receiveHit(
                                     new Damage(projectileDamage.damageAmount(), projectileDamage.damageType(), entity));
                                 ((HealthComponent) hc).receiveHit(projectileDamage);
-                                SkillTools.recieveKnockback(epc.getPosition(), b);
+                                SkillTools.receiveKnockback(epc.getPosition(), b);
                                 this.hitCooldownInFrames = 15;
                             });
                 }
@@ -73,6 +73,12 @@ public class DamageMeleeSkill implements ISkillFunction {
             projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
     }
 
+    /**
+     *  Updates the position of the Skill, so it moves with the hero.
+     *  If the holdingTime reaches 0, removes the entity.
+     *
+     * @param entity the skill to be updated
+     */
     public void update(Entity entity) {
         if (currentHoldingTimeInFrames == 0) {
             Game.removeEntity(entity);
