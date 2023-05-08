@@ -42,10 +42,20 @@ public class ProjectileComponent extends Component {
         return startPosition;
     }
 
+    /**
+     * gets the amount of bounces the projectile should perform
+     *
+     * @return amount of bounces to be performed
+     */
     public int getBounceAmount() {
         return bounceAmount;
     }
 
+    /**
+     * sets the amount of bounces the projectile should perform
+     *
+     * @param bounceAmount amount of bounces to be performed
+     */
     public void setBounceAmount(int bounceAmount) {
         this.bounceAmount = bounceAmount;
     }

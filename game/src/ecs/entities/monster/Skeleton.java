@@ -1,7 +1,5 @@
 package ecs.entities.monster;
 
-import dslToGame.AnimationBuilder;
-import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.fight.MeleeAI;
 import ecs.components.ai.idle.StaticRadiusWalk;
@@ -10,44 +8,26 @@ import ecs.components.skill.SkillComponent;
 import ecs.components.skill.SkillTools;
 import ecs.components.skill.skills.BouncingArrowSkill;
 import ecs.components.skill.skills.Skill;
-import graphic.Animation;
 
 public class Skeleton extends Monster {
 
     public Skeleton() {
-        super(3, 0.05f, 0.05f);
+        super(
+            3,
+            0.05f,
+            0.05f,
+            4,
+            "character/monster/skeleton/run/right",
+            "character/monster/skeleton/run/left",
+            "character/monster/skeleton/idle/right",
+            "character/monster/skeleton/idle/left");
         setupPositionComponent();
         setupVelocityComponent();
         setupHealthComponent();
-        setupAnimationComponent();
         setupAIComponent();
+        setupAnimationComponent();
         setupHitBoxComponent();
-    }
-
-    @Override
-    protected void setupPositionComponent() {
-        new PositionComponent(this);
-    }
-
-    @Override
-    protected void setupVelocityComponent() {
-        Animation moveRight = AnimationBuilder.buildAnimation("character/monster/skeleton/run/right");
-        Animation moveLeft = AnimationBuilder.buildAnimation("character/monster/skeleton/run/left");
-        new VelocityComponent(this, xSpeed, ySpeed, moveLeft, moveRight);
-    }
-
-    @Override
-    protected void setupHealthComponent() {
-        HealthComponent hc = new HealthComponent(this);
-        hc.setMaximalHealthpoints(3);
-        hc.setCurrentHealthpoints(3);
-    }
-
-    @Override
-    protected void setupAnimationComponent() {
-        Animation idleRight = AnimationBuilder.buildAnimation("character/monster/skeleton/idle/right");
-        Animation idleLeft = AnimationBuilder.buildAnimation("character/monster/skeleton/idle/left");
-        new AnimationComponent(this, idleLeft, idleRight);
+        setupXPComponent();
     }
 
     @Override
@@ -59,10 +39,5 @@ public class Skeleton extends Monster {
             new MeleeAI(3, skill),
             new StaticRadiusWalk(3f, 3),
             new RangeTransition(3));
-    }
-
-    @Override
-    protected void setupHitBoxComponent() {
-        new HitboxComponent(this);
     }
 }
