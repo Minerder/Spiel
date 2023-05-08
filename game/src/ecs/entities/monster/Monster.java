@@ -26,4 +26,12 @@ public abstract class Monster extends Entity {
     protected abstract void setupAIComponent();
 
     protected abstract void setupHitBoxComponent();
+
+    public float getxSpeed(){
+        return xSpeed;
+    }
+
+    public float getySpeed() {
+        return ySpeed;
+    }
 }
