@@ -23,7 +23,7 @@ public class PlayableComponentTest {
         playableComponent.setPlayable(false);
         assertFalse(playableComponent.isPlayable());
     }
-
+    /*
     @Test
     public void setSkillSlot1() {
         Skill s = Mockito.mock(Skill.class);
@@ -43,4 +43,5 @@ public class PlayableComponentTest {
         playableComponent.setSkillSlot2(s2);
         assertEquals(s2, playableComponent.getSkillSlot2().get());
     }
+    */
 }

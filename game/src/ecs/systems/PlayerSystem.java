@@ -5,6 +5,8 @@ import configuration.KeyboardConfig;
 import ecs.components.MissingComponentException;
 import ecs.components.PlayableComponent;
 import ecs.components.VelocityComponent;
+import ecs.components.skill.SkillComponent;
+import ecs.components.skill.skills.Skill;
 import ecs.entities.Entity;
 import ecs.tools.interaction.InteractionTool;
 import starter.Game;
@@ -14,7 +16,7 @@ import starter.Game;
  */
 public class PlayerSystem extends ECS_System {
 
-    private record KSData(Entity e, PlayableComponent pc, VelocityComponent vc) {
+    private record KSData(Entity e, PlayableComponent pc, VelocityComponent vc, SkillComponent sc) {
     }
 
     @Override
@@ -47,14 +49,14 @@ public class PlayerSystem extends ECS_System {
         else if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_LEFT.get()))
             ksd.vc.setCurrentXVelocity(-1 * ksd.vc.getXVelocity());
 
+        Object[] skills = ksd.sc.getSkillSet().toArray();
         if (Gdx.input.isKeyPressed(KeyboardConfig.INTERACT_WORLD.get()))
             InteractionTool.interactWithClosestInteractable(ksd.e);
-
             // check skills
-        else if (Gdx.input.isKeyPressed(KeyboardConfig.FIRST_SKILL.get()))
-            ksd.pc.getSkillSlot1().ifPresent(skill -> skill.execute(ksd.e));
-        else if (Gdx.input.isKeyPressed(KeyboardConfig.SECOND_SKILL.get()))
-            ksd.pc.getSkillSlot2().ifPresent(skill -> skill.execute(ksd.e));
+        else if (Gdx.input.isKeyPressed(KeyboardConfig.FIRST_SKILL.get()) && skills[0] != null)
+            ((Skill) skills[0]).execute(ksd.e);
+        else if (Gdx.input.isKeyPressed(KeyboardConfig.SECOND_SKILL.get()) && skills[1] != null)
+            ((Skill) skills[1]).execute(ksd.e);
     }
 
     private KSData buildDataObject(PlayableComponent pc) {
@@ -65,10 +67,19 @@ public class PlayerSystem extends ECS_System {
                 e.getComponent(VelocityComponent.class)
                     .orElseThrow(PlayerSystem::missingVC);
 
-        return new KSData(e, pc, vc);
+        SkillComponent sc =
+            (SkillComponent)
+                e.getComponent(SkillComponent.class)
+                    .orElseThrow(PlayerSystem::missingSC);
+
+
+        return new KSData(e, pc, vc, sc);
     }
 
     private static MissingComponentException missingVC() {
         return new MissingComponentException("VelocityComponent");
+    }
+    private static MissingComponentException missingSC() {
+        return new MissingComponentException("SkillComponent");
     }
 }

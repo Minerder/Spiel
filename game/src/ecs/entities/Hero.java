@@ -2,10 +2,8 @@ package ecs.entities;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
-import ecs.components.AnimationComponent;
-import ecs.components.PositionComponent;
-import ecs.components.VelocityComponent;
-import ecs.components.skill.*;
+import ecs.components.skill.SkillComponent;
+import ecs.components.skill.SkillTools;
 import ecs.components.skill.skills.HomingSparkSkill;
 import ecs.components.skill.skills.MeeleSwordSkill;
 import ecs.components.skill.skills.Skill;
@@ -25,8 +23,6 @@ public class Hero extends Entity {
     private final String pathToIdleRight = "knight/idleRight";
     private final String pathToRunLeft = "knight/runLeft";
     private final String pathToRunRight = "knight/runRight";
-    private Skill firstSkill;
-    private Skill secondSkill;
 
     /**
      * Entity with Components
@@ -37,10 +33,8 @@ public class Hero extends Entity {
         setupVelocityComponent();
         setupAnimationComponent();
         setupHitboxComponent();
-        PlayableComponent pc = new PlayableComponent(this);
-        setupFireballSkill();
-        pc.setSkillSlot1(firstSkill);
-        pc.setSkillSlot2(secondSkill);
+        new PlayableComponent(this);
+        setupSkillComponent();
     }
 
     private void setupVelocityComponent() {
@@ -55,9 +49,10 @@ public class Hero extends Entity {
         new AnimationComponent(this, idleLeft, idleRight);
     }
 
-    private void setupFireballSkill() {
-        firstSkill = new Skill(new MeeleSwordSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
-        secondSkill = new Skill(new HomingSparkSkill(() -> SkillTools.getNearestEntityPosition(this)), fireballCoolDown);
+    private void setupSkillComponent() {
+        SkillComponent sc = new SkillComponent(this);
+        sc.addSkill(new Skill(new MeeleSwordSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown));
+        sc.addSkill(new Skill(new HomingSparkSkill(() -> SkillTools.getNearestEntityPosition(this)), fireballCoolDown));
     }
 
     private void setupHitboxComponent() {

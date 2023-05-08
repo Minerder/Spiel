@@ -8,11 +8,9 @@ public class ProjectileComponent extends Component {
 
     private final Point goalLocation;
     private final Point startPosition;
-
     private int bounceAmount;
 
-    public ProjectileComponent(
-        Entity entity, Point startPosition, Point goalLocation, int bounceAmount) {
+    public ProjectileComponent(Entity entity, Point startPosition, Point goalLocation, int bounceAmount) {
         super(entity);
         this.goalLocation = goalLocation;
         this.startPosition = startPosition;

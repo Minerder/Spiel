@@ -4,6 +4,7 @@ import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.collision.ICollide;
 import ecs.components.skill.skills.ISkillFunction;
+import ecs.components.skill.skills.IUpdateFunction;
 import ecs.damage.Damage;
 import ecs.entities.Entity;
 import graphic.Animation;
@@ -11,7 +12,7 @@ import starter.Game;
 import tools.Constants;
 import tools.Point;
 
-public class DamageMeleeSkill implements ISkillFunction {
+public class DamageMeleeSkill implements ISkillFunction, IUpdateFunction {
 
     private final String pathToTexturesOfProjectile;
     private final Damage projectileDamage;
@@ -52,8 +53,8 @@ public class DamageMeleeSkill implements ISkillFunction {
         this.projectilepc = new PositionComponent(projectile, new Point(epc.getPosition().x + offSet.x, epc.getPosition().y + offSet.y));
 
         Animation animation = AnimationBuilder.buildAnimation(pathToTexturesOfProjectile);
+        new UpdateComponent(projectile, this);
         new AnimationComponent(projectile, animation);
-        new MeleeComponent(projectile, this);
         ICollide collide =
             (a, b, from) -> {
                 if (b != entity && hitCooldownInFrames == 0) {
@@ -71,6 +72,7 @@ public class DamageMeleeSkill implements ISkillFunction {
             projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
     }
 
+    @Override
     public void update(Entity entity) {
         if (currentHoldingTimeInFrames == 0) {
             Game.removeEntity(entity);
