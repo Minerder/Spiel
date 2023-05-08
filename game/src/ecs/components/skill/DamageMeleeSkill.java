@@ -60,6 +60,8 @@ public class DamageMeleeSkill implements ISkillFunction {
                     b.getComponent(HealthComponent.class)
                         .ifPresent(
                             hc -> {
+                                ((HealthComponent) hc).receiveHit(
+                                    new Damage(projectileDamage.damageAmount(), projectileDamage.damageType(), entity));
                                 ((HealthComponent) hc).receiveHit(projectileDamage);
                                 SkillTools.recieveKnockback(epc.getPosition(), b);
                                 this.hitCooldownInFrames = 15;

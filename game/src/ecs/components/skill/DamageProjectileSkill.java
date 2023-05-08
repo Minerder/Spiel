@@ -86,7 +86,8 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
                         b.getComponent(HealthComponent.class)
                                 .ifPresent(
                                         hc -> {
-                                            ((HealthComponent) hc).receiveHit(projectileDamage);
+                                            ((HealthComponent) hc).receiveHit(
+                                                new Damage(projectileDamage.damageAmount(), projectileDamage.damageType(), entity));
                                             SkillTools.recieveKnockback(pc.getStartPosition(), b);
                                             Game.removeEntity(projectile);
                                         });
