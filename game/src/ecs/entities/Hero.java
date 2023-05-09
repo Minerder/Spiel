@@ -10,6 +10,7 @@ import ecs.components.skill.skills.HomingSparkSkill;
 import ecs.components.skill.skills.MeeleSwordSkill;
 import ecs.components.skill.skills.Skill;
 import graphic.Animation;
+import starter.GameOverScreen;
 
 /**
  * The Hero is the player character. It's entity in the ECS. This class helps to set up the hero
@@ -20,7 +21,7 @@ public class Hero extends Entity {
     private final int fireballCoolDown = 1;
     private final float xSpeed = 0.2f;
     private final float ySpeed = 0.2f;
-
+    private final int hitpoints = 20;
     private final String pathToIdleLeft = "knight/idleLeft";
     private final String pathToIdleRight = "knight/idleRight";
     private final String pathToRunLeft = "knight/runLeft";
@@ -35,6 +36,7 @@ public class Hero extends Entity {
         super();
         new PositionComponent(this);
         setupVelocityComponent();
+        setupHealthComponent();
         setupAnimationComponent();
         setupHitboxComponent();
         PlayableComponent pc = new PlayableComponent(this);
@@ -47,6 +49,15 @@ public class Hero extends Entity {
         Animation moveRight = AnimationBuilder.buildAnimation(pathToRunRight);
         Animation moveLeft = AnimationBuilder.buildAnimation(pathToRunLeft);
         new VelocityComponent(this, xSpeed, ySpeed, moveLeft, moveRight);
+    }
+
+    private void setupHealthComponent() {
+        new HealthComponent(
+            this,
+            this.hitpoints,
+            hero -> new GameOverScreen(),
+            AnimationBuilder.buildAnimation("character/knight/hit"),
+            AnimationBuilder.buildAnimation("character/knight/hit"));
     }
 
     private void setupAnimationComponent() {

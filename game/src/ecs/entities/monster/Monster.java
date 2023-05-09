@@ -4,13 +4,13 @@ import ecs.components.skill.skills.Skill;
 import ecs.entities.Entity;
 
 public abstract class Monster extends Entity {
-    protected int hitPoints;
+    protected int hitpoints;
     protected Skill skill;
     protected float xSpeed;
     protected float ySpeed;
 
-    public Monster(int hitPoints, float xSpeed, float ySpeed) {
-        this.hitPoints = hitPoints;
+    public Monster(int hitpoints, float xSpeed, float ySpeed) {
+        this.hitpoints = hitpoints;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
     }

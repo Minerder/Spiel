@@ -98,7 +98,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     private static PauseMenu<Actor> pauseMenu;
     private static Entity hero;
     private Logger gameLogger;
-    private int depth;
+    private static int depth;
 
     public static void main(String[] args) {
         // start the game
@@ -350,6 +350,13 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         Game.hero = hero;
     }
 
+    /**
+     * Reset depth to 0
+     */
+    public static void resetDepth() {
+        depth = 0;
+    }
+
     public void setSpriteBatch(SpriteBatch batch) {
         this.batch = batch;
     }
@@ -378,4 +385,5 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         new SkillSystem();
         new ProjectileSystem();
     }
+
 }
