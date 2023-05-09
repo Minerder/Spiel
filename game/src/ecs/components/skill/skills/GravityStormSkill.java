@@ -14,7 +14,7 @@ import tools.Point;
 public class GravityStormSkill extends DamageProjectileSkill implements IUpdateFunction {
 
     public GravityStormSkill(ITargetSelection selectionFunction) {
-        super("animation/missingTexture.png", 0.05f, new Damage(0, DamageType.PHYSICAL, null), new Point(0.5f, 0.5f), selectionFunction, 8f);
+        super("skills/gravityStorm", 0.05f, new Damage(0, DamageType.PHYSICAL, null), new Point(0.5f, 0.5f), selectionFunction, 8f);
         super.setUpdateFunction(this);
     }
 
