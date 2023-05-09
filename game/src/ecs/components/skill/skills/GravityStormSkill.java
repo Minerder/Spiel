@@ -8,6 +8,7 @@ import ecs.components.skill.SkillTools;
 import ecs.damage.Damage;
 import ecs.damage.DamageType;
 import ecs.entities.Entity;
+import starter.Game;
 import tools.Point;
 
 public class GravityStormSkill extends DamageProjectileSkill implements IUpdateFunction {
@@ -25,6 +26,7 @@ public class GravityStormSkill extends DamageProjectileSkill implements IUpdateF
         PositionComponent startingEntitypc = (PositionComponent) entity.getComponent(PositionComponent.class).orElseThrow();
 
         for (Entity ent : entities) {
+            if (ent.equals(Game.getHero().orElseThrow())) continue;
             PositionComponent targetEntitypc = (PositionComponent) ent.getComponent(PositionComponent.class).orElseThrow();
             VelocityComponent targetEntityvc = (VelocityComponent) ent.getComponent(VelocityComponent.class).orElseThrow();
 

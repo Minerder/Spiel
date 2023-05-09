@@ -13,7 +13,7 @@ public class Chort extends Monster {
             4,
             0.15f,
             0.15f,
-            5,
+            30,
             "character/monster/chort/runRight",
             "character/monster/chort/runLeft",
             "character/monster/chort/idleRight",
@@ -30,7 +30,7 @@ public class Chort extends Monster {
     @Override
     protected void setupAIComponent() {
         new AIComponent(this,
-            new CollideAI(0.1f),
+            new CollideAI(1),
             new PatrouilleWalk(100, 6, 3, PatrouilleWalk.MODE.RANDOM),
             new RangeTransition(3));
     }

@@ -1,4 +1,6 @@
 package ecs.components.skill.skills;
+
+import ecs.components.skill.SkillComponent;
 import ecs.entities.Entity;
 import tools.Constants;
 
@@ -7,6 +9,7 @@ public class Skill {
     private final ISkillFunction skillFunction;
     private final int coolDownInFrames;
     private int currentCoolDownInFrames;
+    private int manaCost;
 
     /**
      * @param skillFunction Function of this skill
@@ -18,12 +21,27 @@ public class Skill {
     }
 
     /**
-     * Execute the method of this skill
+     *
+     * @param skillFunction function of this skill
+     * @param coolDownInSeconds cooldown of this skill
+     * @param manaCost mana cost of this skill
+     */
+    public Skill(ISkillFunction skillFunction, float coolDownInSeconds, int manaCost) {
+        this.skillFunction = skillFunction;
+        this.coolDownInFrames = (int) (coolDownInSeconds * Constants.FRAME_RATE);
+        this.currentCoolDownInFrames = 0;
+        this.manaCost = manaCost;
+    }
+
+    /**
+     * Execute the method of this skill if the entity has enough mana
      *
      * @param entity entity which uses the skill
      */
     public void execute(Entity entity) {
-        if (!isOnCoolDown()) {
+        SkillComponent sc = (SkillComponent) entity.getComponent(SkillComponent.class).orElseThrow();
+        if (!isOnCoolDown() && sc.getCurrentMana() >= manaCost) {
+            sc.setCurrentMana(sc.getCurrentMana() - manaCost);
             skillFunction.execute(entity);
             activateCoolDown();
         }
@@ -36,12 +54,16 @@ public class Skill {
         return currentCoolDownInFrames > 0;
     }
 
-    /** activate cool down */
+    /**
+     * activate cool down
+     */
     public void activateCoolDown() {
         currentCoolDownInFrames = coolDownInFrames;
     }
 
-    /** reduces the current cool down by frame */
+    /**
+     * reduces the current cool down by frame
+     */
     public void reduceCoolDown() {
         currentCoolDownInFrames = Math.max(0, --currentCoolDownInFrames);
     }

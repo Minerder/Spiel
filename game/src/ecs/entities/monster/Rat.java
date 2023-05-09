@@ -15,7 +15,7 @@ public class Rat extends Monster {
             1,
             0.1f,
             0.1f,
-            2,
+            10,
             "character/monster/rat/run/right",
             "character/monster/rat/run/left",
             "character/monster/rat/sleep/right",

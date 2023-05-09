@@ -4,9 +4,7 @@ import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.skill.SkillComponent;
 import ecs.components.skill.SkillTools;
-import ecs.components.skill.skills.HomingSparkSkill;
-import ecs.components.skill.skills.MeeleSwordSkill;
-import ecs.components.skill.skills.Skill;
+import ecs.components.skill.skills.*;
 import ecs.components.xp.ILevelUp;
 import ecs.components.xp.XPComponent;
 import graphic.Animation;
@@ -26,6 +24,7 @@ public class Hero extends Entity implements ILevelUp {
     private final String pathToIdleRight = "knight/idleRight";
     private final String pathToRunLeft = "knight/runLeft";
     private final String pathToRunRight = "knight/runRight";
+    private SkillComponent sc = null;
 
     /**
      * Entity with Components
@@ -61,9 +60,9 @@ public class Hero extends Entity implements ILevelUp {
     }
 
     private void setupSkillComponent() {
-        SkillComponent sc = new SkillComponent(this);
+        sc = new SkillComponent(this, 5);
         sc.addSkill(new Skill(new MeeleSwordSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown));
-        sc.addSkill(new Skill(new HomingSparkSkill(() -> SkillTools.getNearestEntityPosition(this)), fireballCoolDown));
+        sc.addSkill(new Skill(new HomingSparkSkill(() -> SkillTools.getNearestEntityPosition(this)), fireballCoolDown, 2));
     }
 
     private void setupHitboxComponent() {
@@ -84,14 +83,18 @@ public class Hero extends Entity implements ILevelUp {
         HealthComponent hc = (HealthComponent) Game.getHero().orElseThrow().getComponent(HealthComponent.class).orElseThrow();
         hc.setMaximalHealthpoints(this.hitpoints += 1);
         hc.setCurrentHealthpoints(this.hitpoints);
-        // TODO: Also increase maxMana by 1
 
-        // TODO: Let the Hero unlock the new Skills
+        sc.setMaxMana(sc.getMaxMana() + 1);
+
         switch ((int) nexLevel) {
-            case 5 ->
-                System.out.println("You unlocked the Frost Nova Skill! Press 'button' to slow nearby enemies by 30%");
-            case 10 ->
-                System.out.println("You unlocked the Gravity Storm Skill! Press 'button' to shoot a Storm which pulls enemies towards it.");
+            case 5 -> {
+                System.out.println("You unlocked the Frost Nova Skill! Press '1' to create a Frost Nova that slows nearby enemies by 50%");
+                sc.addSkill(new Skill(new FrostNovaSkill(SkillTools::getHeroPosition), 10, 2));
+            }
+            case 10 -> {
+                System.out.println("You unlocked the Gravity Storm Skill! Press '2' to shoot a Storm which pulls enemies towards it.");
+                sc.addSkill(new Skill(new GravityStormSkill(SkillTools::getCursorPositionAsPoint), 30, 5));
+            }
         }
     }
 }

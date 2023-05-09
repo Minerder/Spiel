@@ -16,7 +16,7 @@ public class Skeleton extends Monster {
             3,
             0.05f,
             0.05f,
-            4,
+            20,
             "character/monster/skeleton/run/right",
             "character/monster/skeleton/run/left",
             "character/monster/skeleton/idle/right",

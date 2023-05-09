@@ -16,7 +16,7 @@ public class Imp extends Monster {
             2,
             0.15f,
             0.15f,
-            4,
+            15,
             "character/monster/imp/runRight",
             "character/monster/imp/runLeft",
             "character/monster/imp/idleRight",
@@ -32,8 +32,8 @@ public class Imp extends Monster {
 
     @Override
     protected void setupAIComponent() {
-        SkillComponent sc = new SkillComponent(this);
-        Skill skill = new Skill(new FireballSkill(SkillTools::getHeroPosition), 2);
+        SkillComponent sc = new SkillComponent(this, 5);
+        Skill skill = new Skill(new FireballSkill(SkillTools::getHeroPosition), 2, 3);
         sc.addSkill(skill);
         new AIComponent(this,
             new MeleeAI(3, skill),
