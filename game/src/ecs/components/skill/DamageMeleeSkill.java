@@ -4,6 +4,7 @@ import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.collision.ICollide;
 import ecs.components.skill.skills.ISkillFunction;
+import ecs.components.skill.skills.IUpdateFunction;
 import ecs.damage.Damage;
 import ecs.entities.Entity;
 import graphic.Animation;
@@ -11,7 +12,7 @@ import starter.Game;
 import tools.Constants;
 import tools.Point;
 
-public class DamageMeleeSkill implements ISkillFunction {
+public class DamageMeleeSkill implements ISkillFunction, IUpdateFunction {
 
     private final String pathToTexturesOfProjectile;
     private final Damage projectileDamage;
@@ -52,16 +53,18 @@ public class DamageMeleeSkill implements ISkillFunction {
         this.projectilepc = new PositionComponent(projectile, new Point(epc.getPosition().x + offSet.x, epc.getPosition().y + offSet.y));
 
         Animation animation = AnimationBuilder.buildAnimation(pathToTexturesOfProjectile);
+        new UpdateComponent(projectile, this);
         new AnimationComponent(projectile, animation);
-        new MeleeComponent(projectile, this);
         ICollide collide =
             (a, b, from) -> {
                 if (b != entity && hitCooldownInFrames == 0) {
                     b.getComponent(HealthComponent.class)
                         .ifPresent(
                             hc -> {
+                                ((HealthComponent) hc).receiveHit(
+                                    new Damage(projectileDamage.damageAmount(), projectileDamage.damageType(), entity));
                                 ((HealthComponent) hc).receiveHit(projectileDamage);
-                                SkillTools.recieveKnockback(epc.getPosition(), b);
+                                SkillTools.receiveKnockback(epc.getPosition(), b);
                                 this.hitCooldownInFrames = 15;
                             });
                 }
@@ -71,6 +74,13 @@ public class DamageMeleeSkill implements ISkillFunction {
             projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
     }
 
+    /**
+     *  Updates the position of the Skill, so it moves with the hero.
+     *  If the holdingTime reaches 0, removes the entity.
+     *
+     * @param entity the skill to be updated
+     */
+    @Override
     public void update(Entity entity) {
         if (currentHoldingTimeInFrames == 0) {
             Game.removeEntity(entity);

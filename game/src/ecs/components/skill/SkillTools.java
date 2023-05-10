@@ -10,6 +10,8 @@ import ecs.entities.Entity;
 import starter.Game;
 import tools.Point;
 
+import java.util.ArrayList;
+
 public class SkillTools {
 
     /**
@@ -123,7 +125,13 @@ public class SkillTools {
         return nearestEntityPoint;
     }
 
-    public static void recieveKnockback(Point projectileStartPosition, Entity entity) {
+    /**
+     * Pushes an entity back by a set factor after being hit
+     *
+     * @param projectileStartPosition position from where the projectile which hit the entity started
+     * @param entity the entity which should receive knockback
+     */
+    public static void receiveKnockback(Point projectileStartPosition, Entity entity) {
         PositionComponent epc = (PositionComponent) entity.getComponent(PositionComponent.class).orElseThrow();
         Point entityPosition = epc.getPosition();
         Point direction = Point.getUnitDirectionalVector(entityPosition, projectileStartPosition);
@@ -134,5 +142,41 @@ public class SkillTools {
                     ((VelocityComponent) vc).setCurrentXVelocity(direction.x * 0.4f);
                     ((VelocityComponent) vc).setCurrentYVelocity(direction.y * 0.4f);
                 });
+    }
+
+    /**
+     * Gets all the Entities from the startingEntity in a given range
+     *
+     * @param startingEntity starting position
+     * @param range range
+     * @return an Array of Entities
+     */
+    public static Entity[] getEntitiesInRange(Entity startingEntity, float range) {
+        ArrayList<Entity> entities = new ArrayList<>();
+        PositionComponent startingEntitypc =
+            (PositionComponent)
+                startingEntity.getComponent(PositionComponent.class).orElseThrow();
+
+        for (Entity targetEntity : Game.getEntities()) {
+            // continue only if the Entity has a Healthcomponent and Positioncomponent
+            if (targetEntity.getComponent(HealthComponent.class).orElse(null) == null
+                || targetEntity.getComponent(PositionComponent.class).orElse(null) == null)
+                continue;
+
+            PositionComponent targetEntitypc =
+                (PositionComponent)
+                    targetEntity.getComponent(PositionComponent.class).orElseThrow();
+            Point startingEntityPoint = startingEntitypc.getPosition();
+            Point targetEntityPoint = targetEntitypc.getPosition();
+            float distance = Point.calculateDistance(startingEntityPoint, targetEntityPoint);
+
+            if (distance < range) {
+                entities.add(targetEntity);
+            }
+        }
+        if (entities.size() == 0) return null;
+        Entity[] temp = new Entity[entities.size()];
+        entities.toArray(temp);
+        return temp;
     }
 }
