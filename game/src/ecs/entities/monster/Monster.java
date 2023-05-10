@@ -8,6 +8,7 @@ import ecs.entities.Entity;
 import graphic.Animation;
 
 public abstract class Monster extends Entity {
+
     protected int hitpoints;
     protected Skill skill;
     protected float xSpeed;
@@ -18,7 +19,7 @@ public abstract class Monster extends Entity {
     protected String pathToIdleRight;
     protected String pathToIdleLeft;
 
-    public Monster(int hitpoints, float xSpeed, float ySpeed) {
+    public Monster(int hitpoints, float xSpeed, float ySpeed, int lootXP, String pathToMoveRight, String pathToMoveLeft, String pathToIdleRight, String pathToIdleLeft) {
         this.hitpoints = hitpoints;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
@@ -41,8 +42,8 @@ public abstract class Monster extends Entity {
 
     protected void setupHealthComponent() {
         HealthComponent hc = new HealthComponent(this);
-        hc.setMaximalHealthpoints(this.hitPoints);
-        hc.setCurrentHealthpoints(this.hitPoints);
+        hc.setMaximalHealthpoints(this.hitpoints);
+        hc.setCurrentHealthpoints(this.hitpoints);
     }
 
     protected abstract void setupAIComponent();
@@ -61,7 +62,7 @@ public abstract class Monster extends Entity {
         new XPComponent(this, null, this.lootXP);
     }
 
-    public float getxSpeed(){
+    public float getxSpeed() {
         return xSpeed;
     }
 

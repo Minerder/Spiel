@@ -8,8 +8,8 @@ import ecs.components.skill.skills.*;
 import ecs.components.xp.ILevelUp;
 import ecs.components.xp.XPComponent;
 import graphic.Animation;
-import starter.GameOverScreen;
 import starter.Game;
+import starter.GameOverScreen;
 
 /**
  * The Hero is the player character. It's entity in the ECS. This class helps to set up the hero
@@ -18,10 +18,8 @@ import starter.Game;
 public class Hero extends Entity implements ILevelUp {
 
     private final int fireballCoolDown = 1;
-    private int hitpoints = 20;
     private final float xSpeed = 0.2f;
     private final float ySpeed = 0.2f;
-    private final int hitpoints = 20;
     private final String pathToIdleLeft = "knight/idleLeft";
     private final String pathToIdleRight = "knight/idleRight";
     private final String pathToRunLeft = "knight/runLeft";
@@ -52,7 +50,7 @@ public class Hero extends Entity implements ILevelUp {
     private void setupHealthComponent() {
         new HealthComponent(
             this,
-            this.hitpoints,
+            20,
             hero -> new GameOverScreen(),
             AnimationBuilder.buildAnimation("character/knight/hit"),
             AnimationBuilder.buildAnimation("character/knight/hit"));
@@ -86,8 +84,8 @@ public class Hero extends Entity implements ILevelUp {
         System.out.println("Hero has reached Lvl " + nexLevel + "! You gained 1 extra hitpoint.");
 
         HealthComponent hc = (HealthComponent) Game.getHero().orElseThrow().getComponent(HealthComponent.class).orElseThrow();
-        hc.setMaximalHealthpoints(this.hitpoints += 1);
-        hc.setCurrentHealthpoints(this.hitpoints);
+        hc.setMaximalHealthpoints(hc.getMaximalHealthpoints() + 1);
+        hc.setCurrentHealthpoints(hc.getMaximalHealthpoints());
 
         sc.setMaxMana(sc.getMaxMana() + 1);
 
