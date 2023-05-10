@@ -8,7 +8,7 @@ import ecs.entities.Entity;
 import graphic.Animation;
 
 public abstract class Monster extends Entity {
-    protected int hitPoints;
+    protected int hitpoints;
     protected Skill skill;
     protected float xSpeed;
     protected float ySpeed;
@@ -18,16 +18,8 @@ public abstract class Monster extends Entity {
     protected String pathToIdleRight;
     protected String pathToIdleLeft;
 
-    public Monster(
-        int hitPoints,
-        float xSpeed,
-        float ySpeed,
-        int lootXP,
-        String pathToMoveRight,
-        String pathToMoveLeft,
-        String pathToIdleRight,
-        String pathToIdleLeft) {
-        this.hitPoints = hitPoints;
+    public Monster(int hitpoints, float xSpeed, float ySpeed) {
+        this.hitpoints = hitpoints;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         this.lootXP = lootXP;

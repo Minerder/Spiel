@@ -8,6 +8,7 @@ import ecs.components.skill.skills.*;
 import ecs.components.xp.ILevelUp;
 import ecs.components.xp.XPComponent;
 import graphic.Animation;
+import starter.GameOverScreen;
 import starter.Game;
 
 /**
@@ -20,6 +21,7 @@ public class Hero extends Entity implements ILevelUp {
     private int hitpoints = 20;
     private final float xSpeed = 0.2f;
     private final float ySpeed = 0.2f;
+    private final int hitpoints = 20;
     private final String pathToIdleLeft = "knight/idleLeft";
     private final String pathToIdleRight = "knight/idleRight";
     private final String pathToRunLeft = "knight/runLeft";
@@ -48,9 +50,12 @@ public class Hero extends Entity implements ILevelUp {
     }
 
     private void setupHealthComponent() {
-        HealthComponent hc = new HealthComponent(this);
-        hc.setMaximalHealthpoints(this.hitpoints);
-        hc.setCurrentHealthpoints(this.hitpoints);
+        new HealthComponent(
+            this,
+            this.hitpoints,
+            hero -> new GameOverScreen(),
+            AnimationBuilder.buildAnimation("character/knight/hit"),
+            AnimationBuilder.buildAnimation("character/knight/hit"));
     }
 
     private void setupAnimationComponent() {
