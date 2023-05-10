@@ -13,7 +13,7 @@ public class CollisionSystem extends ECS_System {
 
     protected record CollisionData(HitboxComponent a, HitboxComponent b) {}
 
-    private Map<CollisionKey, CollisionData> collisions = new HashMap<>();
+    private final Map<CollisionKey, CollisionData> collisions = new HashMap<>();
 
     /** checks if there is a collision between two entities based on their hitbox */
     @Override
@@ -56,7 +56,7 @@ public class CollisionSystem extends ECS_System {
         } else if (collisions.remove(key) != null) {
             Tile.Direction d = checkDirectionOfCollision(cdata.a, cdata.b);
             cdata.a.onLeave(cdata.b, d);
-            cdata.b.onLeave(cdata.b, inverse(d));
+            cdata.b.onLeave(cdata.a, inverse(d));
         }
     }
 

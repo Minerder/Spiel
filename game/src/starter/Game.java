@@ -13,13 +13,8 @@ import configuration.KeyboardConfig;
 import controller.AbstractController;
 import controller.SystemController;
 import ecs.components.MissingComponentException;
-import ecs.components.PlayableComponent;
 import ecs.components.PositionComponent;
-import ecs.components.ai.AIComponent;
-import ecs.components.ai.fight.IFightAI;
-import ecs.components.ai.fight.MeleeAI;
-import ecs.components.skill.*;
-import ecs.components.skill.skills.Skill;
+import ecs.components.UpdateComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.entities.monster.*;
@@ -123,7 +118,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         frame();
         clearScreen();
         levelAPI.update();
-        manageSkillCooldowns();
         controller.forEach(AbstractController::update);
         camera.update();
     }
@@ -156,7 +150,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     protected void frame() {
         setCameraFocus();
         manageEntitiesSets();
-        updateMeleeSkills();
+        updateUpdateComponentes();
         getHero().ifPresent(this::loadNextLevelIfEntityIsOnEndTile);
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) togglePause();
     }
@@ -204,39 +198,13 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     }
 
     /**
-     * Reduces the cool-downs for all Skills for each entity
+     * Updates all IUpdateFunctions in all UpdateComponents
      */
-    public void manageSkillCooldowns() {
-        // Reduces the skills of the hero
-        PlayableComponent pc =
-            (PlayableComponent) hero.getComponent(PlayableComponent.class).orElse(null);
-        if (pc != null) {
-            pc.getSkillSlot1().ifPresent(Skill::reduceCoolDown);
-            pc.getSkillSlot2().ifPresent(Skill::reduceCoolDown);
-        }
-        // reduces the skills of all NPCs
-        entities.stream()
-            .filter(entity -> entity.getComponent(AIComponent.class).isPresent())
-            .map(entity -> (AIComponent) entity.getComponent(AIComponent.class).orElse(null))
-            .filter(Objects::nonNull)
-            .forEach(this::reduceSkillCooldown);
-    }
-
-    private void reduceSkillCooldown(AIComponent entityAIComponent) {
-        IFightAI entityFightAI = entityAIComponent.getFightAI();
-        if (entityFightAI.getClass() == MeleeAI.class) {
-            ((MeleeAI) entityFightAI).getFightSkill().reduceCoolDown();
-        }
-    }
-
-    /**
-     * Updates all MeleeSkills for each entity that has one
-     */
-    private void updateMeleeSkills() {
-        List<Entity> l = Game.entities.stream().filter(en -> en.getComponent(MeleeComponent.class).orElse(null) != null).toList();
+    private void updateUpdateComponentes() {
+        List<Entity> l = Game.entities.stream().filter(en -> en.getComponent(UpdateComponent.class).orElse(null) != null).toList();
         for (Entity en : l) {
-            MeleeComponent mc = (MeleeComponent) en.getComponent(MeleeComponent.class).orElseThrow();
-            mc.getMeleeSkill().update(en);
+            UpdateComponent uc = (UpdateComponent) en.getComponent(UpdateComponent.class).orElseThrow();
+            uc.update(en);
         }
     }
 

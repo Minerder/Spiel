@@ -8,11 +8,9 @@ public class ProjectileComponent extends Component {
 
     private final Point goalLocation;
     private final Point startPosition;
-
     private int bounceAmount;
 
-    public ProjectileComponent(
-        Entity entity, Point startPosition, Point goalLocation, int bounceAmount) {
+    public ProjectileComponent(Entity entity, Point startPosition, Point goalLocation, int bounceAmount) {
         super(entity);
         this.goalLocation = goalLocation;
         this.startPosition = startPosition;
@@ -44,10 +42,20 @@ public class ProjectileComponent extends Component {
         return startPosition;
     }
 
+    /**
+     * gets the amount of bounces the projectile should perform
+     *
+     * @return amount of bounces to be performed
+     */
     public int getBounceAmount() {
         return bounceAmount;
     }
 
+    /**
+     * sets the amount of bounces the projectile should perform
+     *
+     * @param bounceAmount amount of bounces to be performed
+     */
     public void setBounceAmount(int bounceAmount) {
         this.bounceAmount = bounceAmount;
     }

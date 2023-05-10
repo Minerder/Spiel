@@ -3,21 +3,36 @@ package ecs.components.skill;
 import ecs.components.Component;
 import ecs.components.skill.skills.Skill;
 import ecs.entities.Entity;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.ArrayList;
 
 public class SkillComponent extends Component {
 
     public static String name = "SkillComponent";
 
-    private Set<Skill> skillSet;
+    private final ArrayList<Skill> skillSet;
+    private int maxMana;
+    private int currentMana;
 
+    /**
+     *
+     * @param entity associated entity
+     * @param maxMana max mana of the entity
+     */
+    public SkillComponent(Entity entity, int maxMana) {
+        super(entity);
+        skillSet = new ArrayList<>();
+        this.maxMana = maxMana;
+        this.currentMana = maxMana;
+    }
     /**
      * @param entity associated entity
      */
     public SkillComponent(Entity entity) {
         super(entity);
-        skillSet = new HashSet<>();
+        skillSet = new ArrayList<>();
+        this.maxMana = 0;
+        this.currentMana = 0;
     }
 
     /**
@@ -39,14 +54,55 @@ public class SkillComponent extends Component {
     }
 
     /**
-     * @return Set with all skills of this component
+     * @return ArrayList with all skills of this component
      */
-    public Set<Skill> getSkillSet() {
+    public ArrayList<Skill> getSkillSet() {
         return skillSet;
     }
 
-    /** reduces the cool down of each skill by 1 frame */
+    /**
+     * Returns the Skill Object at the given index
+     *
+     * @param index index in the List
+     * @return the skill in the given index
+     */
+    public Skill getSkillFromList(int index) {
+        if (index > skillSet.size() - 1) return null;
+        return skillSet.get(index);
+    }
+
+    /**
+     * reduces the cool down of each skill by 1 frame
+     */
     public void reduceAllCoolDowns() {
         for (Skill skill : skillSet) skill.reduceCoolDown();
+    }
+
+    /**
+     * @return maxMana
+     */
+    public int getMaxMana() {
+        return maxMana;
+    }
+
+    /**
+     * @param maxMana new maxMana
+     */
+    public void setMaxMana(int maxMana) {
+        this.maxMana = maxMana;
+    }
+
+    /**
+     * @return currentMana
+     */
+    public int getCurrentMana() {
+        return currentMana;
+    }
+
+    /**
+     * @param currentMana new currentMana
+     */
+    public void setCurrentMana(int currentMana) {
+        this.currentMana = currentMana;
     }
 }

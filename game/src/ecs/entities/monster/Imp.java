@@ -1,64 +1,43 @@
 package ecs.entities.monster;
 
-import dslToGame.AnimationBuilder;
-import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.fight.MeleeAI;
 import ecs.components.ai.idle.StaticRadiusWalk;
 import ecs.components.ai.transition.RangeTransition;
+import ecs.components.skill.SkillComponent;
+import ecs.components.skill.SkillTools;
 import ecs.components.skill.skills.FireballSkill;
 import ecs.components.skill.skills.Skill;
-import ecs.components.skill.SkillTools;
-import graphic.Animation;
 
 public class Imp extends Monster {
 
     public Imp() {
-        super(2, 0.15f, 0.15f);
+        super(
+            2,
+            0.15f,
+            0.15f,
+            15,
+            "character/monster/imp/runRight",
+            "character/monster/imp/runLeft",
+            "character/monster/imp/idleRight",
+            "character/monster/imp/idleLeft");
         setupPositionComponent();
         setupVelocityComponent();
         setupHealthComponent();
-        setupAnimationComponent();
         setupAIComponent();
+        setupAnimationComponent();
         setupHitBoxComponent();
-    }
-
-    @Override
-    protected void setupPositionComponent() {
-        new PositionComponent(this);
-    }
-
-    @Override
-    protected void setupVelocityComponent() {
-        Animation moveRight = AnimationBuilder.buildAnimation("character/monster/imp/runRight");
-        Animation moveLeft = AnimationBuilder.buildAnimation("character/monster/imp/runLeft");
-        new VelocityComponent(this, xSpeed, ySpeed, moveLeft, moveRight);
-    }
-
-    @Override
-    protected void setupHealthComponent() {
-        HealthComponent hc = new HealthComponent(this);
-        hc.setMaximalHealthpoints(2);
-        hc.setCurrentHealthpoints(2);
-    }
-
-    @Override
-    protected void setupAnimationComponent() {
-        Animation idleRight = AnimationBuilder.buildAnimation("character/monster/imp/idleRight");
-        Animation idleLeft = AnimationBuilder.buildAnimation("character/monster/imp/idleLeft");
-        new AnimationComponent(this, idleLeft, idleRight);
+        setupXPComponent();
     }
 
     @Override
     protected void setupAIComponent() {
+        SkillComponent sc = new SkillComponent(this, 5);
+        Skill skill = new Skill(new FireballSkill(SkillTools::getHeroPosition), 2, 3);
+        sc.addSkill(skill);
         new AIComponent(this,
-            new MeleeAI(3, new Skill(new FireballSkill(SkillTools::getHeroPosition), 2)),
+            new MeleeAI(3, skill),
             new StaticRadiusWalk(3f, 3),
             new RangeTransition(3));
-    }
-
-    @Override
-    protected void setupHitBoxComponent() {
-        new HitboxComponent(this);
     }
 }

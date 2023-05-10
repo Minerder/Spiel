@@ -4,6 +4,7 @@ import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.collision.ICollide;
 import ecs.components.skill.skills.ISkillFunction;
+import ecs.components.skill.skills.IUpdateFunction;
 import ecs.damage.Damage;
 import ecs.entities.Entity;
 import graphic.Animation;
@@ -14,14 +15,12 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
 
     private final String pathToTexturesOfProjectile;
     private final float projectileSpeed;
-
     private final float projectileRange;
     private final Damage projectileDamage;
     private final Point projectileHitboxSize;
-
     private final int bounceAmount;
-
     private final ITargetSelection selectionFunction;
+    private IUpdateFunction updateFunction;
 
     public DamageProjectileSkill(
         String pathToTexturesOfProjectile,
@@ -75,19 +74,21 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
             SkillTools.calculateLastPositionInRange(
                 epc.getPosition(), aimedOn, projectileRange);
         Point velocity =
-                SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
+            SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
 
         new VelocityComponent(projectile, velocity.x, velocity.y, animation, animation);
         ProjectileComponent pc =
-                new ProjectileComponent(projectile, epc.getPosition(), targetPoint, bounceAmount);
+            new ProjectileComponent(projectile, epc.getPosition(), targetPoint, bounceAmount);
+        new UpdateComponent(projectile, updateFunction);
         ICollide collide =
                 (a, b, from) -> {
-                    if (b != entity) {
+                    if (b != entity && projectileDamage.damageAmount() > 0) {
                         b.getComponent(HealthComponent.class)
                                 .ifPresent(
                                         hc -> {
-                                            ((HealthComponent) hc).receiveHit(projectileDamage);
-                                            SkillTools.recieveKnockback(pc.getStartPosition(), b);
+                                            ((HealthComponent) hc).receiveHit(
+                                                new Damage(projectileDamage.damageAmount(), projectileDamage.damageType(), entity));
+                                            SkillTools.receiveKnockback(pc.getStartPosition(), b);
                                             Game.removeEntity(projectile);
                                         });
                     }
@@ -95,5 +96,9 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
 
         new HitboxComponent(
             projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
+    }
+
+    public void setUpdateFunction(IUpdateFunction updateFunction) {
+        this.updateFunction = updateFunction;
     }
 }
