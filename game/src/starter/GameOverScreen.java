@@ -73,6 +73,7 @@ public class GameOverScreen implements ActionListener, WindowListener {
             Game.resetDepth();
             Game.setHero(hero);
             heroPC.setPosition(Game.currentLevel.getEndTile().getCoordinateAsPoint());
+            Game.togglePause();
         }
     }
 
