@@ -1,0 +1,108 @@
+<mxfile host="app.diagrams.net" modified="2023-05-17T16:17:01.432Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 OPR/98.0.0.0" etag="CPBPk0pv_mBKkFpzwofW" version="21.3.1">
+  <diagram name="Seite-1" id="PcpOnX4EOYFfyV1ImI5l">
+    <mxGraphModel dx="1114" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=12;endArrow=block;endFill=0;" edge="1" parent="1" source="uaBq9zek2bAl0s_DNd-q-20" target="uaBq9zek2bAl0s_DNd-q-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="505" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.813;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=12;endArrow=block;endFill=0;exitPerimeter=0;" edge="1" parent="uaBq9zek2bAl0s_DNd-q-11" source="uaBq9zek2bAl0s_DNd-q-24">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="505" as="sourcePoint" />
+            <mxPoint x="300" y="160" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="300" y="505" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-1" value="Book" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="460" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-2" value="Bow" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="340" y="200" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=12;labelBackgroundColor=none;fontColor=default;" edge="1" parent="1" source="uaBq9zek2bAl0s_DNd-q-18" target="uaBq9zek2bAl0s_DNd-q-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="375" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-3" value="ManaPotion" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="130" y="330" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-4" value="Sword" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="340" y="300" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-5" value="Bag" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="340" y="410" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=12;labelBackgroundColor=none;fontColor=default;" edge="1" parent="1" source="uaBq9zek2bAl0s_DNd-q-15" target="uaBq9zek2bAl0s_DNd-q-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="250" y="240" />
+              <mxPoint x="300" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-6" value="HealthPotion" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="130" y="200" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-7" value="ItemData" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="240" y="100" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=12;endArrow=block;endFill=0;" edge="1" parent="1" source="uaBq9zek2bAl0s_DNd-q-22" target="uaBq9zek2bAl0s_DNd-q-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="538" y="270" as="sourcePoint" />
+            <mxPoint x="640" y="110" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="340" y="240" />
+              <mxPoint x="300" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=12;endArrow=block;endFill=0;" edge="1" parent="1" source="uaBq9zek2bAl0s_DNd-q-23" target="uaBq9zek2bAl0s_DNd-q-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="290" as="sourcePoint" />
+            <mxPoint x="632" y="130" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="300" y="375" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-15" value="- amount: int" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="130" y="230" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-16" value="+ HealthPotion()&lt;br&gt;- onUse(e: Entity,&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; item: ItemData): void" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="130" y="260" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-18" value="- amount: int" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="130" y="360" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-19" value="+ ManaPotion()&lt;br&gt;- onUse(e: Entity,&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; item: ItemData): void" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="130" y="390" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-20" value="- skill: Skill" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="30" y="490" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-21" value="+ Book()&lt;br&gt;- onCollect(worldItemEntity: Entity,&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; whoCollides: Entity): void&lt;br&gt;- onDrop(user: Entity, which: ItemData,&amp;nbsp; &amp;nbsp; &amp;nbsp; position: Point): void&lt;br&gt;- onUse(e: Entity, item: ItemData): void" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="30" y="520" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-22" value="+ Bow()&lt;br&gt;- onCollect(worldItemEntity:&amp;nbsp; &amp;nbsp; &amp;nbsp; Entity, whoCollides: Entity)" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="340" y="230" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-23" value="+ Sword()&lt;br&gt;- onCollect(worldItemEntity:&amp;nbsp; &amp;nbsp; &amp;nbsp; Entity, whoCollides: Entity)" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="340" y="330" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uaBq9zek2bAl0s_DNd-q-24" value="+ Bag()&lt;br&gt;- onCollect(worldItemEntity: Entity,&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; whoCollides: Entity): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;- onDrop(user: Entity, which: ItemData,&amp;nbsp; &amp;nbsp; &amp;nbsp; position: Point): void" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="340" y="440" width="220" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
