@@ -1,0 +1,57 @@
+<mxfile host="app.diagrams.net" modified="2023-05-17T17:17:57.688Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 OPR/98.0.0.0" etag="e5lSXJ87C8rulCIaExyr" version="21.3.2" type="device">
+  <diagram name="Seite-1" id="WH7qU3b37S3pkOyqZAeC">
+    <mxGraphModel dx="1393" dy="758" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="HWvX_bxeDjcqvXAvewET-1" value="Entity" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="170" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=17;endArrow=block;endFill=0;" edge="1" parent="1" source="HWvX_bxeDjcqvXAvewET-2" target="HWvX_bxeDjcqvXAvewET-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-2" value="Ghost" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="320" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="HWvX_bxeDjcqvXAvewET-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="280" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="540" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-3" value="Gravestone" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="320" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-4" value="- ghost: Ghost" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="160" y="350" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-5" value="- gravestone: Gravestone&lt;br&gt;- detectionRange: float" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="440" y="350" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-6" value="- Ghost()&lt;br&gt;- setupPositionComponent(): void&lt;br&gt;- setupVelocityComponent(): void&lt;br&gt;- setupAnimationComponent(): void&lt;br&gt;- setupAIComponent(): void&lt;br&gt;+ getInstance(): Ghost" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="160" y="380" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-7" value="- Gravestone()&lt;br&gt;- setupPositionComponent(): void&lt;br&gt;- setupAnimationComponent(): void&lt;br&gt;- setupHitboxComponent(): void&lt;br&gt;+ setDetectionRange(): float&lt;br&gt;+ getInstance(): Gravestone" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="440" y="390" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;endArrow=open;endFill=0;endSize=8;" edge="1" parent="1" source="HWvX_bxeDjcqvXAvewET-17" target="HWvX_bxeDjcqvXAvewET-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-17" value="FollowHero" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="680" y="360" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-18" value="«interface»&lt;br&gt;&lt;b&gt;IdleAI&lt;/b&gt;" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="725" y="260" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-21" value="- detectionRadius: float" style="html=1;whiteSpace=wrap;align=left;" vertex="1" parent="1">
+          <mxGeometry x="680" y="410" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HWvX_bxeDjcqvXAvewET-22" value="+ FollowHero(detectionRadius: float)&lt;br&gt;+ idle(entity: Entity): void" style="html=1;whiteSpace=wrap;align=left;" vertex="1" parent="1">
+          <mxGeometry x="680" y="440" width="200" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
