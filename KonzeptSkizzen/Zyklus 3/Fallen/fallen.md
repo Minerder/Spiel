@@ -1,3 +1,5 @@
+# Fallen
+
 Titel: Konzeptskizze für Zyklus 3
 
 Author: Bent Schöne, Marvin Petschulat, Edwin Dik
@@ -5,27 +7,24 @@ Author: Bent Schöne, Marvin Petschulat, Edwin Dik
 ---
 ## Beschreibung der Aufgabe
 
-Es sollen 2 neue Fallen im Dungeon implementiert werden
+Es sollen 2 neue Fallen im Dungeon implementiert werden.
+
+Eine Falle kann von dem Hero oder einem Monster ausgelöst werden. Dabei können die Fallen
+verschiedene Funktionen haben.
+
+Einige Fallen können durch Schalter deaktiviert werden.
 
 ---
 
 ## Beschreibung der Lösung
 
-Es soll eine Spikefalle erstellt werden, die soll Damage verursachen, wenn der Hero darüber läuft.
-Die Spikefalle soll deaktivierbar sein mit dem Hebel.
+Implementiert wird eine Spikefalle, die Schaden verursacht, wenn der Spieler darüber läuft. Die Spikefalle kann durch
+einen Hebel im Level deaktiviert werden. Dabei verursacht die Spike falle 2 Schaden, wenn sie zum ersten Mal ausgelöst
+wurde und sonst 1 Schaden. Damit der Spieler nicht mehrmals in einer kurzen Zeit von der gleichen Spike falle, Schaden
+bekommt, wird ein Cooldown implementiert.
 
-Die zweite Falle soll eine Pfeilfalle sein, die soll schießen wenn der Hero vor die Falle rennt.
-Die Falle hat einen längeren Cooldown das sie erst nach einer gewissen Zeit wieder schießt.
-
-Spikefalle:
-- Spikes die dmg verursachen, wenn der Held darüber läuft
-- Die Falle soll nur einmal aufgehen, sie macht aber Damage wenn man durchläuft und wenn sie hochgeht.
-- Es soll einen Schalter geben der die Falle ausmacht
-- kurzer Cooldown
-
-Pfeilfalle:
-- Die Falle schießt ein Pfeil sobald der Hero in der Hitbox ist.
-- Es soll ein Cooldown von 2s geben. Das die Falle nicht die ganze Zeit schießt
+Die zweite Falle ist eine Pfeilfalle, die ein Pfeil schießt, wenn der Spieler davor rennt. Die Pfeilfalle benutzt die vorhandene
+``BouncingArrowSkill`` um einen Pfeil zu schießen. Der Pfeil verursacht 3 Schaden und hat 2 Sekunden Cooldown.
 
 ---
 
@@ -35,6 +34,7 @@ Methoden werden wieder gemäß der Vorlesung mit Javadoc dokumentiert.
 
 Für die Versionskontrolle wird Git verwendet.
 
+Logging wird schon durch die Klasse ``Entity`` übernommen, wenn eine neue Falle erstellt wird.
 
 ---
 
@@ -42,65 +42,27 @@ Für die Versionskontrolle wird Git verwendet.
 
 Es wird eine neue Oberklasse ``Trap`` erstellt. Diese Klasse kümmert sich darum,
 die Entity zu erstellen und diese alle Components zu geben.
+#### SpikeFalle
+Um die Spikefalle zu implementieren, erstellen wir eine neue Klasse ``SpikeTrap``, die von der Klasse ``Trap`` erbt.
+Im Konstruktor von SpikeTrap wird eine neue ICollide lambda Funktion erstellt. Diese Funktion definiert, wie und wann die
+Spikefalle Schaden verursacht.
+#### Pfeilfalle
+Für die Pfeilfalle erstellen wir eine neue Klasse ``ArrowTrap``, die von der Klasse ``Trap`` erbt.
+Im Konstruktor von ArrowTrap wird eine neue ICollide lambda Funktion erstellt. Diese Funktion entscheidet, wann die Pfeilfalle
+ein Pfeil schießt. Außerdem wird die Methode ``setupRandomWallPosition()`` aufgerufen.
 
-Die Klasse ``SpikeTrap`` erbt von der Oberklasse ``Trap``. In dem Konstruktor werden
-2 neue ICollide Funktionen erstellt die weitergegeben werden. In diesen Funktionen wird
-beschrieben wie die Falle schaden macht.
+Wir haben uns überlegt, dass die Pfeilfalle ein langes Rechteck als Hitbox hat, um zu prüfen, wann der Spieler vor die Pfeilfalle rennt.
+Um unsere Idee umzusetzen, erstellen wir eine neue Methode ``setupRandomWallPosition()``, die, die Position von der Pfeilfalle auf eine zufällige Wand setzt
+und die Richtung der Falle definiert. Danach wird die Größe der Hitbox so geändert, dass die Hitbox ein langes Rechteck im Blickrichtung der Falle ist.
 
-
-
-Es wird eine neue Ober Klasse ``Trap`` erstellt, die soll einen Konstruktor haben in dem Konstruktor werden die Texturen angegeben und mit der LambdaMethode ob der Hero in die Hitbox betritt und wieder verlässt.
-Dazu soll eine Methode setupEntity erstellt werden mit mit PostionComponent, AnimationComponent, und einem HitboxComponent
-Außerdem sollen Methoden für die Animationen erstellt werden.
-
-
-Um die Spikefalle zu implementieren erstellen wir auch eine neue Klasse ``SpikeTrap``.
-Die Spikefalle eerbt von der Ober Klasse ``Trap``.
-Die Klasse bekommt einen Konstruktor mit einem HitboxComponent wenn der Hero in der Hitbox ist bekommt er Schaden.
-Es soll zusätzlich ein Schalter von der Klasse Schalter Variable hinzugefügt werden.
+<img alt="Pfeilfalle Hitbox Darstellung" height="200" src="pfeilfalle.png" width="120"/>
 
 
-Um die Pfeilfalle zu implementieren erstellen wir auch eine neue Klasse ``ArrowTrap``.
-Die Pfeilklasse eerbt von der Ober Klasse ``Trap``.
-Die Klasse bekommt einen Konstruktor der die veerbungs Attribute übernimmt und einer langer Hitbox die in die entgegengesetze Richtung der Wand geht.
-Es soll zusätzlich noch eine Methode changehitbox() geben die, die Länger der Hitbox ändert.
-
-Die Abstrakte Klasse ``getPosFromRandomWall()`` soll eine Random Position von einer Wand in dem Raum aufgreifen.
-Die Methode ist für die Klasse ``ArrowTrap`` gedacht.
-
-Für den Schalter implementieren wir eine Schalter Klasse ``Lever``.
-Die Schalter Klasse hat eine Variable pressed vom Typ Boolean die true wird wernn der Schalter gedrückt wurde.
-Dazu gibt es einen Konstruktor, in dem wird ein EntityComponent, InteractionComponent, AnimationComponent erstellt.
-
-neue abstracte hilfmethdoe getposFromRandomWall()
-Neue ober klasse Falle:
-- falle(String texture davor, String texture während, String textur dannach, onhiboxenter, onhitboxleave)
-- setupEntity
-    - neue entity mit pos, anim, hitbox comp
-- animationTodavor
-- animationTowährent
-- animationtodannach
--
-spikefalle:
-- spikefalle
-    - hitbox die dmg macht
-
-pfeilfalle:
-- schalter variable
-- pefilfalle
-    - neue entity
-    - mit langer hitbox in die gegengesetzte richtung von wand
-    - hitboxenter:
-        - wenn pressed false neue animtaion
-        - neu pfeil
-- changehitbox()
-    - ändert hitbox länge
-
-Schalter klasse:
-- boolean pressed
-- schalter
-    - erstellt neue entity
-    - hitbox wenn hero entered pressed = true
+#### Schalter
+Um einen Schalter zu implementieren, erstellen wir eine neue Klasse ``Lever``, die von Entity erbt.
+Im Konstruktor wird eine neue Entity mit AnimationComponent, PositionComponent und InteractionComponent erstellt.
+Zudem wird die Position vom Schalter auf eine zufällige Wand gesetzt.
+Der Schalter hat eine boolean variable, die sich auf true setzt, wenn der Schalter vom Spieler betätigt wird.
 
 ---
 
