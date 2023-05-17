@@ -2,12 +2,12 @@ package ecs.components.ai.idle;
 
 import ecs.components.AnimationComponent;
 import ecs.components.ai.AIComponent;
-import ecs.components.ai.transition.RangeTransition;
+import ecs.components.ai.AITools;
 import ecs.entities.Entity;
 
 public class SleepingAI implements IIdleAI {
     private final IIdleAI walk;
-    private final RangeTransition range;
+    private final float detectionRadius;
     private final AnimationComponent animationAfterWakingup;
 
     /**
@@ -20,13 +20,13 @@ public class SleepingAI implements IIdleAI {
      */
     public SleepingAI(IIdleAI walk, float detectionRadius, AnimationComponent animationAfterWakingup) {
         this.walk = walk;
-        range = new RangeTransition(detectionRadius);
+        this.detectionRadius = detectionRadius;
         this.animationAfterWakingup = animationAfterWakingup;
     }
 
     @Override
     public void idle(Entity entity) {
-        boolean awake = range.isInFightMode(entity);
+        boolean awake = AITools.playerInRange(entity, detectionRadius);
 
         if (awake) {
             entity.getComponent(AIComponent.class)
