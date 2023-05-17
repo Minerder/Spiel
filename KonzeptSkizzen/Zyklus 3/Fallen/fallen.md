@@ -19,7 +19,7 @@ Manche Fallen können auch durch Schalter deaktiviert werden.
 ## Beschreibung der Lösung
 
 Implementiert wird eine Spikefalle, die Schaden verursacht, wenn der Spieler drüber läuft. Die Spikefalle kann durch
-einen Hebel im Level deaktiviert werden. Dabei verursacht die Spike falle 2 Schaden, wenn sie zum ersten Mal ausgelöst
+einen Hebel im Level deaktiviert werden. Dabei verursacht die Spikefalle 2 Schaden, wenn sie zum ersten Mal ausgelöst
 wurde und 1 Schaden wenn man nochmal drüber läuft. Damit der Spieler nicht mehrmals in einer kurzen Zeit von der gleichen Spikefalle, Schaden
 bekommt, wird ein Cooldown implementiert.
 
@@ -40,7 +40,7 @@ Logging wird schon durch die Klasse ``Entity`` übernommen, wenn eine neue Falle
 
 ## Ansatz und Modellierung
 
-Es wird eine neue Oberklasse ``Trap`` erstellt, welche von der Klasse ``Entity``. Diese Klasse kümmert sich darum,
+Es wird eine neue Oberklasse ``Trap`` erstellt, welche von der Klasse ``Entity`` erbt. Diese Klasse kümmert sich darum,
 die Entities und alle nötigen Components zu erstellen.
 
 #### Spikefalle
