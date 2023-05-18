@@ -1,11 +1,9 @@
 package ecs.entities.monster;
 
-import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
-import ecs.components.ai.idle.GhostWalk;
+import ecs.components.ai.idle.FollowHero;
 import ecs.components.ai.transition.RangeTransition;
-import graphic.Animation;
 
 
 public class Ghost extends Monster {
@@ -31,7 +29,7 @@ public class Ghost extends Monster {
     @Override
     protected void setupAIComponent() {
         AIComponent ai = new AIComponent(this);
-        ai.setIdleAI(new GhostWalk(30, 5, 3, GhostWalk.MODE.RANDOM));
+        ai.setIdleAI(new FollowHero(30, 5, 3, FollowHero.MODE.RANDOM));
         ai.setTransitionAI(new RangeTransition(3f));
     }
 

@@ -13,7 +13,7 @@ import starter.Game;
 import tools.Constants;
 import tools.Point;
 
-public class GhostWalk implements IIdleAI {
+public class FollowHero implements IIdleAI {
 
     private static final Random random = new Random();
 
@@ -51,7 +51,7 @@ public class GhostWalk implements IIdleAI {
      * @param pauseTime Max time in milliseconds to wait on a checkpoint. The actual time is a
      *     random number between 0 and this value
      */
-    public GhostWalk(float radius, int numberCheckpoints, int pauseTime, MODE mode) {
+    public FollowHero(float radius, int numberCheckpoints, int pauseTime, MODE mode) {
         this.radius = radius;
         this.numberCheckpoints = numberCheckpoints;
         this.pauseFrames = pauseTime / (1000 / Constants.FRAME_RATE);
