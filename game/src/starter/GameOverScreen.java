@@ -1,16 +1,16 @@
 package starter;
 
 import com.badlogic.gdx.Gdx;
-import ecs.components.PositionComponent;
-import ecs.entities.Hero;
+import contrib.entities.EntityFactory;
+import core.Game;
+import core.components.PositionComponent;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-
-import javax.swing.*;
 
 public class GameOverScreen implements ActionListener, WindowListener {
 
@@ -21,7 +21,6 @@ public class GameOverScreen implements ActionListener, WindowListener {
      * Creates a new Game Over Screen with the options to restart or quit the game
      */
     public GameOverScreen() {
-        Game.togglePause();
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 300);
@@ -67,13 +66,12 @@ public class GameOverScreen implements ActionListener, WindowListener {
         frame.dispose();
         if (source.equals(btnQuit)) {
             closeGame();
-        } else if (source.equals(btnRestart)){
-            Hero hero = new Hero();
-            PositionComponent heroPC = (PositionComponent) hero.getComponent(PositionComponent.class).orElseThrow();
+        } else if (source.equals(btnRestart)) {
+            Game.setHero(EntityFactory.getHero());
+            PositionComponent heroPC = (PositionComponent) Game.getHero().orElseThrow().getComponent(PositionComponent.class).orElseThrow();
             Game.resetDepth();
-            Game.setHero(hero);
+            Game.setHero(Game.getHero().orElseThrow());
             heroPC.setPosition(Game.currentLevel.getEndTile().getCoordinateAsPoint());
-            Game.togglePause();
         }
     }
 
@@ -87,20 +85,26 @@ public class GameOverScreen implements ActionListener, WindowListener {
     }
 
     @Override
-    public void windowOpened(WindowEvent e) {}
+    public void windowOpened(WindowEvent e) {
+    }
 
     @Override
-    public void windowClosed(WindowEvent e) {}
+    public void windowClosed(WindowEvent e) {
+    }
 
     @Override
-    public void windowIconified(WindowEvent e) {}
+    public void windowIconified(WindowEvent e) {
+    }
 
     @Override
-    public void windowDeiconified(WindowEvent e) {}
+    public void windowDeiconified(WindowEvent e) {
+    }
 
     @Override
-    public void windowActivated(WindowEvent e) {}
+    public void windowActivated(WindowEvent e) {
+    }
 
     @Override
-    public void windowDeactivated(WindowEvent e) {}
+    public void windowDeactivated(WindowEvent e) {
+    }
 }
