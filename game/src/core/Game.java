@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import contrib.components.UpdateComponent;
 import contrib.configuration.KeyboardConfig;
 import contrib.entities.EntityFactory;
+import contrib.entities.Ghost;
+import contrib.entities.Gravestone;
 import contrib.entities.monster.Chort;
 import contrib.entities.monster.Imp;
 import contrib.entities.monster.Rat;
@@ -206,7 +208,19 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
-        for (int i = 0; i < (int) (Math.random() * 3); i++) {
+        spawnMonsters();
+    }
+
+    private void spawnMonsters() {
+        // 16% chance to spawn
+        if (Math.random() <= 0.16) {
+            Ghost.getInstance().setNewPosition();
+            entities.add(Ghost.getInstance());
+            Gravestone.getInstance().setNewPosition();
+            entities.add(Gravestone.getInstance());
+        }
+
+        for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
             new Rat();
         }
 
@@ -225,7 +239,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
                     new Chort();
                 }
             }
-
         }
     }
 
