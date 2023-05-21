@@ -209,7 +209,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         for (int i = 0; i < (int) (Math.random() * 3); i++) {
             new Rat();
         }
-
+        EntityFactory.getChest();
         if (depth >= 6) {
             for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
                 new Skeleton();
@@ -280,7 +280,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         pc.setPosition(currentLevel.getStartTile().getCoordinate().toPoint());
     }
 
-    public void pause(){
+    public void pause() {
         // Text Dialogue (output of information texts)
         UITools.showInfoText(Constants.DEFAULT_MESSAGE);
     }
