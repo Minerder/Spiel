@@ -15,8 +15,7 @@ public class SkillComponent extends Component {
     private int currentMana;
 
     /**
-     *
-     * @param entity associated entity
+     * @param entity  associated entity
      * @param maxMana max mana of the entity
      */
     public SkillComponent(Entity entity, int maxMana) {
@@ -25,6 +24,7 @@ public class SkillComponent extends Component {
         this.maxMana = maxMana;
         this.currentMana = maxMana;
     }
+
     /**
      * @param entity associated entity
      */
@@ -51,6 +51,27 @@ public class SkillComponent extends Component {
      */
     public void removeSkill(Skill skill) {
         skillSet.remove(skill);
+    }
+
+    /**
+     * Replaces a skill at the same index as oldSkill
+     *
+     * @param oldSkill Skill that gets replaced
+     * @param newSkill Skill that is placed into the set
+     */
+    public void replaceSkill(Skill oldSkill, Skill newSkill) {
+        int index = skillSet.indexOf(oldSkill);
+        skillSet.set(index, newSkill);
+    }
+
+    /**
+     * Places the skill in the given index
+     *
+     * @param skill skill to add
+     * @param index position in set
+     */
+    public void setSkill(Skill skill, int index) {
+        skillSet.add(index, skill);
     }
 
     /**

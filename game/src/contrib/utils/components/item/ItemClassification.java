@@ -1,6 +1,6 @@
 package contrib.utils.components.item;
 
-public enum ItemType {
+public enum ItemClassification {
     Basic,
     Active,
     Passive

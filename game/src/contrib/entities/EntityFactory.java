@@ -4,12 +4,7 @@ import contrib.components.*;
 import contrib.utils.components.interaction.DropItemsInteraction;
 import contrib.utils.components.item.ItemData;
 import contrib.utils.components.item.ItemDataGenerator;
-import contrib.utils.components.skill.SkillTools;
-import contrib.utils.components.skill.skills.FrostNovaSkill;
-import contrib.utils.components.skill.skills.GravityStormSkill;
-import contrib.utils.components.skill.skills.HomingSparkSkill;
-import contrib.utils.components.skill.skills.MeeleSwordSkill;
-import contrib.utils.components.skill.Skill;
+import contrib.utils.components.item.items.ItemFactory;
 import core.Entity;
 import core.Game;
 import core.components.DrawComponent;
@@ -23,8 +18,6 @@ import dslToGame.AnimationBuilder;
 import starter.GameOverScreen;
 
 import java.util.List;
-import java.util.Random;
-import java.util.stream.IntStream;
 
 /**
  * A utility class for building entities in the game world. The {@link EntityFactory} class provides
@@ -40,7 +33,6 @@ public class EntityFactory {
      * @return Created Entity
      */
     public static Entity getHero() {
-        final int fireballCoolDown = 1;
         final float xSpeed = 0.2f;
         final float ySpeed = 0.2f;
         final String pathToIdleLeft = "knight/idleLeft";
@@ -68,11 +60,11 @@ public class EntityFactory {
             AnimationBuilder.buildAnimation("character/knight/hit"));
         new PlayerComponent(hero);
         SkillComponent sc = new SkillComponent(hero, 5);
-        sc.addSkill(new Skill(new MeeleSwordSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown));
-        sc.addSkill(new Skill(new HomingSparkSkill(() -> SkillTools.getNearestEntityPosition(hero)), fireballCoolDown, 2));
-        sc.addSkill(new Skill(new FrostNovaSkill(SkillTools::getHeroPosition), 10, 2));
-        sc.addSkill(new Skill(new GravityStormSkill(SkillTools::getCursorPositionAsPoint), 30, 5));
         new XPComponent(hero, new HeroLevelUp());
+        InventoryComponent invc = new InventoryComponent(hero, 2);
+        ItemData sword = ItemFactory.getSpecificSword(0);
+        invc.setEquipment(sword);
+        sc.addSkill(sword.getSkill());
         return hero;
     }
 
@@ -88,13 +80,7 @@ public class EntityFactory {
      * @return Created Entity
      */
     public static Entity getChest() {
-        Random random = new Random();
-        ItemDataGenerator itemDataGenerator = new ItemDataGenerator();
-
-        List<ItemData> itemData =
-            IntStream.range(0, random.nextInt(1, 3))
-                .mapToObj(i -> itemDataGenerator.generateItemData())
-                .toList();
+        List<ItemData> itemData = ItemDataGenerator.generateRandomItems(3);
         return getChest(
             itemData,
             Game.currentLevel.getRandomTile(LevelElement.FLOOR).getCoordinate().toPoint());
