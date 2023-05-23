@@ -42,33 +42,29 @@ public class ArrowTrap extends Trap {
 
     @Override
     public void setupPositionComponent() {
-        pcc = new PositionComponent(this, setupRandomWallPosition());
+        pcc = new PositionComponent(this);
+        setupRandomWallPosition();
     }
 
-    private Point setupRandomWallPosition(){
-        Point wall = Game.currentLevel.getRandomTilePoint(LevelElement.FLOOR);
-        for(float i = 0; i <= 15; i+=0.05){
-            if (!Game.currentLevel.getTileAt(new Point(wall.x + i, wall.y).toCoordinate()).isAccessible()) {
-                wall.x = wall.x + i;
-                break;
-            }
+    private void setupRandomWallPosition(){
+        float newX = pcc.getPosition().x + 0.5f; // Sets the position to the middle of the tile
+        float newY = pcc.getPosition().y + 0.2f;
+        float x = pcc.getPosition().x;
+        float y = pcc.getPosition().y;
 
-            if (!Game.currentLevel.getTileAt(new Point(wall.x, wall.y+i).toCoordinate()).isAccessible()) {
-                wall.y = wall.y + i;
-                break;
-            }
-
-            if (!Game.currentLevel.getTileAt(new Point(wall.x - i, wall.y).toCoordinate()).isAccessible()) {
-                wall.x = wall.x - i;
-                break;
-            }
-
-            if (!Game.currentLevel.getTileAt(new Point(wall.x, wall.y-i).toCoordinate()).isAccessible()) {
-                wall.y = wall.y - i;
-                break;
-            }
+        if (!Game.currentLevel.getTileAt(new Point(x + 1, y).toCoordinate()).isAccessible()) {
+            pcc.setPosition(new Point(newX + 0.5f, newY));
+            System.out.println("Right");
+        } else if (!Game.currentLevel.getTileAt(new Point(x, y + 1).toCoordinate()).isAccessible()) {
+            pcc.setPosition(new Point(newX, newY + 0.5f));
+            System.out.println("Up");
+        } else if (!Game.currentLevel.getTileAt(new Point(x, y - 1).toCoordinate()).isAccessible()) {
+            pcc.setPosition(new Point(newX, newY));
+            System.out.println("Down");
+        } else if (!Game.currentLevel.getTileAt(new Point(x - 1, y).toCoordinate()).isAccessible()) {
+            pcc.setPosition(new Point(newX - 0.5f, newY));
+            System.out.println("Left");
         }
-        return wall;
     }
 
     private void generateHitbox() {
