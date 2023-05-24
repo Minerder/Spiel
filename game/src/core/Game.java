@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import contrib.components.HealthComponent;
 import contrib.components.SkillComponent;
 import contrib.components.UpdateComponent;
+import contrib.components.XPComponent;
 import contrib.configuration.KeyboardConfig;
 import contrib.entities.EntityFactory;
 import contrib.entities.Ghost;
@@ -200,8 +201,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             //DummyQuizQuestionList.getRandomQuestion().askQuizQuestionWithUI();
             HealthComponent hc = (HealthComponent) hero.getComponent(HealthComponent.class).orElseThrow();
             SkillComponent sc = (SkillComponent) hero.getComponent(SkillComponent.class).orElseThrow();
-            java.lang.System.out.println("Current health: " + hc.getCurrentHealthpoints() + " Max health: " + hc.getMaximalHealthpoints());
-            java.lang.System.out.println("Current mana: " + sc.getCurrentMana()+ " Max mana: " + sc.getMaxMana());
+            XPComponent xpc = (XPComponent) hero.getComponent(XPComponent.class).orElseThrow();
+            java.lang.System.out.println("Current health: " + hc.getCurrentHealthpoints() + ", Max health: " + hc.getMaximalHealthpoints());
+            java.lang.System.out.println("Current mana: " + sc.getCurrentMana() + ", Max mana: " + sc.getMaxMana());
+            java.lang.System.out.println("Current level: " + xpc.getCurrentLevel());
+            java.lang.System.out.println("Current xp: " + xpc.getCurrentXP() + ", XP needed for level up: " + xpc.getXPToNextLevel());
 
         }
         if (Gdx.input.isKeyJustPressed(KeyboardConfig.DEBUG_TOGGLE_KEY.get())) {
@@ -231,11 +235,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
             new Rat();
         }
-      
+
         new SpikeTrap();
         new ArrowTrap();
         EntityFactory.getChest();
-      
+
         if (depth >= 6) {
             for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
                 new Skeleton();

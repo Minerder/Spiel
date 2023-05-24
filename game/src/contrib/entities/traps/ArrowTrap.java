@@ -3,6 +3,8 @@ package contrib.entities.traps;
 import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
 import contrib.components.SkillComponent;
+import contrib.utils.components.health.Damage;
+import contrib.utils.components.health.DamageType;
 import contrib.utils.components.skill.ITargetSelection;
 import contrib.utils.components.skill.Skill;
 import contrib.utils.components.skill.skills.BouncingArrowSkill;
@@ -27,7 +29,7 @@ public class ArrowTrap extends Trap implements ITargetSelection {
         super("dungeon/traps/arrowTrap/arrowTrap_N.png", "dungeon/traps/arrowTrap/arrowTrap_N.png");
         setupPositionComponent();
         sc = new SkillComponent(this);
-        sc.addSkill(new Skill(new BouncingArrowSkill(this, 0), 2));
+        sc.addSkill(new Skill(new BouncingArrowSkill(this, new Damage(1, DamageType.PHYSICAL, null), 0), 2));
         generateHitbox();
         setupCollideComponent();
     }

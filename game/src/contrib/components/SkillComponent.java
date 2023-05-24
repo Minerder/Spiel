@@ -66,7 +66,7 @@ public class SkillComponent extends Component {
     }
 
     /**
-     * Places the skill in the given index
+     * Places the skill at the given index
      *
      * @param skill skill to add
      * @param index position in set
