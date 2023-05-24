@@ -18,7 +18,7 @@ public class ArrowTrap extends Trap implements ITargetSelection {
     private Point offset;
     private PositionComponent pcc;
     private final SkillComponent sc;
-    private int direction; // direction the trap shoots 1 = left, -1 = right, 0 = down
+    private int direction; // direction in which the trap shoots 1 = left, -1 = right, 0 = down
 
     /**
      * Creates a new ArrowTrap which shoots arrows at the player
@@ -47,18 +47,14 @@ public class ArrowTrap extends Trap implements ITargetSelection {
         setupRandomWallPosition();
     }
 
-    /**
-     * Sets the position of the ArrowTrap next to a wall to the right left or up
-     * and gives the trap the right texture
-     */
     private void setupRandomWallPosition() {
         float newX = pcc.getPosition().x + 0.5f; // Sets the position to the middle of the tile
         float newY = pcc.getPosition().y + 0.2f;
         float x = pcc.getPosition().x;
         float y = pcc.getPosition().y;
-        pcc.setPosition(new Point(newX, newY));
+
         // searches for the nearest wall traveling 10 tiles
-        // searches up left and right
+        // searches up, left and right
         for (int i = 0; i < 10; i++) {
             if (Game.currentLevel.getTileAt(new Point(x + i + 1, y).toCoordinate()).getLevelElement() == LevelElement.WALL) {
                 pcc.setPosition(new Point(newX + i + 0.4f, newY));
@@ -95,7 +91,11 @@ public class ArrowTrap extends Trap implements ITargetSelection {
         }
     }
 
-
+    /**
+     * Gets a point at the end of the trap's hitbox as the target point
+     *
+     * @return the target point of the ArrowTrap
+     */
     @Override
     public Point selectTargetPoint() {
         if (direction == 1) {

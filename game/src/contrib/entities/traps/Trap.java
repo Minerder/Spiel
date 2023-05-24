@@ -48,6 +48,9 @@ public class Trap extends Entity {
         if (dc != null) dc.setCurrentAnimation(idle);
     }
 
+    /**
+     * Sets the animation of the trap to the received idle animation
+     */
     public void setIdleAnimation(Animation idle) {
         if (dc != null) dc.setCurrentAnimation(idle);
     }
