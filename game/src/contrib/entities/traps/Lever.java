@@ -14,7 +14,7 @@ public class Lever extends Entity {
     private final DrawComponent dc;
     private final Trap trap;
 
-    public Lever(Trap trap){
+    public Lever(Trap trap) {
         super();
         Animation idle = AnimationBuilder.buildAnimation("dungeon/traps/lever.png");
         activated = AnimationBuilder.buildAnimation("dungeon/traps/lever_activated.png");
@@ -30,7 +30,7 @@ public class Lever extends Entity {
      *
      * @return True if the lever is pressed, otherwise false
      */
-    public boolean getPressed(){
+    public boolean getPressed() {
         return pressed;
     }
 
@@ -45,10 +45,10 @@ public class Lever extends Entity {
     private void setupInteractionComponent() {
         new InteractionComponent(this, 2, false,
             a -> {
-            pressed = true;
-            trap.setIdleAnimation();
-            setActivated();
-        });
+                pressed = true;
+                trap.startIdleAnimation();
+                setActivated();
+            });
     }
 
 }

@@ -3,41 +3,42 @@ package contrib.entities.traps;
 import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
 import contrib.components.SkillComponent;
+import contrib.utils.components.skill.ITargetSelection;
 import contrib.utils.components.skill.Skill;
-import contrib.utils.components.skill.SkillTools;
 import contrib.utils.components.skill.skills.BouncingArrowSkill;
 import core.Game;
 import core.components.PositionComponent;
 import core.level.utils.LevelElement;
 import core.utils.Point;
+import dslToGame.AnimationBuilder;
 
-public class ArrowTrap extends Trap {
+public class ArrowTrap extends Trap implements ITargetSelection {
 
-    private final Point size = new Point(5,5);
-    private final Point offset = new Point(0,0);
+    private Point size;
+    private Point offset;
     private PositionComponent pcc;
     private final SkillComponent sc;
+    private int direction; // direction the trap shoots 1 = left, -1 = right, 0 = down
 
     /**
      * Creates a new ArrowTrap which shoots arrows at the player
      */
     public ArrowTrap() {
-        // TODO: fix randomWallPosition and generateHitbox
-        super("dungeon/traps/arrowTrap/arrowTrap.png", "dungeon/traps/arrowTrap/arrowTrap.png");
+        super("dungeon/traps/arrowTrap/arrowTrap_N.png", "dungeon/traps/arrowTrap/arrowTrap_N.png");
         setupPositionComponent();
         sc = new SkillComponent(this);
-        sc.addSkill(new Skill(new BouncingArrowSkill(SkillTools::getHeroPosition, 0), 2));
-        //generateHitbox();
+        sc.addSkill(new Skill(new BouncingArrowSkill(this, 0), 2));
+        generateHitbox();
         setupCollideComponent();
     }
 
     private void setupCollideComponent() {
-        new CollideComponent(this, offset, size,
+        new CollideComponent(this, this.offset, this.size,
             (a, b, from) -> {
                 if (b.getComponent(HealthComponent.class).isPresent()) {
                     sc.getSkillFromList(0).execute(a);
                 }
-        }, null);
+            }, null);
     }
 
     @Override
@@ -46,71 +47,69 @@ public class ArrowTrap extends Trap {
         setupRandomWallPosition();
     }
 
-    private void setupRandomWallPosition(){
+    /**
+     * Sets the position of the ArrowTrap next to a wall to the right left or up
+     * and gives the trap the right texture
+     */
+    private void setupRandomWallPosition() {
         float newX = pcc.getPosition().x + 0.5f; // Sets the position to the middle of the tile
         float newY = pcc.getPosition().y + 0.2f;
         float x = pcc.getPosition().x;
         float y = pcc.getPosition().y;
-
-        if (!Game.currentLevel.getTileAt(new Point(x + 1, y).toCoordinate()).isAccessible()) {
-            pcc.setPosition(new Point(newX + 0.5f, newY));
-            System.out.println("Right");
-        } else if (!Game.currentLevel.getTileAt(new Point(x, y + 1).toCoordinate()).isAccessible()) {
-            pcc.setPosition(new Point(newX, newY + 0.5f));
-            System.out.println("Up");
-        } else if (!Game.currentLevel.getTileAt(new Point(x, y - 1).toCoordinate()).isAccessible()) {
-            pcc.setPosition(new Point(newX, newY));
-            System.out.println("Down");
-        } else if (!Game.currentLevel.getTileAt(new Point(x - 1, y).toCoordinate()).isAccessible()) {
-            pcc.setPosition(new Point(newX - 0.5f, newY));
-            System.out.println("Left");
+        pcc.setPosition(new Point(newX, newY));
+        // searches for the nearest wall traveling 10 tiles
+        // searches up left and right
+        for (int i = 0; i < 10; i++) {
+            if (Game.currentLevel.getTileAt(new Point(x + i + 1, y).toCoordinate()).getLevelElement() == LevelElement.WALL) {
+                pcc.setPosition(new Point(newX + i + 0.4f, newY));
+                super.setIdleAnimation(AnimationBuilder.buildAnimation("dungeon/traps/arrowTrap/arrowTrap_E.png"));
+                this.direction = 1;
+                break;
+            } else if (Game.currentLevel.getTileAt(new Point(x, y + i + 1).toCoordinate()).getLevelElement() == LevelElement.WALL) {
+                pcc.setPosition(new Point(newX, newY + i + 0.5f));
+                super.setIdleAnimation(AnimationBuilder.buildAnimation("dungeon/traps/arrowTrap/arrowTrap_N.png"));
+                this.direction = 0;
+                break;
+            } else if (Game.currentLevel.getTileAt(new Point(x - i - 1, y).toCoordinate()).getLevelElement() == LevelElement.WALL) {
+                pcc.setPosition(new Point(newX - i - 0.5f, newY));
+                super.setIdleAnimation(AnimationBuilder.buildAnimation("dungeon/traps/arrowTrap/arrowTrap_W.png"));
+                this.direction = -1;
+                break;
+            }
         }
     }
 
     private void generateHitbox() {
-        if (Game.currentLevel.getTileAt(new Point(pcc.getPosition().x+1, pcc.getPosition().y).toCoordinate()).isAccessible()) {
-            // nach rechts
-            for(float i = 0; i < 5; i++) {
-                if (!Game.currentLevel.getTileAt(new Point(pcc.getPosition().x + i, pcc.getPosition().y).toCoordinate()).isAccessible()) {
-                    size.x = i + 1;
-                    size.y = 1;
-                    offset.x = (float) Math.ceil(size.x/2);
-                    offset.y = 0;
-                }
-            }
-        } else if (Game.currentLevel.getTileAt(new Point(pcc.getPosition().x, pcc.getPosition().y+1).toCoordinate()).isAccessible()) {
-            // nach oben
-            for(float i = 0; i < 5; i++) {
-                if (!Game.currentLevel.getTileAt(new Point(pcc.getPosition().x , pcc.getPosition().y + i).toCoordinate()).isAccessible()) {
-                    size.x = 1;
-                    size.y = i + 1;
-                    offset.y = (float) Math.ceil(size.y/2);
-                    offset.x = 0;
-                }
-            }
-        } else if (Game.currentLevel.getTileAt(new Point(pcc.getPosition().x-1, pcc.getPosition().y).toCoordinate()).isAccessible()) {
-            // nach links
-            for(float i = 0; i < 5; i++) {
-                if (!Game.currentLevel.getTileAt(new Point(pcc.getPosition().x - i , pcc.getPosition().y).toCoordinate()).isAccessible()) {
-                    size.x = i * -1;
-                    size.y = 1;
-                    offset.x = (float) Math.ceil(size.y/2)*-1;
-                    offset.y = 0;
-                }
-            }
-        } else if (Game.currentLevel.getTileAt(new Point(pcc.getPosition().x, pcc.getPosition().y-1).toCoordinate()).isAccessible()) {
-            // nach unten
-            for(float i = 0; i < 5; i++) {
-                if (!Game.currentLevel.getTileAt(new Point(pcc.getPosition().x , pcc.getPosition().y - i).toCoordinate()).isAccessible()) {
-                    size.x = 1;
-                    size.y = i * -1;
-                   offset.y = (float) Math.ceil(size.y/2)*-1;
-                    offset.x = 0;
-                }
-            }
+        if (direction == 1) {
+            //left 5 tiles
+            this.size = new Point(5, 0.5f);
+            this.offset = new Point(-4, 0.2f);
+        } else if (direction == -1) {
+            //right 5 tiles
+            this.size = new Point(5, 0.5f);
+            this.offset = new Point(0, 0);
+        } else if (direction == 0) {
+            //down 5 tiles
+            this.size = new Point(0.5f, 5);
+            this.offset = new Point(0.2f, -4);
         }
-        size.x = size.x/2;
-        size.y = size.y/2;
+    }
+
+
+    @Override
+    public Point selectTargetPoint() {
+        if (direction == 1) {
+            // left
+            return new Point(pcc.getPosition().x - 5, pcc.getPosition().y);
+        } else if (direction == -1) {
+            // right
+            return new Point(pcc.getPosition().x + 5, pcc.getPosition().y);
+        } else if (direction == 0) {
+            // down
+            return new Point(pcc.getPosition().x, pcc.getPosition().y - 5);
+        } else {
+            return new Point(0, 0);
+        }
     }
 }
 

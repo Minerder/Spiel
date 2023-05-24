@@ -15,7 +15,7 @@ public class Trap extends Entity {
     /**
      * Creates a new Trap
      *
-     * @param idleAnimation The path to the idle animation
+     * @param idleAnimation       The path to the idle animation
      * @param activationAnimation The path to the activation animation
      */
     public Trap(String idleAnimation, String activationAnimation) {
@@ -42,7 +42,11 @@ public class Trap extends Entity {
     /**
      * Sets the animation of the trap to the idle animation
      */
-    public void setIdleAnimation() {
+    public void startIdleAnimation() {
+        if (dc != null) dc.setCurrentAnimation(idle);
+    }
+
+    public void setIdleAnimation(Animation idle) {
         if (dc != null) dc.setCurrentAnimation(idle);
     }
 
