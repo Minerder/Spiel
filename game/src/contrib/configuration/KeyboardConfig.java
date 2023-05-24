@@ -20,47 +20,34 @@ public class KeyboardConfig {
         new ConfigKey<>(new String[]{"inventory", "open"}, new ConfigIntValue(Input.Keys.I));
     public static final ConfigKey<Integer> INTERACT_WORLD =
         new ConfigKey<>(new String[]{"interact", "world"}, new ConfigIntValue(Input.Keys.E));
-    public static final ConfigKey<Integer> FIRST_SKILL =
-        new ConfigKey<>(new String[]{"skill", "first"}, new ConfigIntValue(Input.Keys.Q));
-    public static final ConfigKey<Integer> SECOND_SKILL =
-        new ConfigKey<>(new String[]{"skill", "second"}, new ConfigIntValue(Input.Keys.R));
-
+    public static final ConfigKey<Integer> EQUIPMENT_SLOT =
+        new ConfigKey<>(new String[]{"skill", "equipment_slot"}, new ConfigIntValue(Input.Keys.Q));
+    public static final ConfigKey<Integer> SKILL_SLOT_1 =
+        new ConfigKey<>(new String[]{"skill", "skill_slot_1"}, new ConfigIntValue(Input.Keys.NUM_1));
+    public static final ConfigKey<Integer> SKILL_SLOT_2 =
+        new ConfigKey<>(new String[]{"skill", "skill_slot_2"}, new ConfigIntValue(Input.Keys.NUM_2));
     public static final ConfigKey<Integer> DEBUG_TOGGLE_KEY =
         new ConfigKey<>(new String[]{"debug", "activate"}, new ConfigIntValue(Input.Keys.B));
-
     public static final ConfigKey<Integer> DEBUG_ZOOM_IN =
         new ConfigKey<>(new String[]{"debug", "zoom_in"}, new ConfigIntValue(Input.Keys.K));
-
     public static final ConfigKey<Integer> DEBUG_ZOOM_OUT =
         new ConfigKey<>(new String[]{"debug", "zoom_out"}, new ConfigIntValue(Input.Keys.L));
-
     public static final ConfigKey<Integer> DEBUG_TOGGLE_LEVELSIZE =
         new ConfigKey<>(
             new String[]{"debug", "toggle_levelsize"}, new ConfigIntValue(Input.Keys.Z));
-
     public static final ConfigKey<Integer> DEBUG_SPAWN_MONSTER =
         new ConfigKey<>(
             new String[]{"debug", "spawn_monster"}, new ConfigIntValue(Input.Keys.X));
-
     public static final ConfigKey<Integer> DEBUG_TELEPORT_TO_START =
         new ConfigKey<>(
             new String[]{"debug", "teleport_Start"}, new ConfigIntValue(Input.Keys.J));
-
     public static final ConfigKey<Integer> DEBUG_TELEPORT_TO_END =
         new ConfigKey<>(
             new String[]{"debug", "teleport_end"}, new ConfigIntValue(Input.Keys.H));
-
     public static final ConfigKey<Integer> DEBUG_TELEPORT_ON_END =
         new ConfigKey<>(
             new String[]{"debug", "teleport_onEnd"}, new ConfigIntValue(Input.Keys.G));
-
     public static final ConfigKey<Integer> DEBUG_TELEPORT_TO_CURSOR =
         new ConfigKey<>(
             new String[]{"debug", "teleport_cursor"}, new ConfigIntValue(Input.Keys.O));
-
-    public static final ConfigKey<Integer> THIRD_SKILL =
-        new ConfigKey<>(new String[]{"skill", "third"}, new ConfigIntValue(Input.Keys.NUM_1));
-
-    public static final ConfigKey<Integer> FOURTH_SKILL =
-        new ConfigKey<>(new String[]{"skill", "fourth"}, new ConfigIntValue(Input.Keys.NUM_2));
 }

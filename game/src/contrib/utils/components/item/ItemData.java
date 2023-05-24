@@ -1,15 +1,14 @@
 package contrib.utils.components.item;
 
-import contrib.components.CollideComponent;
 import contrib.components.InventoryComponent;
 import contrib.components.ItemComponent;
 import contrib.configuration.ItemConfig;
+import contrib.entities.WorldItemBuilder;
+import contrib.utils.components.item.items.ItemKind;
+import contrib.utils.components.skill.Skill;
 import contrib.utils.components.stats.DamageModifier;
-
 import core.Entity;
 import core.Game;
-import core.components.DrawComponent;
-import core.components.PositionComponent;
 import core.utils.Point;
 import core.utils.components.draw.Animation;
 
@@ -18,7 +17,7 @@ import java.util.List;
 /**
  * A Class which contains the Information of a specific Item.
  *
- * <p>It contains the {@link #itemType}, animations / textures for inside the hero inventory ({@link
+ * <p>It contains the {@link #itemClassification}, animations / textures for inside the hero inventory ({@link
  * #inventoryTexture}) or in the world ({@link #worldTexture}), as well as the {@link #itemName} and
  * a {@link #description}.
  *
@@ -30,11 +29,12 @@ import java.util.List;
  * <p>Lastly it holds a {@link #damageModifier}
  */
 public class ItemData {
-    private ItemType itemType;
-    private Animation inventoryTexture;
-    private Animation worldTexture;
-    private String itemName;
-    private String description;
+    private final ItemClassification itemClassification;
+    private final ItemKind itemKind;
+    private final Animation inventoryTexture;
+    private final Animation worldTexture;
+    private final String itemName;
+    private final String description;
 
     private IOnCollect onCollect;
     private IOnDrop onDrop;
@@ -42,32 +42,37 @@ public class ItemData {
     private IOnUse onUse;
 
     // passive
-    private DamageModifier damageModifier;
+    private final DamageModifier damageModifier;
+    private final Skill skill;
 
     /**
      * creates a new item data object.
      *
-     * @param itemType Enum entry describing item type.
-     * @param inventoryTexture Animation that is played inside the hero inventory.
-     * @param worldTexture Animation that is played while item is dropped in the world.
-     * @param itemName String defining name of item.
-     * @param description String giving a description of the item
-     * @param onCollect Functional interface defining behaviour when item is collected.
-     * @param onDrop Functional interface defining behaviour when item is dropped.
-     * @param onUse Functional interface defining behaviour when item is used.
-     * @param damageModifier Defining if dealt damage is altered.
+     * @param itemClassification Enum entry describing item classification.
+     * @param itemKind           Enum entry describing item kind.
+     * @param inventoryTexture   Animation that is played inside the hero inventory.
+     * @param worldTexture       Animation that is played while item is dropped in the world.
+     * @param itemName           String defining name of item.
+     * @param description        String giving a description of the item
+     * @param onCollect          Functional interface defining behaviour when item is collected.
+     * @param onDrop             Functional interface defining behaviour when item is dropped.
+     * @param onUse              Functional interface defining behaviour when item is used.
+     * @param damageModifier     Defining if dealt damage is altered.
      */
     public ItemData(
-            ItemType itemType,
-            Animation inventoryTexture,
-            Animation worldTexture,
-            String itemName,
-            String description,
-            IOnCollect onCollect,
-            IOnDrop onDrop,
-            IOnUse onUse,
-            DamageModifier damageModifier) {
-        this.itemType = itemType;
+        ItemClassification itemClassification,
+        ItemKind itemKind,
+        Animation inventoryTexture,
+        Animation worldTexture,
+        String itemName,
+        String description,
+        IOnCollect onCollect,
+        IOnDrop onDrop,
+        IOnUse onUse,
+        DamageModifier damageModifier,
+        Skill skill) {
+        this.itemClassification = itemClassification;
+        this.itemKind = itemKind;
         this.inventoryTexture = inventoryTexture;
         this.worldTexture = worldTexture;
         this.itemName = itemName;
@@ -76,49 +81,57 @@ public class ItemData {
         this.setOnDrop(onDrop);
         this.setOnUse(onUse);
         this.damageModifier = damageModifier;
+        this.skill = skill;
     }
 
     /**
      * creates a new item data object. With a basic handling of collecting, dropping and using.
      *
-     * @param itemType Enum entry describing item type.
-     * @param inventoryTexture Animation that is played inside the hero inventory.
-     * @param worldTexture Animation that is played while item is dropped in the world.
-     * @param itemName String defining name of item.
-     * @param description String giving a description of the item
+     * @param itemClassification Enum entry describing item classification.
+     * @param itemKind           Enum entry describing item kind
+     * @param inventoryTexture   Animation that is played inside the hero inventory.
+     * @param worldTexture       Animation that is played while item is dropped in the world.
+     * @param itemName           String defining name of item.
+     * @param description        String giving a description of the item
      */
     public ItemData(
-            ItemType itemType,
-            Animation inventoryTexture,
-            Animation worldTexture,
-            String itemName,
-            String description) {
+        ItemClassification itemClassification,
+        ItemKind itemKind,
+        Animation inventoryTexture,
+        Animation worldTexture,
+        String itemName,
+        String description) {
         this(
-                itemType,
-                inventoryTexture,
-                worldTexture,
-                itemName,
-                description,
-                ItemData::defaultCollect,
-                ItemData::defaultDrop,
-                ItemData::defaultUseCallback,
-                new DamageModifier());
+            itemClassification,
+            itemKind,
+            inventoryTexture,
+            worldTexture,
+            itemName,
+            description,
+            ItemData::defaultCollect,
+            ItemData::defaultDrop,
+            ItemData::defaultUseCallback,
+            new DamageModifier(),
+            null);
     }
 
-    /** Constructing object with completely default values. Taken from {@link ItemConfig}. */
+    /**
+     * Constructing object with completely default values. Taken from {@link ItemConfig}.
+     */
     public ItemData() {
         this(
-                ItemConfig.TYPE.get(),
-                new Animation(List.of(ItemConfig.TEXTURE.get()), 1),
-                new Animation(List.of(ItemConfig.TEXTURE.get()), 1),
-                ItemConfig.NAME.get(),
-                ItemConfig.DESCRIPTION.get());
+            ItemConfig.TYPE.get(),
+            ItemKind.POTION,
+            new Animation(List.of(ItemConfig.TEXTURE.get()), 1),
+            new Animation(List.of(ItemConfig.TEXTURE.get()), 1),
+            ItemConfig.NAME.get(),
+            ItemConfig.DESCRIPTION.get());
     }
 
     /**
      * what should happen when an Entity interacts with the Item while it is lying in the World.
      *
-     * @param worldItemEntity Item which is collected
+     * @param worldItemEntity  Item which is collected
      * @param whoTriesCollects Entity that tries to collect item
      */
     public void triggerCollect(Entity worldItemEntity, Entity whoTriesCollects) {
@@ -147,8 +160,8 @@ public class ItemData {
     /**
      * @return The current itemType.
      */
-    public ItemType getItemType() {
-        return itemType;
+    public ItemClassification getItemType() {
+        return itemClassification;
     }
 
     /**
@@ -183,70 +196,68 @@ public class ItemData {
      * Default callback for item use. Prints a message to the console and removes the item from the
      * inventory.
      *
-     * @param e Entity that uses the item
+     * @param e    Entity that uses the item
      * @param item Item that is used
      */
     private static void defaultUseCallback(Entity e, ItemData item) {
         e.getComponent(InventoryComponent.class)
-                .ifPresent(
-                        component -> {
-                            InventoryComponent invComp = (InventoryComponent) component;
-                            invComp.removeItem(item);
-                        });
+            .ifPresent(
+                component -> {
+                    InventoryComponent invComp = (InventoryComponent) component;
+                    invComp.removeItem(item);
+                });
         System.out.printf("Item \"%s\" used by entity %d\n", item.getItemName(), e.id());
     }
 
     /**
      * Default callback for dropping item.
      *
-     * @param who Entity dropping the item.
-     * @param which Item that is being dropped.
+     * @param who      Entity dropping the item.
+     * @param which    Item that is being dropped.
      * @param position Position where to drop the item.
      */
-    private static void defaultDrop(Entity who, ItemData which, Point position) {
-        Entity droppedItem = new Entity();
-        new PositionComponent(droppedItem, position);
-        new DrawComponent(droppedItem, which.getWorldTexture());
-        CollideComponent component = new CollideComponent(droppedItem);
-        component.setiCollideEnter((a, b, direction) -> which.triggerCollect(a, b));
+    protected static void defaultDrop(Entity who, ItemData which, Point position) {
+        InventoryComponent inventoryComponent = (InventoryComponent) who.getComponent(InventoryComponent.class).orElseThrow();
+        inventoryComponent.removeItem(which);
+        WorldItemBuilder.buildWorldItem(which, position);
     }
 
     /**
      * Default callback for collecting items.
      *
-     * @param worldItem Item in world that is being collected.
+     * @param worldItem    Item in world that is being collected.
      * @param whoCollected Entity that tries to pick up item.
      */
-    private static void defaultCollect(Entity worldItem, Entity whoCollected) {
+    protected static void defaultCollect(Entity worldItem, Entity whoCollected) {
         // check if the Game has a Hero
         Game.getHero()
-                .ifPresent(
-                        hero -> {
-                            // check if entity picking up Item is the Hero
-                            if (whoCollected.equals(hero)) {
-                                // check if Hero has an Inventory Component
-                                hero.getComponent(InventoryComponent.class)
-                                        .ifPresent(
-                                                (x) -> {
-                                                    // check if Item can be added to hero Inventory
-                                                    if (((InventoryComponent) x)
-                                                            .addItem(
-                                                                    worldItem
-                                                                            .getComponent(
-                                                                                    ItemComponent
-                                                                                            .class)
-                                                                            .map(
-                                                                                    ItemComponent
-                                                                                                    .class
-                                                                                            ::cast)
-                                                                            .get()
-                                                                            .getItemData()))
-                                                        // if added to hero Inventory
-                                                        // remove Item from World
-                                                        Game.removeEntity(worldItem);
-                                                });
-                            }
-                        });
+            .ifPresent(
+                hero -> {
+                    // check if entity picking up Item is the Hero
+                    if (whoCollected.equals(hero)) {
+                        // check if Hero has an Inventory Component
+                        hero.getComponent(InventoryComponent.class)
+                            .ifPresent(
+                                (x) -> {
+                                    // check if Item can be added to hero Inventory
+                                    if (((InventoryComponent) x)
+                                        .addItem(
+                                            worldItem
+                                                .getComponent(
+                                                    ItemComponent
+                                                        .class)
+                                                .map(
+                                                    ItemComponent
+                                                        .class
+                                                        ::cast)
+                                                .get()
+                                                .getItemData()))
+                                        // if added to hero Inventory
+                                        // remove Item from World
+                                        Game.removeEntity(worldItem);
+                                });
+                    }
+                });
     }
 
     /**
@@ -295,5 +306,19 @@ public class ItemData {
      */
     public void setOnUse(IOnUse onUse) {
         this.onUse = onUse;
+    }
+
+    /**
+     * @return Skill of the item
+     */
+    public Skill getSkill() {
+        return skill;
+    }
+
+    /**
+     * @return itemKind of item
+     */
+    public ItemKind getItemKind() {
+        return itemKind;
     }
 }

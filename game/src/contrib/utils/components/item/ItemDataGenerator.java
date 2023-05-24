@@ -1,40 +1,36 @@
 package contrib.utils.components.item;
 
-import core.utils.components.draw.Animation;
+import contrib.utils.components.item.items.ItemFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/** Generator which creates a random ItemData based on the Templates prepared. */
 public class ItemDataGenerator {
-    private static final List<String> missingTexture = List.of("animation/missingTexture.png");
-
-    private List<ItemData> templates =
-            List.of(
-                    new ItemData(
-                            ItemType.Basic,
-                            new Animation(missingTexture, 1),
-                            new Animation(missingTexture, 1),
-                            "Buch",
-                            "Ein sehr lehrreiches Buch."),
-                    new ItemData(
-                            ItemType.Basic,
-                            new Animation(missingTexture, 1),
-                            new Animation(missingTexture, 1),
-                            "Tuch",
-                            "Ein sauberes Tuch.."),
-                    new ItemData(
-                            ItemType.Basic,
-                            new Animation(missingTexture, 1),
-                            new Animation(missingTexture, 1),
-                            "Namensschild",
-                            "Ein Namensschild wo der Name nicht mehr lesbar ist.."));
-    private Random rand = new Random();
 
     /**
-     * @return a new randomItemData
+     * Generates new random Items
+     *
+     * @param amount amount of items in list
+     * @return list of random items
      */
-    public ItemData generateItemData() {
-        return templates.get(rand.nextInt(templates.size()));
+    public static List<ItemData> generateRandomItems(int amount) {
+        List<ItemData> items = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            switch (new Random().nextInt(0, 6)) {
+                case 0 -> items.add(ItemFactory.getBag());
+
+                case 1 -> items.add(ItemFactory.getHealthPotion(5));
+
+                case 2 -> items.add(ItemFactory.getManaPotion(5));
+
+                case 3 -> items.add(ItemFactory.getBow());
+
+                case 4 -> items.add(ItemFactory.getSword());
+
+                case 5 -> items.add(ItemFactory.getBook());
+            }
+        }
+        return items;
     }
 }

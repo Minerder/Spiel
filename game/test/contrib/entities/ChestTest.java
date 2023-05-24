@@ -1,26 +1,26 @@
 package contrib.entities;
 
-import static org.junit.Assert.*;
-
 import contrib.components.CollideComponent;
 import contrib.components.InteractionComponent;
 import contrib.components.InventoryComponent;
 import contrib.utils.components.item.ItemData;
 import contrib.utils.components.item.ItemDataGenerator;
-
 import core.Component;
 import core.Entity;
 import core.Game;
-import core.components.*;
+import core.components.DrawComponent;
+import core.components.PositionComponent;
 import core.level.TileLevel;
 import core.level.utils.DesignLabel;
 import core.level.utils.LevelElement;
 import core.utils.Point;
-
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ChestTest {
 
@@ -62,7 +62,7 @@ public class ChestTest {
     @Test
     public void checkInteractionDroppingItems() {
         cleanup();
-        List<ItemData> itemData = List.of(new ItemDataGenerator().generateItemData());
+        List<ItemData> itemData = ItemDataGenerator.generateRandomItems(5);
         Point position = new Point(0, 0);
         Entity c = EntityFactory.getChest(itemData, position);
         Game.getDelayedEntitySet().update();
@@ -82,7 +82,7 @@ public class ChestTest {
     @Test
     public void checkInteractionOnDroppedItems() {
         cleanup();
-        List<ItemData> itemData = List.of(new ItemDataGenerator().generateItemData());
+        List<ItemData> itemData = ItemDataGenerator.generateRandomItems(5);
         Point position = new Point(0, 0);
         Entity c = EntityFactory.getChest(itemData, position);
         Game.removeEntity(c);

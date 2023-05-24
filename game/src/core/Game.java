@@ -231,8 +231,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
             new Rat();
         }
+      
         new SpikeTrap();
         new ArrowTrap();
+        EntityFactory.getChest();
+      
         if (depth >= 6) {
             for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
                 new Skeleton();
