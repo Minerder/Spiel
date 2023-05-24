@@ -9,12 +9,13 @@ import java.util.ArrayList;
 public class SkillComponent extends Component {
 
     public static String name = "SkillComponent";
-
     private final ArrayList<Skill> skillSet;
     private int maxMana;
     private int currentMana;
 
     /**
+     * Creates a new SkillComponent containing a list of skills
+     *
      * @param entity  associated entity
      * @param maxMana max mana of the entity
      */
@@ -45,7 +46,7 @@ public class SkillComponent extends Component {
     }
 
     /**
-     * remove a skill from this component
+     * Remove a skill from this component
      *
      * @param skill to remove
      */
@@ -82,10 +83,10 @@ public class SkillComponent extends Component {
     }
 
     /**
-     * Returns the Skill Object at the given index
+     * Returns the skill object at the given index
      *
-     * @param index index in the List
-     * @return the skill in the given index
+     * @param index index of the skill
+     * @return The skill object at the given index
      */
     public Skill getSkillFromList(int index) {
         if (index > skillSet.size() - 1) return null;
@@ -93,13 +94,15 @@ public class SkillComponent extends Component {
     }
 
     /**
-     * reduces the cool down of each skill by 1 frame
+     * Reduces the cooldown of each skill by 1 frame
      */
     public void reduceAllCoolDowns() {
         for (Skill skill : skillSet) skill.reduceCoolDown();
     }
 
     /**
+     * Gets the maxMana
+     *
      * @return maxMana
      */
     public int getMaxMana() {
@@ -107,6 +110,8 @@ public class SkillComponent extends Component {
     }
 
     /**
+     * Sets a new maxMana
+     *
      * @param maxMana new maxMana
      */
     public void setMaxMana(int maxMana) {
@@ -114,6 +119,8 @@ public class SkillComponent extends Component {
     }
 
     /**
+     * Gets the currentMana
+     *
      * @return currentMana
      */
     public int getCurrentMana() {
@@ -121,6 +128,8 @@ public class SkillComponent extends Component {
     }
 
     /**
+     * Sets a new currentMana
+     *
      * @param currentMana new currentMana
      */
     public void setCurrentMana(int currentMana) {
