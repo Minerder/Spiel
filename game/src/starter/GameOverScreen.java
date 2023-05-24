@@ -3,6 +3,7 @@ package starter;
 import com.badlogic.gdx.Gdx;
 import contrib.entities.EntityFactory;
 import core.Game;
+import core.System;
 import core.components.PositionComponent;
 
 import javax.swing.*;
@@ -21,6 +22,8 @@ public class GameOverScreen implements ActionListener, WindowListener {
      * Creates a new Game Over Screen with the options to restart or quit the game
      */
     public GameOverScreen() {
+        Game.systems.forEach(System::stop);
+
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 300);
@@ -64,6 +67,7 @@ public class GameOverScreen implements ActionListener, WindowListener {
         Object source = e.getSource();
 
         frame.dispose();
+        Game.systems.forEach(System::run);
         if (source.equals(btnQuit)) {
             closeGame();
         } else if (source.equals(btnRestart)) {
