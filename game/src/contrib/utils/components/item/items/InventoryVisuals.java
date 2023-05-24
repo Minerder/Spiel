@@ -45,6 +45,11 @@ public class InventoryVisuals {
             item = invc.getItems().get(itemIndex - 2);
         }
 
+        if (item == null){
+            cancelPrint();
+            return;
+        }
+
         // item actions
         out.print("Actions possible: ");
         if (item.getItemType().equals(ItemClassification.Active) && !itemInSkillSlot) {
@@ -71,6 +76,7 @@ public class InventoryVisuals {
             }
             case "inspect" -> out.println("\n" + item.getDescription() + "\n");
             case "exit" -> {
+                cancelPrint();
                 return;
             }
         }
@@ -78,7 +84,7 @@ public class InventoryVisuals {
     }
 
     /**
-     * Prints the inventory to the console
+     * Prints the inventory in the console
      *
      * @param invc items
      */
