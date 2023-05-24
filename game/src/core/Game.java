@@ -6,6 +6,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import contrib.components.HealthComponent;
+import contrib.components.SkillComponent;
 import contrib.components.UpdateComponent;
 import contrib.configuration.KeyboardConfig;
 import contrib.entities.EntityFactory;
@@ -13,6 +15,8 @@ import contrib.entities.monster.Chort;
 import contrib.entities.monster.Imp;
 import contrib.entities.monster.Rat;
 import contrib.entities.monster.Skeleton;
+import contrib.entities.traps.ArrowTrap;
+import contrib.entities.traps.SpikeTrap;
 import contrib.systems.*;
 import core.components.PositionComponent;
 import core.configuration.Configuration;
@@ -36,7 +40,6 @@ import core.utils.components.draw.Painter;
 import core.utils.components.draw.TextureHandler;
 import core.utils.controller.AbstractController;
 import core.utils.controller.SystemController;
-import quizquestion.DummyQuizQuestionList;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -192,7 +195,12 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
             // Dialogue for quiz questions (display of quiz questions and the answer area in test
             // mode)
-            DummyQuizQuestionList.getRandomQuestion().askQuizQuestionWithUI();
+            //DummyQuizQuestionList.getRandomQuestion().askQuizQuestionWithUI();
+            HealthComponent hc = (HealthComponent) hero.getComponent(HealthComponent.class).orElseThrow();
+            SkillComponent sc = (SkillComponent) hero.getComponent(SkillComponent.class).orElseThrow();
+            java.lang.System.out.println("Current health: " + hc.getCurrentHealthpoints() + " Max health: " + hc.getMaximalHealthpoints());
+            java.lang.System.out.println("Current mana: " + sc.getCurrentMana()+ " Max mana: " + sc.getMaxMana());
+
         }
         if (Gdx.input.isKeyJustPressed(KeyboardConfig.DEBUG_TOGGLE_KEY.get())) {
             debugger.toggleRun();
@@ -209,7 +217,8 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         for (int i = 0; i < (int) (Math.random() * 3); i++) {
             new Rat();
         }
-
+        new SpikeTrap();
+        new ArrowTrap();
         if (depth >= 6) {
             for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
                 new Skeleton();
@@ -280,7 +289,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         pc.setPosition(currentLevel.getStartTile().getCoordinate().toPoint());
     }
 
-    public void pause(){
+    public void pause() {
         // Text Dialogue (output of information texts)
         UITools.showInfoText(Constants.DEFAULT_MESSAGE);
     }

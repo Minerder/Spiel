@@ -3,6 +3,7 @@ package contrib.entities.traps;
 import core.Entity;
 import core.components.DrawComponent;
 import core.components.PositionComponent;
+import core.utils.Point;
 import core.utils.components.draw.Animation;
 import dslToGame.AnimationBuilder;
 
@@ -29,7 +30,8 @@ public class Trap extends Entity {
      * Sets up the position component of the trap
      */
     public void setupPositionComponent() {
-        new PositionComponent(this);
+        PositionComponent pcc = new PositionComponent(this);
+        pcc.setPosition(new Point(pcc.getPosition().x + 0.5f, pcc.getPosition().y + 0.2f));
     }
 
     /**

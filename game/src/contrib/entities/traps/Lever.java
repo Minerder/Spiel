@@ -4,6 +4,7 @@ import contrib.components.InteractionComponent;
 import core.Entity;
 import core.components.DrawComponent;
 import core.components.PositionComponent;
+import core.utils.Point;
 import core.utils.components.draw.Animation;
 import dslToGame.AnimationBuilder;
 
@@ -39,11 +40,12 @@ public class Lever extends Entity {
     }
 
     private void setupPositionComponent() {
-        new PositionComponent(this);
+        PositionComponent pcc = new PositionComponent(this);
+        pcc.setPosition(new Point(pcc.getPosition().x + 0.5f, pcc.getPosition().y + 0.2f));
     }
 
     private void setupInteractionComponent() {
-        new InteractionComponent(this, 2, false,
+        new InteractionComponent(this, 1.2f, false,
             a -> {
                 pressed = true;
                 trap.startIdleAnimation();
