@@ -158,8 +158,8 @@ public class Book extends ItemData implements IOnUse, IOnDrop, IOnCollect {
         int skillSlotIndex;
         try {
             skillSlotIndex = Integer.parseInt(scan.next().replace("\n", ""));
-            if (skillSlotIndex > 1 || skillSlotIndex < 0) throw new InputMismatchException();
-        } catch (InputMismatchException exception) {
+            if (skillSlotIndex > 1 || skillSlotIndex < 0) throw new NumberFormatException();
+        } catch (NumberFormatException exception) {
             System.out.println("Falsche eingabe");
             return;
         }
