@@ -16,7 +16,7 @@ public class Bag extends ItemData implements IOnUse {
     /**
      * Generates a new bag
      */
-    Bag() {
+    public Bag() {
         super(ItemClassification.Active,
             ItemKind.BAG,
             AnimationBuilder.buildAnimation("items/bag/bag_small.png"),
