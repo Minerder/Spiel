@@ -190,7 +190,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     protected void frame() {
         setCameraFocus();
         entities.update();
-        updateUpdateComponentes();
+        updateUpdateComponents();
         getHero().ifPresent(this::loadNextLevelIfEntityIsOnEndTile);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
@@ -261,12 +261,9 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     /**
      * Updates all IUpdateFunctions in all UpdateComponents
      */
-    private void updateUpdateComponentes() {
-        List<Entity> l = Game.entities.getSet().stream().filter(en -> en.getComponent(UpdateComponent.class).orElse(null) != null).toList();
-        for (Entity en : l) {
-            UpdateComponent uc = (UpdateComponent) en.getComponent(UpdateComponent.class).orElseThrow();
-            uc.update(en);
-        }
+    private void updateUpdateComponents() {
+        Game.entities.getSet().stream().filter(en -> en.getComponent(UpdateComponent.class).isPresent()).forEach(
+                en -> ((UpdateComponent) en.getComponent(UpdateComponent.class).orElseThrow()).update(en));
     }
 
     private void setCameraFocus() {
