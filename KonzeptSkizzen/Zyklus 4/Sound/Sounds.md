@@ -26,6 +26,7 @@ Implementiert werden sollen Sounds für:
 - NPC Geist beim Heilen
 - Monster stirbt
 - Monster wird getroffen
+- Inventar verschieben und Droppen
 
 Wir haben vor die Sounds zu samplen bzw teilweise selber zuerstellen über FL-Studio,
 damit wir die einheitlich bekommen und wieder einzigartige Elemente ins Dungeon bekommen.
@@ -72,4 +73,5 @@ Spiel zuhören sein soll).
 
 ## UML
 
-![sound2](Sound2.png)
+![Sound3.drawio.png](Sound3.drawio.png)
+
