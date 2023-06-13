@@ -45,12 +45,14 @@ public class Lever extends Entity {
     }
 
     private void setupInteractionComponent() {
-        new InteractionComponent(this, 1.2f, false,
-            a -> {
-                pressed = true;
-                trap.startIdleAnimation();
-                setActivated();
-            });
+        new InteractionComponent(
+                this,
+                1.2f,
+                false,
+                a -> {
+                    pressed = true;
+                    trap.startIdleAnimation();
+                    setActivated();
+                });
     }
-
 }

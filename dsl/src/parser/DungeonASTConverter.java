@@ -2,17 +2,12 @@ package parser;
 
 import antlr.main.DungeonDSLLexer;
 import antlr.main.DungeonDSLParser;
-
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
-// importing all required classes from symbolTable will be to verbose
-// CHECKSTYLE:OFF: AvoidStarImport
-
 import parser.AST.*;
-// CHECKSTYLE:ON: AvoidStarImport
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -301,8 +296,8 @@ public class DungeonASTConverter implements antlr.main.DungeonDSLListener {
         assert (typeSpecifier.type == Node.Type.Identifier);
 
         var objectDef =
-            new ObjectDefNode(
-                typeSpecifier, id, propertyDefList, ObjectDefNode.Type.GrammarBuiltInType);
+                new ObjectDefNode(
+                        typeSpecifier, id, propertyDefList, ObjectDefNode.Type.GrammarBuiltInType);
         astStack.push(objectDef);
     }
 
@@ -326,8 +321,8 @@ public class DungeonASTConverter implements antlr.main.DungeonDSLListener {
         assert (typeSpecifier.type == Node.Type.Identifier);
 
         var objectDef =
-            new ObjectDefNode(
-                typeSpecifier, id, propertyDefList, ObjectDefNode.Type.GrammarBuiltInType);
+                new ObjectDefNode(
+                        typeSpecifier, id, propertyDefList, ObjectDefNode.Type.GrammarBuiltInType);
         astStack.push(objectDef);
     }
 
@@ -449,14 +444,14 @@ public class DungeonASTConverter implements antlr.main.DungeonDSLListener {
     public void exitDot_def(DungeonDSLParser.Dot_defContext ctx) {
         // check, whether all edge_ops are correct for graph type
         DotDefNode.Type graphType =
-            ctx.graph_type.getText().equals("dslToGame/graph")
-                ? DotDefNode.Type.graph
-                : DotDefNode.Type.digraph;
+                ctx.graph_type.getText().equals("dslToGame/graph")
+                        ? DotDefNode.Type.graph
+                        : DotDefNode.Type.digraph;
 
         EdgeOpNode.Type edgeOpType =
-            graphType == DotDefNode.Type.graph
-                ? EdgeOpNode.Type.doubleLine
-                : EdgeOpNode.Type.arrow;
+                graphType == DotDefNode.Type.graph
+                        ? EdgeOpNode.Type.doubleLine
+                        : EdgeOpNode.Type.arrow;
 
         // if dot_stmt_list is not empty, it will be on stack
         Node stmtList = Node.NONE;
@@ -469,7 +464,7 @@ public class DungeonASTConverter implements antlr.main.DungeonDSLListener {
         for (Node dotStmtList : stmtList.getChildren()) {
             for (Node dotStmt : dotStmtList.getChildren()) {
                 if (dotStmt.type == Node.Type.DotEdgeRHS
-                    && !((EdgeRhsNode) dotStmt).getEdgeOpType().equals(edgeOpType)) {
+                        && !((EdgeRhsNode) dotStmt).getEdgeOpType().equals(edgeOpType)) {
                     // TODO: sensible syntax error message
                     System.out.println("Wrong syntax");
                 }

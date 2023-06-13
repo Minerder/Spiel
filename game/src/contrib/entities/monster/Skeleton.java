@@ -1,6 +1,5 @@
 package contrib.entities.monster;
 
-
 import contrib.components.AIComponent;
 import contrib.components.SkillComponent;
 import contrib.utils.components.ai.fight.MeleeAI;
@@ -16,14 +15,14 @@ public class Skeleton extends Monster {
 
     public Skeleton() {
         super(
-            3,
-            0.05f,
-            0.05f,
-            20,
-            "character/monster/skeleton/run/right",
-            "character/monster/skeleton/run/left",
-            "character/monster/skeleton/idle/right",
-            "character/monster/skeleton/idle/left");
+                3,
+                0.05f,
+                0.05f,
+                20,
+                "character/monster/skeleton/run/right",
+                "character/monster/skeleton/run/left",
+                "character/monster/skeleton/idle/right",
+                "character/monster/skeleton/idle/left");
         setupPositionComponent();
         setupVelocityComponent();
         setupHealthComponent();
@@ -36,11 +35,15 @@ public class Skeleton extends Monster {
     @Override
     protected void setupAIComponent() {
         SkillComponent sc = new SkillComponent(this);
-        Skill skill = new Skill(new BouncingArrowSkill(SkillTools::getHeroPosition,new Damage(1,DamageType.PHYSICAL,null), 1), 2);
+        Skill skill =
+                new Skill(
+                        new BouncingArrowSkill(
+                                SkillTools::getHeroPosition,
+                                new Damage(1, DamageType.PHYSICAL, null),
+                                1),
+                        2);
         sc.addSkill(skill);
-        new AIComponent(this,
-            new MeleeAI(3, skill),
-            new StaticRadiusWalk(3f, 3),
-            new RangeTransition(3));
+        new AIComponent(
+                this, new MeleeAI(3, skill), new StaticRadiusWalk(3f, 3), new RangeTransition(3));
     }
 }

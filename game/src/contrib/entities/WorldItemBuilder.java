@@ -10,9 +10,7 @@ import core.components.DrawComponent;
 import core.components.PositionComponent;
 import core.utils.Point;
 
-/**
- * Class which creates all needed Components for a basic WorldItem
- */
+/** Class which creates all needed Components for a basic WorldItem */
 public class WorldItemBuilder {
 
     /**
@@ -27,7 +25,8 @@ public class WorldItemBuilder {
         new DrawComponent(droppedItem, itemData.getWorldTexture());
         new ItemComponent(droppedItem, itemData);
 
-        IInteraction pickup = (entity) -> itemData.triggerCollect(droppedItem, Game.getHero().orElseThrow());
+        IInteraction pickup =
+                (entity) -> itemData.triggerCollect(droppedItem, Game.getHero().orElseThrow());
         new InteractionComponent(droppedItem, 1, true, pickup);
 
         return droppedItem;

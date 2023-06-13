@@ -71,11 +71,12 @@ public class Point {
 
     /**
      * Calculates the directional vector AB from point A and point B
+     *
      * @param a Point A
      * @param b Point B
      * @return the directional vector AB
      */
-    public static Point getDirectionalVector(Point a, Point b){
+    public static Point getDirectionalVector(Point a, Point b) {
         return new Point(b.x - a.x, b.y - a.y);
     }
 }

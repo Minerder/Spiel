@@ -1,15 +1,15 @@
 package contrib.components;
 
-import static org.junit.Assert.*;
-
 import contrib.utils.components.skill.Skill;
 import core.Entity;
 import core.Game;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class SkillComponentTest {
 

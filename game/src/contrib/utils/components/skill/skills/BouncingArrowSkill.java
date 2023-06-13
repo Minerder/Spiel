@@ -7,15 +7,14 @@ import core.utils.Point;
 
 public class BouncingArrowSkill extends DamageProjectileSkill {
 
-
     public BouncingArrowSkill(ITargetSelection selectionFunction, Damage damage, int bounceAmount) {
         super(
-            "skills/arrow/up",
-            0.5f,
-            damage,
-            new Point(0.5f, 0.5f),
-            selectionFunction,
-            6f,
-            bounceAmount);
+                "skills/arrow/up",
+                0.5f,
+                damage,
+                new Point(0.5f, 0.5f),
+                selectionFunction,
+                6f,
+                bounceAmount);
     }
 }

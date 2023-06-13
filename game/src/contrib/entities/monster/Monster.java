@@ -23,7 +23,15 @@ public abstract class Monster extends Entity {
     protected String pathToIdleRight;
     protected String pathToIdleLeft;
 
-    public Monster(int hitpoints, float xSpeed, float ySpeed, int lootXP, String pathToMoveRight, String pathToMoveLeft, String pathToIdleRight, String pathToIdleLeft) {
+    public Monster(
+            int hitpoints,
+            float xSpeed,
+            float ySpeed,
+            int lootXP,
+            String pathToMoveRight,
+            String pathToMoveLeft,
+            String pathToIdleRight,
+            String pathToIdleLeft) {
         this.hitpoints = hitpoints;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;

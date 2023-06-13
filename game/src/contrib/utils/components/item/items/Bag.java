@@ -13,21 +13,20 @@ public class Bag extends ItemData implements IOnUse {
     private final List<ItemData> inventory;
     private final int maxSize;
 
-    /**
-     * Generates a new bag
-     */
+    /** Generates a new bag */
     public Bag() {
-        super(ItemClassification.Active,
-            ItemKind.BAG,
-            AnimationBuilder.buildAnimation("items/bag/bag_small.png"),
-            AnimationBuilder.buildAnimation("items/bag/bag_small.png"),
-            "Bag",
-            "A leather bag that can hold 2 items of the same type.",
-            ItemData::defaultCollect,
-            ItemData::defaultDrop,
-            null,
-            null,
-            null);
+        super(
+                ItemClassification.Active,
+                ItemKind.BAG,
+                AnimationBuilder.buildAnimation("items/bag/bag_small.png"),
+                AnimationBuilder.buildAnimation("items/bag/bag_small.png"),
+                "Bag",
+                "A leather bag that can hold 2 items of the same type.",
+                ItemData::defaultCollect,
+                ItemData::defaultDrop,
+                null,
+                null,
+                null);
         super.setOnUse(this);
         inventory = new ArrayList<>();
         maxSize = 2;
@@ -36,7 +35,7 @@ public class Bag extends ItemData implements IOnUse {
     /**
      * Starts the print loop for the bag.
      *
-     * @param e    The entity that used the item.
+     * @param e The entity that used the item.
      * @param item The item that was used.
      */
     @Override
@@ -45,15 +44,16 @@ public class Bag extends ItemData implements IOnUse {
     }
 
     /**
-     * Adding an Element to the Inventory does not allow adding more items than the size
-     * of the inventory and only of the same ItemKind.
+     * Adding an Element to the Inventory does not allow adding more items than the size of the
+     * inventory and only of the same ItemKind.
      *
      * @param itemData the item which should be added
      * @return true if the item was added, otherwise false
      */
     public boolean addItem(ItemData itemData) {
         if (inventory.size() >= maxSize) return false;
-        if (inventory.size() == 1 && inventory.get(0).getItemKind() != itemData.getItemKind()) return false;
+        if (inventory.size() == 1 && inventory.get(0).getItemKind() != itemData.getItemKind())
+            return false;
         return inventory.add(itemData);
     }
 

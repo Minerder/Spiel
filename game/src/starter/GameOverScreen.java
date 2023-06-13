@@ -18,9 +18,7 @@ public class GameOverScreen implements ActionListener, WindowListener {
     private final JButton btnQuit, btnRestart;
     private final JFrame frame;
 
-    /**
-     * Creates a new Game Over Screen with the options to restart or quit the game
-     */
+    /** Creates a new Game Over Screen with the options to restart or quit the game */
     public GameOverScreen() {
         Game.systems.forEach(System::stop);
 
@@ -72,7 +70,12 @@ public class GameOverScreen implements ActionListener, WindowListener {
             closeGame();
         } else if (source.equals(btnRestart)) {
             Game.setHero(EntityFactory.getHero());
-            PositionComponent heroPC = (PositionComponent) Game.getHero().orElseThrow().getComponent(PositionComponent.class).orElseThrow();
+            PositionComponent heroPC =
+                    (PositionComponent)
+                            Game.getHero()
+                                    .orElseThrow()
+                                    .getComponent(PositionComponent.class)
+                                    .orElseThrow();
             Game.resetDepth();
             Game.setHero(Game.getHero().orElseThrow());
             heroPC.setPosition(Game.currentLevel.getEndTile().getCoordinateAsPoint());
@@ -89,26 +92,20 @@ public class GameOverScreen implements ActionListener, WindowListener {
     }
 
     @Override
-    public void windowOpened(WindowEvent e) {
-    }
+    public void windowOpened(WindowEvent e) {}
 
     @Override
-    public void windowClosed(WindowEvent e) {
-    }
+    public void windowClosed(WindowEvent e) {}
 
     @Override
-    public void windowIconified(WindowEvent e) {
-    }
+    public void windowIconified(WindowEvent e) {}
 
     @Override
-    public void windowDeiconified(WindowEvent e) {
-    }
+    public void windowDeiconified(WindowEvent e) {}
 
     @Override
-    public void windowActivated(WindowEvent e) {
-    }
+    public void windowActivated(WindowEvent e) {}
 
     @Override
-    public void windowDeactivated(WindowEvent e) {
-    }
+    public void windowDeactivated(WindowEvent e) {}
 }

@@ -15,7 +15,6 @@ import core.utils.components.MissingComponentException;
 import core.utils.components.draw.Animation;
 import dslToGame.AnimationBuilder;
 
-
 public class DamageMeleeSkill implements ISkillFunction, IUpdateFunction {
 
     private final String pathToTexturesOfProjectile;
@@ -30,10 +29,10 @@ public class DamageMeleeSkill implements ISkillFunction, IUpdateFunction {
     private PositionComponent projectilepc;
 
     public DamageMeleeSkill(
-        String pathToTexturesOfProjectile,
-        Damage projectileDamage,
-        Point projectileHitboxSize,
-        ITargetSelection selectionFunction) {
+            String pathToTexturesOfProjectile,
+            Damage projectileDamage,
+            Point projectileHitboxSize,
+            ITargetSelection selectionFunction) {
         this.pathToTexturesOfProjectile = pathToTexturesOfProjectile;
         this.projectileDamage = projectileDamage;
         this.projectileHitboxSize = projectileHitboxSize;
@@ -49,38 +48,45 @@ public class DamageMeleeSkill implements ISkillFunction, IUpdateFunction {
         Entity projectile = new Entity();
         Point aimedOn = selectionFunction.selectTargetPoint();
         PositionComponent epc =
-            (PositionComponent)
-                entity.getComponent(PositionComponent.class)
-                    .orElseThrow(
-                        () -> new MissingComponentException("PositionComponent"));
+                (PositionComponent)
+                        entity.getComponent(PositionComponent.class)
+                                .orElseThrow(
+                                        () -> new MissingComponentException("PositionComponent"));
         this.offSet = SkillTools.getMeleeSkillOffsetPositon(epc.getPosition(), aimedOn);
-        this.projectilepc = new PositionComponent(projectile, new Point(epc.getPosition().x + offSet.x, epc.getPosition().y + offSet.y));
+        this.projectilepc =
+                new PositionComponent(
+                        projectile,
+                        new Point(epc.getPosition().x + offSet.x, epc.getPosition().y + offSet.y));
 
         Animation animation = AnimationBuilder.buildAnimation(pathToTexturesOfProjectile);
         new UpdateComponent(projectile, this);
         new DrawComponent(projectile, animation);
         ICollide collide =
-            (a, b, from) -> {
-                if (b != entity && hitCooldownInFrames == 0) {
-                    b.getComponent(HealthComponent.class)
-                        .ifPresent(
-                            hc -> {
-                                ((HealthComponent) hc).receiveHit(
-                                    new Damage(projectileDamage.damageAmount(), projectileDamage.damageType(), entity));
-                                ((HealthComponent) hc).receiveHit(projectileDamage);
-                                SkillTools.receiveKnockback(epc.getPosition(), b);
-                                this.hitCooldownInFrames = 15;
-                            });
-                }
-            };
+                (a, b, from) -> {
+                    if (b != entity && hitCooldownInFrames == 0) {
+                        b.getComponent(HealthComponent.class)
+                                .ifPresent(
+                                        hc -> {
+                                            ((HealthComponent) hc)
+                                                    .receiveHit(
+                                                            new Damage(
+                                                                    projectileDamage.damageAmount(),
+                                                                    projectileDamage.damageType(),
+                                                                    entity));
+                                            ((HealthComponent) hc).receiveHit(projectileDamage);
+                                            SkillTools.receiveKnockback(epc.getPosition(), b);
+                                            this.hitCooldownInFrames = 15;
+                                        });
+                    }
+                };
 
         new CollideComponent(
-            projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
+                projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
     }
 
     /**
-     *  Updates the position of the Skill, so it moves with the hero.
-     *  If the holdingTime reaches 0, removes the entity.
+     * Updates the position of the Skill, so it moves with the hero. If the holdingTime reaches 0,
+     * removes the entity.
      *
      * @param entity the skill to be updated
      */
@@ -92,8 +98,12 @@ public class DamageMeleeSkill implements ISkillFunction, IUpdateFunction {
         }
         hitCooldownInFrames = Math.max(0, --hitCooldownInFrames);
         currentHoldingTimeInFrames = Math.max(0, --currentHoldingTimeInFrames);
-        PositionComponent ownedBypc = (PositionComponent) ownedBy.getComponent(PositionComponent.class).orElseThrow();
+        PositionComponent ownedBypc =
+                (PositionComponent) ownedBy.getComponent(PositionComponent.class).orElseThrow();
         if (projectilepc == null) return;
-        this.projectilepc.setPosition(new Point(ownedBypc.getPosition().x + offSet.x, ownedBypc.getPosition().y + offSet.y));
+        this.projectilepc.setPosition(
+                new Point(
+                        ownedBypc.getPosition().x + offSet.x,
+                        ownedBypc.getPosition().y + offSet.y));
     }
 }
