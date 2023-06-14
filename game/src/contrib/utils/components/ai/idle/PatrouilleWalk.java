@@ -1,10 +1,8 @@
 package contrib.utils.components.ai.idle;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
-
 import contrib.utils.components.ai.AITools;
 import contrib.utils.components.ai.IIdleAI;
-
 import core.Entity;
 import core.Game;
 import core.components.PositionComponent;
@@ -20,8 +18,6 @@ import java.util.Random;
 public class PatrouilleWalk implements IIdleAI {
 
     private static final Random random = new Random();
-
-
 
     public enum MODE {
         /** Walks to a random checkpoint. */

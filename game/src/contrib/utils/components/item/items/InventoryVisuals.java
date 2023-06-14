@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 import static java.lang.System.out;
 
-
 public class InventoryVisuals {
     static Scanner scan = new Scanner(java.lang.System.in);
 
@@ -25,7 +24,8 @@ public class InventoryVisuals {
      * @param e From entity prints InventoryComponent
      */
     public static void print(Entity e) {
-        InventoryComponent invc = (InventoryComponent) e.getComponent(InventoryComponent.class).orElseThrow();
+        InventoryComponent invc =
+                (InventoryComponent) e.getComponent(InventoryComponent.class).orElseThrow();
         Game.systems.forEach(System::stop);
 
         printInventory(invc);
@@ -45,7 +45,7 @@ public class InventoryVisuals {
             item = invc.getItems().get(itemIndex - 2);
         }
 
-        if (item == null){
+        if (item == null) {
             cancelPrint();
             return;
         }
@@ -71,7 +71,8 @@ public class InventoryVisuals {
                     item.getOnUse().onUse(e, item);
             }
             case "drop" -> {
-                PositionComponent pc = (PositionComponent) e.getComponent(PositionComponent.class).orElseThrow();
+                PositionComponent pc =
+                        (PositionComponent) e.getComponent(PositionComponent.class).orElseThrow();
                 item.getOnDrop().onDrop(e, item, pc.getPosition());
             }
             case "inspect" -> out.println("\n" + item.getDescription() + "\n");
@@ -93,18 +94,14 @@ public class InventoryVisuals {
         out.println("Equipment slot:");
         if (invc.getEquipment() != null)
             out.println("  " + invc.getEquipment().getItemName() + "\n");
-        else
-            out.println("  empty\n");
+        else out.println("  empty\n");
         // skill slots
         out.println("  Skill slots:");
-        if (invc.getSkillslot1() != null)
-            out.println("0 " + invc.getSkillslot1().getItemName());
-        else
-            out.println("0 empty");
+        if (invc.getSkillslot1() != null) out.println("0 " + invc.getSkillslot1().getItemName());
+        else out.println("0 empty");
         if (invc.getSkillslot2() != null)
             out.println("1 " + invc.getSkillslot2().getItemName() + "\n");
-        else
-            out.println("1 empty\n");
+        else out.println("1 empty\n");
         // inventory
         out.println("Inventory slots:");
         for (int i = 0; i < invc.getItems().size(); i++) {
@@ -149,7 +146,8 @@ public class InventoryVisuals {
                     item.getOnUse().onUse(e, item);
             }
             case "drop" -> {
-                PositionComponent pc = (PositionComponent) e.getComponent(PositionComponent.class).orElseThrow();
+                PositionComponent pc =
+                        (PositionComponent) e.getComponent(PositionComponent.class).orElseThrow();
                 item.getOnDrop().onDrop(e, item, pc.getPosition());
             }
             case "inspect" -> out.println("\n" + item.getDescription() + "\n");

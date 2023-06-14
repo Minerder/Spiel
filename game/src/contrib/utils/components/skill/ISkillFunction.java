@@ -11,4 +11,3 @@ public interface ISkillFunction {
      */
     void execute(Entity entity);
 }
-

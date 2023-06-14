@@ -11,9 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-/**
- * Allows an Entity to carry Items
- */
+/** Allows an Entity to carry Items */
 public class InventoryComponent extends Component {
 
     private final List<ItemData> inventory;
@@ -26,7 +24,7 @@ public class InventoryComponent extends Component {
     /**
      * creates a new InventoryComponent
      *
-     * @param entity  the Entity where this Component should be added to
+     * @param entity the Entity where this Component should be added to
      * @param maxSize the maximal size of the inventory
      */
     public InventoryComponent(Entity entity, int maxSize) {
@@ -45,32 +43,34 @@ public class InventoryComponent extends Component {
     public boolean addItem(ItemData itemData) {
         if (inventory.size() >= maxSize) {
             for (ItemData item : inventory) {
-                if (item instanceof Bag && !(itemData instanceof Bag) && ((Bag) item).filledSlots() < ((Bag) item).getMaxSize()) {
+                if (item instanceof Bag
+                        && !(itemData instanceof Bag)
+                        && ((Bag) item).filledSlots() < ((Bag) item).getMaxSize()) {
                     inventoryLogger.log(
-                        CustomLogLevel.DEBUG,
-                        "Item '"
-                            + this.getClass().getSimpleName()
-                            + "' was added to the inventory of a bag from entity '"
-                            + entity.getClass().getSimpleName()
-                            + "'.");
+                            CustomLogLevel.DEBUG,
+                            "Item '"
+                                    + this.getClass().getSimpleName()
+                                    + "' was added to the inventory of a bag from entity '"
+                                    + entity.getClass().getSimpleName()
+                                    + "'.");
                     return ((Bag) item).addItem(itemData);
                 }
             }
             return false;
         }
         inventoryLogger.log(
-            CustomLogLevel.DEBUG,
-            "Item '"
-                + this.getClass().getSimpleName()
-                + "' was added to the inventory of entity '"
-                + entity.getClass().getSimpleName()
-                + "'.");
+                CustomLogLevel.DEBUG,
+                "Item '"
+                        + this.getClass().getSimpleName()
+                        + "' was added to the inventory of entity '"
+                        + entity.getClass().getSimpleName()
+                        + "'.");
         return inventory.add(itemData);
     }
 
     /**
-     * Removes the given item from the inventory if the item is in the inventory.
-     * Else it gets removed from the bag that contains the item.
+     * Removes the given item from the inventory if the item is in the inventory. Else it gets
+     * removed from the bag that contains the item.
      *
      * @param itemData the item which should be removed
      * @return true if the element was removed, otherwise false
@@ -78,23 +78,24 @@ public class InventoryComponent extends Component {
     public boolean removeItem(ItemData itemData) {
         if (inventory.contains(itemData)) {
             inventoryLogger.log(
-                CustomLogLevel.DEBUG,
-                "Removing item '"
-                    + this.getClass().getSimpleName()
-                    + "' from inventory of entity '"
-                    + entity.getClass().getSimpleName()
-                    + "'.");
+                    CustomLogLevel.DEBUG,
+                    "Removing item '"
+                            + this.getClass().getSimpleName()
+                            + "' from inventory of entity '"
+                            + entity.getClass().getSimpleName()
+                            + "'.");
             return inventory.remove(itemData);
         } else {
             for (ItemData item : inventory) {
-                if (item.getItemKind() == ItemKind.BAG && ((Bag) item).getItems().contains(itemData)) {
+                if (item.getItemKind() == ItemKind.BAG
+                        && ((Bag) item).getItems().contains(itemData)) {
                     inventoryLogger.log(
-                        CustomLogLevel.DEBUG,
-                        "Removing item '"
-                            + this.getClass().getSimpleName()
-                            + "' from a bag from entity '"
-                            + entity.getClass().getSimpleName()
-                            + "'.");
+                            CustomLogLevel.DEBUG,
+                            "Removing item '"
+                                    + this.getClass().getSimpleName()
+                                    + "' from a bag from entity '"
+                                    + entity.getClass().getSimpleName()
+                                    + "'.");
                     return ((Bag) item).removeItem(itemData);
                 }
             }

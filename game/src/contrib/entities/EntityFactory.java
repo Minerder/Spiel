@@ -49,19 +49,19 @@ public class EntityFactory {
         Animation idleLeft = AnimationBuilder.buildAnimation(pathToIdleLeft);
         new DrawComponent(hero, idleLeft, idleRight);
         new CollideComponent(
-            hero,
-            (you, other, direction) -> System.out.println("heroCollisionEnter"),
-            (you, other, direction) -> System.out.println("heroCollisionLeave"));
+                hero,
+                (you, other, direction) -> System.out.println("heroCollisionEnter"),
+                (you, other, direction) -> System.out.println("heroCollisionLeave"));
         new HealthComponent(
-            hero,
-            20,
-            hero2 -> new GameOverScreen(),
-            AnimationBuilder.buildAnimation("character/knight/hit"),
-            AnimationBuilder.buildAnimation("character/knight/hit"));
+                hero,
+                20,
+                hero2 -> new GameOverScreen(),
+                AnimationBuilder.buildAnimation("character/knight/hit"),
+                AnimationBuilder.buildAnimation("character/knight/hit"));
         new PlayerComponent(hero);
         SkillComponent sc = new SkillComponent(hero, 5);
         new XPComponent(hero, new HeroLevelUp());
-        InventoryComponent invc = new InventoryComponent(hero, 2);
+        InventoryComponent invc = new InventoryComponent(hero, 20);
         ItemData sword = ItemFactory.getSpecificSword(0);
         invc.setEquipment(sword);
         sc.addSkill(sword.getSkill());
@@ -82,8 +82,8 @@ public class EntityFactory {
     public static Entity getChest() {
         List<ItemData> itemData = ItemDataGenerator.generateRandomItems(3);
         return getChest(
-            itemData,
-            Game.currentLevel.getRandomTile(LevelElement.FLOOR).getCoordinate().toPoint());
+                itemData,
+                Game.currentLevel.getRandomTile(LevelElement.FLOOR).getCoordinate().toPoint());
     }
 
     /**
@@ -100,24 +100,24 @@ public class EntityFactory {
     public static Entity getChest(List<ItemData> itemData, Point position) {
         final float defaultInteractionRadius = 1f;
         final List<String> DEFAULT_CLOSED_ANIMATION_FRAMES =
-            List.of("objects/treasurechest/chest_full_open_anim_f0.png");
+                List.of("objects/treasurechest/chest_full_open_anim_f0.png");
         final List<String> DEFAULT_OPENING_ANIMATION_FRAMES =
-            List.of(
-                "objects/treasurechest/chest_full_open_anim_f0.png",
-                "objects/treasurechest/chest_full_open_anim_f1.png",
-                "objects/treasurechest/chest_full_open_anim_f2.png",
-                "objects/treasurechest/chest_empty_open_anim_f2.png");
+                List.of(
+                        "objects/treasurechest/chest_full_open_anim_f0.png",
+                        "objects/treasurechest/chest_full_open_anim_f1.png",
+                        "objects/treasurechest/chest_full_open_anim_f2.png",
+                        "objects/treasurechest/chest_empty_open_anim_f2.png");
 
         Entity chest = new Entity();
         new PositionComponent(chest, position);
         InventoryComponent ic = new InventoryComponent(chest, itemData.size());
         itemData.forEach(ic::addItem);
         new InteractionComponent(
-            chest, defaultInteractionRadius, false, new DropItemsInteraction());
+                chest, defaultInteractionRadius, false, new DropItemsInteraction());
         new DrawComponent(
-            chest,
-            new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 100, false),
-            new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
+                chest,
+                new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 100, false),
+                new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
         return chest;
     }
 }

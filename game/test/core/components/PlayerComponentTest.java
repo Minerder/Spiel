@@ -1,11 +1,11 @@
 package core.components;
 
-import static org.junit.Assert.*;
-
 import core.Entity;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PlayerComponentTest {
 
@@ -22,7 +22,7 @@ public class PlayerComponentTest {
         playableComponent.setPlayable(false);
         assertFalse(playableComponent.isPlayable());
     }
-/* TODO fix tests now using skillcomponent for skills
+    /* TODO fix tests now using skillcomponent for skills
     @Test
     public void setSkillSlot1() {
         Skill s = Mockito.mock(Skill.class);

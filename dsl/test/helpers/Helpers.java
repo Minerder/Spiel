@@ -2,17 +2,13 @@ package helpers;
 
 import antlr.main.DungeonDSLLexer;
 import antlr.main.DungeonDSLParser;
-
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-
 import parser.DungeonASTConverter;
-
 import runtime.GameEnvironment;
 import runtime.MemorySpace;
 import runtime.Value;
-
 import semanticAnalysis.Symbol;
 import semanticAnalysis.SymbolTableParser;
 import semanticAnalysis.types.IType;
@@ -75,7 +71,7 @@ public class Helpers {
      * @throws IOException if the file does not exist
      */
     public static parser.AST.Node getASTFromResourceFile(URL fileResourceURL)
-        throws URISyntaxException, IOException {
+            throws URISyntaxException, IOException {
         var file = new File(fileResourceURL.toURI());
         var stream = CharStreams.fromFileName(file.getAbsolutePath());
 
@@ -105,7 +101,7 @@ public class Helpers {
      * @return the {@link semanticAnalysis.SymbolTableParser.Result} of the semantic analysis
      */
     public static SymbolTableParser.Result getSymtableForASTWithLoadedTypes(
-        parser.AST.Node ast, IType[] types) {
+            parser.AST.Node ast, IType[] types) {
         var symTableParser = new SymbolTableParser();
         var env = new GameEnvironment();
         env.loadTypes(types);

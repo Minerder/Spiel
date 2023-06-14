@@ -6,7 +6,7 @@ import contrib.utils.components.ai.IIdleAI;
 import core.Entity;
 import core.level.Tile;
 
-public class FollowHero implements IIdleAI{
+public class FollowHero implements IIdleAI {
 
     private final float detectionRange;
     private final RadiusWalk defaultIdle = new RadiusWalk(3, 2);

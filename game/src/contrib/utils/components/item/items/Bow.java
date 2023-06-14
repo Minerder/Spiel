@@ -61,39 +61,51 @@ public class Bow extends ItemData implements IOnCollect {
             default -> throw new IllegalStateException("Unexpected value");
         }
 
-        Skill skill = new Skill(new BouncingArrowSkill(SkillTools::getCursorPositionAsPoint, damage, bounceAmount), 1);
+        Skill skill =
+                new Skill(
+                        new BouncingArrowSkill(
+                                SkillTools::getCursorPositionAsPoint, damage, bounceAmount),
+                        1);
 
-        return new ItemData(ItemClassification.Basic,
-            ItemKind.BOW,
-            inventoryTexture,
-            worldTexture,
-            itemName,
-            itemDesc,
-            this,
-            ItemData::defaultDrop,
-            null,
-            null,
-            skill);
+        return new ItemData(
+                ItemClassification.Basic,
+                ItemKind.BOW,
+                inventoryTexture,
+                worldTexture,
+                itemName,
+                itemDesc,
+                this,
+                ItemData::defaultDrop,
+                null,
+                null,
+                skill);
     }
 
     /**
-     * Replaces the WorldItemEntity with the current item in equipment slot and updates the SkillComponent.
-     * Creates a new WorldEntity for the old item in equipment slot
+     * Replaces the WorldItemEntity with the current item in equipment slot and updates the
+     * SkillComponent. Creates a new WorldEntity for the old item in equipment slot
      *
      * @param WorldItemEntity Item that gets collected
-     * @param whoCollides     Entity that collects the item
+     * @param whoCollides Entity that collects the item
      */
     @Override
     public void onCollect(Entity WorldItemEntity, Entity whoCollides) {
-        InventoryComponent inventoryComponent = (InventoryComponent) whoCollides.getComponent(InventoryComponent.class).orElseThrow();
-        SkillComponent skillComponent = (SkillComponent) whoCollides.getComponent(SkillComponent.class).orElseThrow();
-        PositionComponent positionComponent = (PositionComponent) whoCollides.getComponent(PositionComponent.class).orElseThrow();
-        ItemComponent item = (ItemComponent) WorldItemEntity.getComponent(ItemComponent.class).orElseThrow();
+        InventoryComponent inventoryComponent =
+                (InventoryComponent)
+                        whoCollides.getComponent(InventoryComponent.class).orElseThrow();
+        SkillComponent skillComponent =
+                (SkillComponent) whoCollides.getComponent(SkillComponent.class).orElseThrow();
+        PositionComponent positionComponent =
+                (PositionComponent) whoCollides.getComponent(PositionComponent.class).orElseThrow();
+        ItemComponent item =
+                (ItemComponent) WorldItemEntity.getComponent(ItemComponent.class).orElseThrow();
 
         Game.removeEntity(WorldItemEntity);
 
-        skillComponent.replaceSkill(inventoryComponent.getEquipment().getSkill(), item.getItemData().getSkill());
-        WorldItemBuilder.buildWorldItem(inventoryComponent.getEquipment(), positionComponent.getPosition());
+        skillComponent.replaceSkill(
+                inventoryComponent.getEquipment().getSkill(), item.getItemData().getSkill());
+        WorldItemBuilder.buildWorldItem(
+                inventoryComponent.getEquipment(), positionComponent.getPosition());
         inventoryComponent.setEquipment(item.getItemData());
     }
 }

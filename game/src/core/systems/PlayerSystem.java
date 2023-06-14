@@ -13,33 +13,39 @@ import core.components.PlayerComponent;
 import core.components.VelocityComponent;
 import core.utils.components.MissingComponentException;
 
-/**
- * Used to control the player
- */
+/** Used to control the player */
 public class PlayerSystem extends System {
 
-    private record KSData(Entity e, PlayerComponent pc, VelocityComponent vc, SkillComponent sc, XPComponent xc) {
-    }
+    private record KSData(
+            Entity e,
+            PlayerComponent pc,
+            VelocityComponent vc,
+            SkillComponent sc,
+            XPComponent xc) {}
 
     @Override
     public void update() {
         Game.getEntities().stream()
-            .flatMap(e -> e.getComponent(PlayerComponent.class).stream())
-            .map(pc -> buildDataObject((PlayerComponent) pc))
-            .forEach(this::checkKeystroke);
+                .flatMap(e -> e.getComponent(PlayerComponent.class).stream())
+                .map(pc -> buildDataObject((PlayerComponent) pc))
+                .forEach(this::checkKeystroke);
     }
 
     private void checkKeystroke(KSData ksd) {
-        if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_UP.get()) && Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_RIGHT.get())) {
+        if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_UP.get())
+                && Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_RIGHT.get())) {
             ksd.vc.setCurrentYVelocity(0.75f * ksd.vc.getYVelocity());
             ksd.vc.setCurrentXVelocity(0.75f * ksd.vc.getXVelocity());
-        } else if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_UP.get()) && Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_LEFT.get())) {
+        } else if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_UP.get())
+                && Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_LEFT.get())) {
             ksd.vc.setCurrentYVelocity(0.75f * ksd.vc.getYVelocity());
             ksd.vc.setCurrentXVelocity(-0.75f * ksd.vc.getXVelocity());
-        } else if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_DOWN.get()) && Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_RIGHT.get())) {
+        } else if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_DOWN.get())
+                && Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_RIGHT.get())) {
             ksd.vc.setCurrentYVelocity(-0.75f * ksd.vc.getYVelocity());
             ksd.vc.setCurrentXVelocity(0.75f * ksd.vc.getXVelocity());
-        } else if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_DOWN.get()) && Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_LEFT.get())) {
+        } else if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_DOWN.get())
+                && Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_LEFT.get())) {
             ksd.vc.setCurrentYVelocity(-0.75f * ksd.vc.getYVelocity());
             ksd.vc.setCurrentXVelocity(-0.75f * ksd.vc.getXVelocity());
         } else if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_UP.get()))
@@ -53,13 +59,13 @@ public class PlayerSystem extends System {
 
         if (Gdx.input.isKeyJustPressed(KeyboardConfig.INTERACT_WORLD.get()))
             InteractionTool.interactWithClosestInteractable(ksd.e);
-            // check skills
-        else if (Gdx.input.isKeyPressed(KeyboardConfig.EQUIPMENT_SLOT.get()) && ksd.sc.getSkillFromList(0) != null)
-            ksd.sc.getSkillFromList(0).execute(ksd.e);
-        else if (Gdx.input.isKeyPressed(KeyboardConfig.SKILL_SLOT_1.get()) && ksd.sc.getSkillFromList(1) != null)
-            ksd.sc.getSkillFromList(1).execute(ksd.e);
-        else if (Gdx.input.isKeyPressed(KeyboardConfig.SKILL_SLOT_2.get()) && ksd.sc.getSkillFromList(2) != null)
-            ksd.sc.getSkillFromList(2).execute(ksd.e);
+        // check skills
+        else if (Gdx.input.isKeyPressed(KeyboardConfig.EQUIPMENT_SLOT.get())
+                && ksd.sc.getSkillFromList(0) != null) ksd.sc.getSkillFromList(0).execute(ksd.e);
+        else if (Gdx.input.isKeyPressed(KeyboardConfig.SKILL_SLOT_1.get())
+                && ksd.sc.getSkillFromList(1) != null) ksd.sc.getSkillFromList(1).execute(ksd.e);
+        else if (Gdx.input.isKeyPressed(KeyboardConfig.SKILL_SLOT_2.get())
+                && ksd.sc.getSkillFromList(2) != null) ksd.sc.getSkillFromList(2).execute(ksd.e);
         // open inventory
         if (Gdx.input.isKeyPressed(KeyboardConfig.INVENTORY_OPEN.get())) {
             InventoryVisuals.print(ksd.e);
@@ -70,20 +76,17 @@ public class PlayerSystem extends System {
         Entity e = pc.getEntity();
 
         VelocityComponent vc =
-            (VelocityComponent)
-                e.getComponent(VelocityComponent.class)
-                    .orElseThrow(PlayerSystem::missingVC);
+                (VelocityComponent)
+                        e.getComponent(VelocityComponent.class)
+                                .orElseThrow(PlayerSystem::missingVC);
 
         SkillComponent sc =
-            (SkillComponent)
-                e.getComponent(SkillComponent.class)
-                    .orElseThrow(PlayerSystem::missingSC);
+                (SkillComponent)
+                        e.getComponent(SkillComponent.class).orElseThrow(PlayerSystem::missingSC);
 
         XPComponent xc =
-            (XPComponent)
-                e.getComponent(XPComponent.class)
-                    .orElseThrow(PlayerSystem::missingXC);
-
+                (XPComponent)
+                        e.getComponent(XPComponent.class).orElseThrow(PlayerSystem::missingXC);
 
         return new KSData(e, pc, vc, sc, xc);
     }

@@ -16,7 +16,7 @@ public class SkillComponent extends Component {
     /**
      * Creates a new SkillComponent containing a list of skills
      *
-     * @param entity  associated entity
+     * @param entity associated entity
      * @param maxMana max mana of the entity
      */
     public SkillComponent(Entity entity, int maxMana) {
@@ -93,9 +93,7 @@ public class SkillComponent extends Component {
         return skillSet.get(index);
     }
 
-    /**
-     * Reduces the cooldown of each skill by 1 frame
-     */
+    /** Reduces the cooldown of each skill by 1 frame */
     public void reduceAllCoolDowns() {
         for (Skill skill : skillSet) skill.reduceCoolDown();
     }

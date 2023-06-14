@@ -1,13 +1,10 @@
 package contrib.components;
 
-
 import contrib.utils.components.skill.IUpdateFunction;
 import core.Component;
 import core.Entity;
 
-/**
- * Enables an Entity to have an update function wich gets called every frame
- */
+/** Enables an Entity to have an update function wich gets called every frame */
 public class UpdateComponent extends Component {
     private final IUpdateFunction updateFunction;
 
@@ -18,6 +15,7 @@ public class UpdateComponent extends Component {
 
     /**
      * Executes the update function
+     *
      * @param entity
      */
     public void update(Entity entity) {

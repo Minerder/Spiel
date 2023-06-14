@@ -3,7 +3,6 @@ package contrib.utils.components.skill;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-
 import contrib.components.HealthComponent;
 import core.Entity;
 import core.Game;
@@ -19,12 +18,12 @@ public class SkillTools {
      * calculates the last position in range regardless of aimed position
      *
      * @param startPoint position to start the calculation
-     * @param aimPoint   point to aim for
-     * @param range      range from start to
+     * @param aimPoint point to aim for
+     * @param range range from start to
      * @return last position in range if you follow the directon from startPoint to aimPoint
      */
     public static Point calculateLastPositionInRange(
-        Point startPoint, Point aimPoint, float range) {
+            Point startPoint, Point aimPoint, float range) {
 
         // calculate distance from startPoint to aimPoint
         float dx = aimPoint.x - startPoint.x;
@@ -63,7 +62,7 @@ public class SkillTools {
      */
     public static Point getCursorPositionAsPoint() {
         Vector3 mousePosition =
-            Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+                Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         return new Point(mousePosition.x, mousePosition.y);
     }
 
@@ -89,7 +88,7 @@ public class SkillTools {
     public static Point getHeroPosition() {
         Entity h = Game.getHero().orElseThrow();
         PositionComponent pc =
-            (PositionComponent) h.getComponent(PositionComponent.class).orElseThrow();
+                (PositionComponent) h.getComponent(PositionComponent.class).orElseThrow();
         return pc.getPosition();
     }
 
@@ -101,19 +100,19 @@ public class SkillTools {
      */
     public static Point getNearestEntityPosition(Entity startingEntity) {
         PositionComponent startingEntitypc =
-            (PositionComponent)
-                startingEntity.getComponent(PositionComponent.class).orElseThrow();
+                (PositionComponent)
+                        startingEntity.getComponent(PositionComponent.class).orElseThrow();
         Point nearestEntityPoint = SkillTools.getCursorPositionAsPoint();
         float max = 999f;
         for (Entity targetEntitys : Game.getEntities()) {
             // continue only if the Entity has a Healthcomponent and Positioncomponent
             if (targetEntitys.getComponent(HealthComponent.class).orElse(null) == null
-                || targetEntitys.getComponent(PositionComponent.class).orElse(null) == null)
+                    || targetEntitys.getComponent(PositionComponent.class).orElse(null) == null)
                 continue;
 
             PositionComponent targetEntitypc =
-                (PositionComponent)
-                    targetEntitys.getComponent(PositionComponent.class).orElseThrow();
+                    (PositionComponent)
+                            targetEntitys.getComponent(PositionComponent.class).orElseThrow();
             Point startingEntityPoint = startingEntitypc.getPosition();
             Point targetEntityPoint = targetEntitypc.getPosition();
             float distance = Point.calculateDistance(startingEntityPoint, targetEntityPoint);
@@ -129,20 +128,22 @@ public class SkillTools {
     /**
      * Pushes an entity back by a set factor after being hit
      *
-     * @param projectileStartPosition position from where the projectile which hit the entity started
+     * @param projectileStartPosition position from where the projectile which hit the entity
+     *     started
      * @param entity the entity which should receive knockback
      */
     public static void receiveKnockback(Point projectileStartPosition, Entity entity) {
-        PositionComponent epc = (PositionComponent) entity.getComponent(PositionComponent.class).orElseThrow();
+        PositionComponent epc =
+                (PositionComponent) entity.getComponent(PositionComponent.class).orElseThrow();
         Point entityPosition = epc.getPosition();
         Point direction = Point.getUnitDirectionalVector(entityPosition, projectileStartPosition);
 
         entity.getComponent(VelocityComponent.class)
-            .ifPresent(
-                vc -> {
-                    ((VelocityComponent) vc).setCurrentXVelocity(direction.x * 0.4f);
-                    ((VelocityComponent) vc).setCurrentYVelocity(direction.y * 0.4f);
-                });
+                .ifPresent(
+                        vc -> {
+                            ((VelocityComponent) vc).setCurrentXVelocity(direction.x * 0.4f);
+                            ((VelocityComponent) vc).setCurrentYVelocity(direction.y * 0.4f);
+                        });
     }
 
     /**
@@ -155,18 +156,18 @@ public class SkillTools {
     public static Entity[] getEntitiesInRange(Entity startingEntity, float range) {
         ArrayList<Entity> entities = new ArrayList<>();
         PositionComponent startingEntitypc =
-            (PositionComponent)
-                startingEntity.getComponent(PositionComponent.class).orElseThrow();
+                (PositionComponent)
+                        startingEntity.getComponent(PositionComponent.class).orElseThrow();
 
         for (Entity targetEntity : Game.getEntities()) {
             // continue only if the Entity has a Healthcomponent and Positioncomponent
             if (targetEntity.getComponent(HealthComponent.class).orElse(null) == null
-                || targetEntity.getComponent(PositionComponent.class).orElse(null) == null)
+                    || targetEntity.getComponent(PositionComponent.class).orElse(null) == null)
                 continue;
 
             PositionComponent targetEntitypc =
-                (PositionComponent)
-                    targetEntity.getComponent(PositionComponent.class).orElseThrow();
+                    (PositionComponent)
+                            targetEntity.getComponent(PositionComponent.class).orElseThrow();
             Point startingEntityPoint = startingEntitypc.getPosition();
             Point targetEntityPoint = targetEntitypc.getPosition();
             float distance = Point.calculateDistance(startingEntityPoint, targetEntityPoint);

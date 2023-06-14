@@ -1,17 +1,17 @@
 package contrib.entities;
 
-import contrib.components.XPComponent;
-import contrib.utils.components.ai.AITools;
-import core.Game;
-import dslToGame.AnimationBuilder;
-import core.components.PositionComponent;
-import core.Entity;
-import core.components.DrawComponent;
 import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
+import contrib.components.XPComponent;
+import contrib.utils.components.ai.AITools;
+import core.Entity;
+import core.Game;
+import core.components.DrawComponent;
 import core.components.PlayerComponent;
+import core.components.PositionComponent;
+import dslToGame.AnimationBuilder;
 
-public class Gravestone extends Entity{
+public class Gravestone extends Entity {
     private static final Gravestone gravestone = new Gravestone();
     private final float detectionRange = 3f;
 
@@ -32,35 +32,37 @@ public class Gravestone extends Entity{
 
     private void setupCollideComponent() {
         new CollideComponent(
-            this,
-            (a, b, from) -> {
-                if (b.getComponent(PlayerComponent.class).isPresent()) {
-                    if (AITools.entityInRange(Ghost.getInstance(), b, detectionRange)) {
-                        b.getComponent(XPComponent.class)
-                            .ifPresent(
-                                xpc -> ((XPComponent) xpc).addXP(10));
+                this,
+                (a, b, from) -> {
+                    if (b.getComponent(PlayerComponent.class).isPresent()) {
+                        if (AITools.entityInRange(Ghost.getInstance(), b, detectionRange)) {
+                            b.getComponent(XPComponent.class)
+                                    .ifPresent(xpc -> ((XPComponent) xpc).addXP(10));
 
-                        b.getComponent(HealthComponent.class)
-                            .ifPresent(
-                                hc -> ((HealthComponent) hc).setCurrentHealthpoints(((HealthComponent)hc).getMaximalHealthpoints()));
+                            b.getComponent(HealthComponent.class)
+                                    .ifPresent(
+                                            hc ->
+                                                    ((HealthComponent) hc)
+                                                            .setCurrentHealthpoints(
+                                                                    ((HealthComponent) hc)
+                                                                            .getMaximalHealthpoints()));
 
-                        Game.removeEntity(this);
-                        Game.removeEntity(Ghost.getInstance());
+                            Game.removeEntity(this);
+                            Game.removeEntity(Ghost.getInstance());
+                        }
                     }
-                }
-            },
-            null);
+                },
+                null);
     }
 
-    /**
-     * Sets a new position for the gravestone.
-     */
+    /** Sets a new position for the gravestone. */
     public void setNewPosition() {
         setupPositionComponent();
     }
 
     /**
      * Returns the instance of the gravestone.
+     *
      * @return The instance of the gravestone
      */
     public static Gravestone getInstance() {

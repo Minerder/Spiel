@@ -22,25 +22,30 @@ public class ArrowTrap extends Trap implements ITargetSelection {
     private final SkillComponent sc;
     private int direction; // direction in which the trap shoots 1 = left, -1 = right, 0 = down
 
-    /**
-     * Creates a new ArrowTrap which shoots arrows at the player
-     */
+    /** Creates a new ArrowTrap which shoots arrows at the player */
     public ArrowTrap() {
         super("dungeon/traps/arrowTrap/arrowTrap_N.png", "dungeon/traps/arrowTrap/arrowTrap_N.png");
         setupPositionComponent();
         sc = new SkillComponent(this);
-        sc.addSkill(new Skill(new BouncingArrowSkill(this, new Damage(1, DamageType.PHYSICAL, null), 0), 2));
+        sc.addSkill(
+                new Skill(
+                        new BouncingArrowSkill(this, new Damage(1, DamageType.PHYSICAL, null), 0),
+                        2));
         generateHitbox();
         setupCollideComponent();
     }
 
     private void setupCollideComponent() {
-        new CollideComponent(this, this.offset, this.size,
-            (a, b, from) -> {
-                if (b.getComponent(HealthComponent.class).isPresent()) {
-                    sc.getSkillFromList(0).execute(a);
-                }
-            }, null);
+        new CollideComponent(
+                this,
+                this.offset,
+                this.size,
+                (a, b, from) -> {
+                    if (b.getComponent(HealthComponent.class).isPresent()) {
+                        sc.getSkillFromList(0).execute(a);
+                    }
+                },
+                null);
     }
 
     @Override
@@ -58,19 +63,31 @@ public class ArrowTrap extends Trap implements ITargetSelection {
         // searches for the nearest wall traveling 10 tiles
         // searches up, left and right
         for (int i = 0; i < 10; i++) {
-            if (Game.currentLevel.getTileAt(new Point(x + i + 1, y).toCoordinate()).getLevelElement() == LevelElement.WALL) {
+            if (Game.currentLevel
+                            .getTileAt(new Point(x + i + 1, y).toCoordinate())
+                            .getLevelElement()
+                    == LevelElement.WALL) {
                 pcc.setPosition(new Point(newX + i + 0.4f, newY));
-                super.setIdleAnimation(AnimationBuilder.buildAnimation("dungeon/traps/arrowTrap/arrowTrap_E.png"));
+                super.setIdleAnimation(
+                        AnimationBuilder.buildAnimation("dungeon/traps/arrowTrap/arrowTrap_E.png"));
                 this.direction = 1;
                 break;
-            } else if (Game.currentLevel.getTileAt(new Point(x, y + i + 1).toCoordinate()).getLevelElement() == LevelElement.WALL) {
+            } else if (Game.currentLevel
+                            .getTileAt(new Point(x, y + i + 1).toCoordinate())
+                            .getLevelElement()
+                    == LevelElement.WALL) {
                 pcc.setPosition(new Point(newX, newY + i + 0.5f));
-                super.setIdleAnimation(AnimationBuilder.buildAnimation("dungeon/traps/arrowTrap/arrowTrap_N.png"));
+                super.setIdleAnimation(
+                        AnimationBuilder.buildAnimation("dungeon/traps/arrowTrap/arrowTrap_N.png"));
                 this.direction = 0;
                 break;
-            } else if (Game.currentLevel.getTileAt(new Point(x - i - 1, y).toCoordinate()).getLevelElement() == LevelElement.WALL) {
+            } else if (Game.currentLevel
+                            .getTileAt(new Point(x - i - 1, y).toCoordinate())
+                            .getLevelElement()
+                    == LevelElement.WALL) {
                 pcc.setPosition(new Point(newX - i - 0.5f, newY));
-                super.setIdleAnimation(AnimationBuilder.buildAnimation("dungeon/traps/arrowTrap/arrowTrap_W.png"));
+                super.setIdleAnimation(
+                        AnimationBuilder.buildAnimation("dungeon/traps/arrowTrap/arrowTrap_W.png"));
                 this.direction = -1;
                 break;
             }
@@ -79,15 +96,15 @@ public class ArrowTrap extends Trap implements ITargetSelection {
 
     private void generateHitbox() {
         if (direction == 1) {
-            //left 5 tiles
+            // left 5 tiles
             this.size = new Point(5, 0.5f);
             this.offset = new Point(-4, 0.2f);
         } else if (direction == -1) {
-            //right 5 tiles
+            // right 5 tiles
             this.size = new Point(5, 0.5f);
             this.offset = new Point(0, 0);
         } else if (direction == 0) {
-            //down 5 tiles
+            // down 5 tiles
             this.size = new Point(0.5f, 5);
             this.offset = new Point(0.2f, -4);
         }
@@ -114,4 +131,3 @@ public class ArrowTrap extends Trap implements ITargetSelection {
         }
     }
 }
-
