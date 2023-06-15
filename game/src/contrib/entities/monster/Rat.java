@@ -4,8 +4,10 @@ import contrib.components.AIComponent;
 import contrib.utils.components.ai.idle.PatrouilleWalk;
 import contrib.utils.components.ai.idle.SleepingAI;
 import contrib.utils.components.ai.transition.SelfDefendTransition;
+
 import core.components.DrawComponent;
 import core.utils.components.draw.Animation;
+
 import dslToGame.AnimationBuilder;
 
 public class Rat extends Monster {

@@ -2,8 +2,10 @@ package core.hud;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 import core.Game;
 import core.System;
+
 import quizquestion.QuizQuestion;
 
 /** Contains Constructor, which immediately creates the dialogue including all its elements. */

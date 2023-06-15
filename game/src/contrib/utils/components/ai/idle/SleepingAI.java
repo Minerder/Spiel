@@ -3,6 +3,7 @@ package contrib.utils.components.ai.idle;
 import contrib.components.AIComponent;
 import contrib.utils.components.ai.AITools;
 import contrib.utils.components.ai.IIdleAI;
+
 import core.Entity;
 import core.components.DrawComponent;
 

@@ -5,7 +5,9 @@ import contrib.components.InventoryComponent;
 import contrib.utils.components.item.IOnUse;
 import contrib.utils.components.item.ItemClassification;
 import contrib.utils.components.item.ItemData;
+
 import core.Entity;
+
 import dslToGame.AnimationBuilder;
 
 public class HealthPotion extends ItemData implements IOnUse {

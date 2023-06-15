@@ -8,10 +8,12 @@ import contrib.utils.components.health.DamageType;
 import contrib.utils.components.skill.ITargetSelection;
 import contrib.utils.components.skill.Skill;
 import contrib.utils.components.skill.skills.BouncingArrowSkill;
+
 import core.Game;
 import core.components.PositionComponent;
 import core.level.utils.LevelElement;
 import core.utils.Point;
+
 import dslToGame.AnimationBuilder;
 
 public class ArrowTrap extends Trap implements ITargetSelection {

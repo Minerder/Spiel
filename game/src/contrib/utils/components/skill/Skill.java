@@ -1,6 +1,7 @@
 package contrib.utils.components.skill;
 
 import contrib.components.SkillComponent;
+
 import core.Entity;
 import core.utils.Constants;
 

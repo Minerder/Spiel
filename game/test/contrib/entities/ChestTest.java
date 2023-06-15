@@ -1,10 +1,14 @@
 package contrib.entities;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import contrib.components.CollideComponent;
 import contrib.components.InteractionComponent;
 import contrib.components.InventoryComponent;
 import contrib.utils.components.item.ItemData;
 import contrib.utils.components.item.ItemDataGenerator;
+
 import core.Component;
 import core.Entity;
 import core.Game;
@@ -14,13 +18,11 @@ import core.level.TileLevel;
 import core.level.utils.DesignLabel;
 import core.level.utils.LevelElement;
 import core.utils.Point;
+
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class ChestTest {
 

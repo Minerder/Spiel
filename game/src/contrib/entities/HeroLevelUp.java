@@ -7,6 +7,7 @@ import contrib.utils.components.skill.SkillTools;
 import contrib.utils.components.skill.skills.FrostNovaSkill;
 import contrib.utils.components.skill.skills.GravityStormSkill;
 import contrib.utils.components.xp.ILevelUp;
+
 import core.Game;
 
 public class HeroLevelUp implements ILevelUp {

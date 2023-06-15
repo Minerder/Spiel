@@ -6,6 +6,7 @@ import contrib.components.ProjectileComponent;
 import contrib.components.UpdateComponent;
 import contrib.utils.components.collision.ICollide;
 import contrib.utils.components.health.Damage;
+
 import core.Entity;
 import core.Game;
 import core.components.DrawComponent;
@@ -14,6 +15,7 @@ import core.components.VelocityComponent;
 import core.utils.Point;
 import core.utils.components.MissingComponentException;
 import core.utils.components.draw.Animation;
+
 import dslToGame.AnimationBuilder;
 
 public abstract class DamageProjectileSkill implements ISkillFunction {

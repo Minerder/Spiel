@@ -4,6 +4,7 @@ import contrib.components.InteractionComponent;
 import contrib.components.ItemComponent;
 import contrib.utils.components.interaction.IInteraction;
 import contrib.utils.components.item.ItemData;
+
 import core.Entity;
 import core.Game;
 import core.components.DrawComponent;

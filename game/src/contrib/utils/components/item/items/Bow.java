@@ -12,10 +12,12 @@ import contrib.utils.components.item.ItemData;
 import contrib.utils.components.skill.Skill;
 import contrib.utils.components.skill.SkillTools;
 import contrib.utils.components.skill.skills.BouncingArrowSkill;
+
 import core.Entity;
 import core.Game;
 import core.components.PositionComponent;
 import core.utils.components.draw.Animation;
+
 import dslToGame.AnimationBuilder;
 
 import java.util.Random;

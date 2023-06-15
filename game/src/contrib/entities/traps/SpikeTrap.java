@@ -2,6 +2,7 @@ package contrib.entities.traps;
 
 import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
+
 import core.utils.Point;
 
 public class SpikeTrap extends Trap {

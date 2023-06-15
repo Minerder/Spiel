@@ -1,6 +1,7 @@
 package contrib.components;
 
 import contrib.utils.components.skill.IUpdateFunction;
+
 import core.Component;
 import core.Entity;
 

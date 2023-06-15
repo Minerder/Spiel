@@ -4,6 +4,7 @@ import contrib.utils.components.health.Damage;
 import contrib.utils.components.health.DamageType;
 import contrib.utils.components.skill.DamageProjectileSkill;
 import contrib.utils.components.skill.ITargetSelection;
+
 import core.utils.Point;
 
 public class HomingSparkSkill extends DamageProjectileSkill {

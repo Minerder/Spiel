@@ -6,6 +6,7 @@ import contrib.components.HealthComponent;
 import contrib.utils.components.ai.fight.CollideAI;
 import contrib.utils.components.ai.idle.PatrouilleWalk;
 import contrib.utils.components.ai.transition.RangeTransition;
+
 import core.components.PlayerComponent;
 
 public class Chort extends Monster {

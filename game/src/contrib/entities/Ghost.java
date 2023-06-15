@@ -4,10 +4,12 @@ import contrib.components.AIComponent;
 import contrib.utils.components.ai.fight.CollideAI;
 import contrib.utils.components.ai.idle.FollowHero;
 import contrib.utils.components.ai.transition.RangeTransition;
+
 import core.Entity;
 import core.components.DrawComponent;
 import core.components.PositionComponent;
 import core.components.VelocityComponent;
+
 import dslToGame.AnimationBuilder;
 
 public class Ghost extends Entity {

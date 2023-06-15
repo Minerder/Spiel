@@ -1,11 +1,13 @@
 package contrib.entities.traps;
 
 import contrib.components.InteractionComponent;
+
 import core.Entity;
 import core.components.DrawComponent;
 import core.components.PositionComponent;
 import core.utils.Point;
 import core.utils.components.draw.Animation;
+
 import dslToGame.AnimationBuilder;
 
 public class Lever extends Entity {

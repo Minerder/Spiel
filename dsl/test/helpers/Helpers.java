@@ -2,13 +2,17 @@ package helpers;
 
 import antlr.main.DungeonDSLLexer;
 import antlr.main.DungeonDSLParser;
+
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+
 import parser.DungeonASTConverter;
+
 import runtime.GameEnvironment;
 import runtime.MemorySpace;
 import runtime.Value;
+
 import semanticAnalysis.Symbol;
 import semanticAnalysis.SymbolTableParser;
 import semanticAnalysis.types.IType;

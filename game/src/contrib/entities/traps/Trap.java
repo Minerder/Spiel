@@ -5,6 +5,7 @@ import core.components.DrawComponent;
 import core.components.PositionComponent;
 import core.utils.Point;
 import core.utils.components.draw.Animation;
+
 import dslToGame.AnimationBuilder;
 
 public class Trap extends Entity {

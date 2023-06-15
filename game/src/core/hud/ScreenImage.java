@@ -3,8 +3,8 @@ package core.hud;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+
 import core.utils.Constants;
 import core.utils.Point;
 

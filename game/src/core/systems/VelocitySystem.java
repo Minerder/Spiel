@@ -2,6 +2,7 @@ package core.systems;
 
 import contrib.components.HealthComponent;
 import contrib.components.ProjectileComponent;
+
 import core.Entity;
 import core.Game;
 import core.System;

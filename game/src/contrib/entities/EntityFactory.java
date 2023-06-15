@@ -5,6 +5,7 @@ import contrib.utils.components.interaction.DropItemsInteraction;
 import contrib.utils.components.item.ItemData;
 import contrib.utils.components.item.ItemDataGenerator;
 import contrib.utils.components.item.items.ItemFactory;
+
 import core.Entity;
 import core.Game;
 import core.components.DrawComponent;
@@ -14,7 +15,9 @@ import core.components.VelocityComponent;
 import core.level.utils.LevelElement;
 import core.utils.Point;
 import core.utils.components.draw.Animation;
+
 import dslToGame.AnimationBuilder;
+
 import starter.GameOverScreen;
 
 import java.util.List;

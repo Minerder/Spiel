@@ -4,11 +4,13 @@ import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
 import contrib.components.XPComponent;
 import contrib.utils.components.skill.Skill;
+
 import core.Entity;
 import core.components.DrawComponent;
 import core.components.PositionComponent;
 import core.components.VelocityComponent;
 import core.utils.components.draw.Animation;
+
 import dslToGame.AnimationBuilder;
 
 public abstract class Monster extends Entity {

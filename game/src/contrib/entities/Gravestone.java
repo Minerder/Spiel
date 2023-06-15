@@ -4,11 +4,13 @@ import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
 import contrib.components.XPComponent;
 import contrib.utils.components.ai.AITools;
+
 import core.Entity;
 import core.Game;
 import core.components.DrawComponent;
 import core.components.PlayerComponent;
 import core.components.PositionComponent;
+
 import dslToGame.AnimationBuilder;
 
 public class Gravestone extends Entity {

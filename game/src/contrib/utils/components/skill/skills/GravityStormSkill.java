@@ -6,6 +6,7 @@ import contrib.utils.components.skill.DamageProjectileSkill;
 import contrib.utils.components.skill.ITargetSelection;
 import contrib.utils.components.skill.IUpdateFunction;
 import contrib.utils.components.skill.SkillTools;
+
 import core.Entity;
 import core.Game;
 import core.components.PositionComponent;

@@ -3,6 +3,7 @@ package contrib.components;
 import contrib.utils.components.item.ItemData;
 import contrib.utils.components.item.items.Bag;
 import contrib.utils.components.item.items.ItemKind;
+
 import core.Component;
 import core.Entity;
 import core.utils.logging.CustomLogLevel;

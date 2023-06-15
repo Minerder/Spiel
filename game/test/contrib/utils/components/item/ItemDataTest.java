@@ -1,22 +1,24 @@
 package contrib.utils.components.item;
 
+import static org.junit.Assert.*;
+
 import contrib.components.CollideComponent;
 import contrib.components.InventoryComponent;
 import contrib.configuration.ItemConfig;
 import contrib.utils.components.item.items.ItemKind;
+
 import core.Entity;
 import core.Game;
 import core.components.DrawComponent;
 import core.components.PositionComponent;
 import core.utils.Point;
 import core.utils.components.draw.Animation;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class ItemDataTest {
     @Before
