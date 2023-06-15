@@ -24,6 +24,7 @@ import contrib.systems.*;
 import core.components.PositionComponent;
 import core.configuration.Configuration;
 import core.hud.UITools;
+import core.hud.heroUI.HeroUI;
 import core.level.IOnLevelLoader;
 import core.level.Tile;
 import core.level.elements.ILevel;
@@ -162,6 +163,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
                 new LevelManager(
                         batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         levelAPI.loadLevel(LEVELSIZE);
+        controller.add(HeroUI.getHeroUI());
         createSystems();
     }
 
@@ -171,6 +173,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         entities.update();
         updateUpdateComponents();
         getHero().ifPresent(this::loadNextLevelIfEntityIsOnEndTile);
+        HeroUI.getHeroUI().update();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             pause();
@@ -210,6 +213,8 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
         spawnMonsters();
+        entities.update();
+        HeroUI.getHeroUI().createEnemyHealthBars();
     }
 
     private void spawnMonsters() {
