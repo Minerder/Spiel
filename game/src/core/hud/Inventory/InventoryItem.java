@@ -2,6 +2,7 @@ package core.hud.Inventory;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
 import contrib.utils.components.item.ItemData;
 
 public class InventoryItem extends Image {

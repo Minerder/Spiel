@@ -2,7 +2,9 @@ package core.hud.Inventory;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import contrib.utils.components.item.ItemData;
+
 import core.Game;
 
 public class InventorySlotClickListener extends ClickListener {

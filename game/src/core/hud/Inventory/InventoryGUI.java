@@ -4,8 +4,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+
 import contrib.components.InventoryComponent;
 import contrib.utils.components.item.ItemData;
+
 import core.Game;
 import core.System;
 import core.systems.PlayerSystem;

@@ -1,6 +1,7 @@
 package core.hud.Inventory;
 
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+
 import contrib.utils.components.item.items.ItemKind;
 
 public class InventorySlotTarget extends DragAndDrop.Target {

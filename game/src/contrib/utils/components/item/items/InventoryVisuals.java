@@ -1,7 +1,10 @@
 package contrib.utils.components.item.items;
 
+import static java.lang.System.out;
+
 import contrib.utils.components.item.ItemClassification;
 import contrib.utils.components.item.ItemData;
+
 import core.Entity;
 import core.Game;
 import core.System;
@@ -11,8 +14,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.lang.System.out;
 
 public class InventoryVisuals {
     static Scanner scan = new Scanner(java.lang.System.in);

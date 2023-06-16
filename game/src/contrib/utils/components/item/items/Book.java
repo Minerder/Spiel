@@ -15,10 +15,12 @@ import contrib.utils.components.skill.skills.FireballSkill;
 import contrib.utils.components.skill.skills.FrostNovaSkill;
 import contrib.utils.components.skill.skills.GravityStormSkill;
 import contrib.utils.components.skill.skills.HomingSparkSkill;
+
 import core.Entity;
 import core.Game;
 import core.utils.Point;
 import core.utils.components.draw.Animation;
+
 import dslToGame.AnimationBuilder;
 
 import java.util.Random;

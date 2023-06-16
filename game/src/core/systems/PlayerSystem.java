@@ -1,10 +1,12 @@
 package core.systems;
 
 import com.badlogic.gdx.Gdx;
+
 import contrib.components.SkillComponent;
 import contrib.components.XPComponent;
 import contrib.configuration.KeyboardConfig;
 import contrib.utils.components.interaction.InteractionTool;
+
 import core.Entity;
 import core.Game;
 import core.System;

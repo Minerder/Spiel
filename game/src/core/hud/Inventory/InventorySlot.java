@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+
 import core.utils.Constants;
 
 public class InventorySlot extends Stack {
@@ -25,7 +26,7 @@ public class InventorySlot extends Stack {
      * @param item the inventory item of the inventory slot
      */
     public void setInventoryItem(InventoryItem item) {
-        if (item != null){
+        if (item != null) {
             if (this.hasInventoryItem()) this.removeInventoryItem();
             this.add(item);
         }
