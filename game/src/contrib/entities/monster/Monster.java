@@ -62,7 +62,7 @@ public abstract class Monster extends Entity {
 
     protected abstract void setupAIComponent();
 
-    protected void setupAnimationComponent() {
+    protected void setupDrawComponent() {
         Animation idleRight = AnimationBuilder.buildAnimation(this.pathToIdleRight);
         Animation idleLeft = AnimationBuilder.buildAnimation(this.pathToIdleLeft);
         new DrawComponent(this, idleLeft, idleRight);

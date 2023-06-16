@@ -19,10 +19,7 @@ import contrib.configuration.KeyboardConfig;
 import contrib.entities.EntityFactory;
 import contrib.entities.Ghost;
 import contrib.entities.Gravestone;
-import contrib.entities.monster.Chort;
-import contrib.entities.monster.Imp;
-import contrib.entities.monster.Rat;
-import contrib.entities.monster.Skeleton;
+import contrib.entities.monster.*;
 import contrib.entities.traps.ArrowTrap;
 import contrib.entities.traps.SpikeTrap;
 import contrib.systems.*;
@@ -229,13 +226,15 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             entities.add(Gravestone.getInstance());
         }
 
+        if (Math.random() <= 0.17) new MonsterChest();
+        else EntityFactory.getChest();
+
         for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {
             new Rat();
         }
 
         new SpikeTrap();
         new ArrowTrap();
-        EntityFactory.getChest();
 
         if (depth >= 6) {
             for (int i = 0; i < (int) (Math.random() * 2 + 1); i++) {

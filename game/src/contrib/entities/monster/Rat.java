@@ -26,7 +26,7 @@ public class Rat extends Monster {
         setupVelocityComponent();
         setupHealthComponent();
         setupAIComponent();
-        setupAnimationComponent();
+        setupDrawComponent();
         setupHitBoxComponent();
         setupXPComponent();
     }
