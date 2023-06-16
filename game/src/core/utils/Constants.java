@@ -57,7 +57,6 @@ public final class Constants {
 
     public static final String INVENTORYSLOT_PATH = "skin/InventorySkin/inventorySlot.png";
 
-
     public static final Skin enemyHealthBarSkin =
             new Skin(
                     Gdx.files.internal("skin/enemyHealthBar/enemyHealthBar.json"),

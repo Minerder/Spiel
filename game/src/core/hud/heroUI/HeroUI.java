@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import contrib.components.HealthComponent;
+import contrib.components.SkillComponent;
 import contrib.components.XPComponent;
 
 import core.Game;
@@ -30,12 +31,14 @@ public class HeroUI<T extends Actor> extends ScreenController<T> {
     private final Set<EnemyHealthBar> enemyHealthBars;
     private ScreenText level;
     private HeroHealthBar healthBar;
+    private HeroManaBar manaBar;
     private HeroXPBar xpBar;
     private BitmapFont font;
     private int previousHealthPoints;
     private long previousTotalXP;
+    private int previousMana;
 
-    private record HeroData(HealthComponent hc, XPComponent xc) {}
+    private record HeroData(HealthComponent hc, XPComponent xc, SkillComponent sc) {}
 
     private HeroUI(SpriteBatch batch) {
         super(batch);
@@ -63,6 +66,13 @@ public class HeroUI<T extends Actor> extends ScreenController<T> {
                         hd.hc.getCurrentHealthpoints() - previousHealthPoints, font);
             previousHealthPoints = hd.hc.getCurrentHealthpoints();
             healthBar.updateHealthBar(hd.hc);
+        }
+
+        if (hd.sc != null) {
+            if (hd.sc.getCurrentMana() != previousMana)
+                manaBar.createManaPopup(hd.sc.getCurrentMana() - previousMana, font);
+            previousMana = hd.sc.getCurrentMana();
+            manaBar.updateManaBar(hd.sc);
         }
     }
 
@@ -101,8 +111,13 @@ public class HeroUI<T extends Actor> extends ScreenController<T> {
         XPComponent xc =
                 (XPComponent)
                         Game.getHero().flatMap(e -> e.getComponent(XPComponent.class)).orElse(null);
+        SkillComponent sc =
+                (SkillComponent)
+                        Game.getHero()
+                                .flatMap(e -> e.getComponent(SkillComponent.class))
+                                .orElse(null);
 
-        return new HeroData(hc, xc);
+        return new HeroData(hc, xc, sc);
     }
 
     private void setup() {
@@ -116,7 +131,7 @@ public class HeroUI<T extends Actor> extends ScreenController<T> {
         font = generator.generateFont(parameter);
 
         if (hd.xc != null) {
-            previousTotalXP = hd.xc.getTotalXP();
+            this.previousTotalXP = hd.xc.getTotalXP();
             level =
                     new ScreenText(
                             "Level: ",
@@ -125,22 +140,30 @@ public class HeroUI<T extends Actor> extends ScreenController<T> {
                             new LabelStyleBuilder(font).setFontcolor(Color.GREEN).build());
             this.add((T) level);
 
-            xpBar = new HeroXPBar("hud/xpBar/xpBar_7.png", new Point(0, 5), 1.9f);
+            xpBar = new HeroXPBar("hud/bar_empty.png", new Point(0, 5), 1.9f);
             this.add((T) xpBar);
         } else {
             LOGGER.warning("Couldn't create hero xp bar because of missing XPComponent");
         }
 
         if (hd.hc != null) {
-            previousHealthPoints = hd.hc.getCurrentHealthpoints();
+            this.previousHealthPoints = hd.hc.getCurrentHealthpoints();
             healthBar =
                     new HeroHealthBar(
-                            "hud/healthBar/healthBar_7.png",
-                            new Point(Constants.WINDOW_WIDTH - 195, 5),
-                            1.9f);
+                            "hud/bar_empty.png", new Point(Constants.WINDOW_WIDTH - 195, 40), 1.9f);
             this.add((T) healthBar);
         } else {
             LOGGER.warning("Couldn't create hero health bar because of missing HealthComponent");
+        }
+
+        if (hd.sc != null) {
+            this.previousMana = hd.sc.getCurrentMana();
+            manaBar =
+                    new HeroManaBar(
+                            "hud/bar_empty.png", new Point(Constants.WINDOW_WIDTH - 195, 5), 1.9f);
+            this.add((T) manaBar);
+        } else {
+            LOGGER.warning("Couldn't create hero mana bar because of missing SkillComponent");
         }
     }
 
