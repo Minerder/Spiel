@@ -10,6 +10,7 @@ import contrib.utils.components.skill.Skill;
 import contrib.utils.components.skill.skills.BouncingArrowSkill;
 
 import core.Game;
+import core.components.PlayerComponent;
 import core.components.PositionComponent;
 import core.level.utils.LevelElement;
 import core.utils.Point;
@@ -43,7 +44,8 @@ public class ArrowTrap extends Trap implements ITargetSelection {
                 this.offset,
                 this.size,
                 (a, b, from) -> {
-                    if (b.getComponent(HealthComponent.class).isPresent()) {
+                    if (b.getComponent(HealthComponent.class).isPresent()
+                            && b.getComponent(PlayerComponent.class).isPresent()) {
                         sc.getSkillFromList(0).execute(a);
                     }
                 },
