@@ -26,7 +26,7 @@ Implementiert werden sollen Sounds für:
 - NPC Geist beim Heilen
 - Monster stirbt
 - Monster wird getroffen
-- Inventar verschieben und Droppen
+- Items im Inventar verschieben und Droppen
 
 Wir haben vor die Sounds zu samplen bzw teilweise selber zuerstellen über FL-Studio,
 damit wir die einheitlich bekommen und wieder einzigartige Elemente ins Dungeon bekommen.
@@ -50,17 +50,6 @@ und als Attribut ``Sound sound`` in den jeweiligen Klassen hinzugefügt, um die 
 ``sound`` wird dann in einem try-catch mit dem Code: `Gdx.audio.newSound(Gdx.files.internal("file.mp3"));`,
 initialisiert und anschließend kann mit den Methoden `play(volume)` `loop(volume)` der Sound abgespielt werden.
 Dabei wird die Exception `GdxRuntimeException` abgefangen.
-
-
-#### x
-
-Manche Sounds wie z.b "Entity wird getroffen" oder "Entity stirbt", passieren von dem Hero an einem
-anderen Ort deswegen macht es Sinn es zu pannen.
-Es soll geguckt werden wo der Hero ist und wo der Sound spielen soll. Dazu soll berechnet werden wie
-weit Links oder wie weit rechts der Sound abgespielt werden soll.
-So wird mit der Methode aus dem Interface `play (volume, pitch, pan)` die Variable pan dann gesetzt.
-
-#### x
 
 Für die Hintergrundmusik vom Spiel, wird eine neue Methode ``playSound()`` in `Game.java` erstellt, dort wird
 abhängig von der Variable `depth` die jeweilige Hintergrundmusik für diese Ebene abgespielt.

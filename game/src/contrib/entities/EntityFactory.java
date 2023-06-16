@@ -5,7 +5,6 @@ import contrib.utils.components.interaction.DropItemsInteraction;
 import contrib.utils.components.item.ItemData;
 import contrib.utils.components.item.ItemDataGenerator;
 import contrib.utils.components.item.items.ItemFactory;
-
 import core.Entity;
 import core.Game;
 import core.components.DrawComponent;
@@ -15,9 +14,7 @@ import core.components.VelocityComponent;
 import core.level.utils.LevelElement;
 import core.utils.Point;
 import core.utils.components.draw.Animation;
-
 import dslToGame.AnimationBuilder;
-
 import starter.GameOverScreen;
 
 import java.util.List;
@@ -64,7 +61,7 @@ public class EntityFactory {
         new PlayerComponent(hero);
         SkillComponent sc = new SkillComponent(hero, 5);
         new XPComponent(hero, new HeroLevelUp());
-        InventoryComponent invc = new InventoryComponent(hero, 20);
+        InventoryComponent invc = new InventoryComponent(hero, 24);
         ItemData sword = ItemFactory.getSpecificSword(0);
         invc.setEquipment(sword);
         sc.addSkill(sword.getSkill());

@@ -1,16 +1,11 @@
 package core;
 
-import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
-
-import static core.utils.logging.LoggerConfig.initBaseLogger;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import contrib.components.HealthComponent;
 import contrib.components.SkillComponent;
 import contrib.components.UpdateComponent;
@@ -26,9 +21,9 @@ import contrib.entities.monster.Skeleton;
 import contrib.entities.traps.ArrowTrap;
 import contrib.entities.traps.SpikeTrap;
 import contrib.systems.*;
-
 import core.components.PositionComponent;
 import core.configuration.Configuration;
+import core.hud.Inventory.InventoryGUI;
 import core.hud.UITools;
 import core.hud.heroUI.HeroUI;
 import core.level.IOnLevelLoader;
@@ -57,6 +52,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
+
+import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
+import static core.utils.logging.LoggerConfig.initBaseLogger;
 
 /** The heart of the framework. From here all strings are pulled. */
 public class Game extends ScreenAdapter implements IOnLevelLoader {
@@ -168,6 +166,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         levelAPI.loadLevel(LEVELSIZE);
         controller.add(HeroUI.getHeroUI());
         createSystems();
+        controller.add(InventoryGUI.getInstance());
     }
 
     /** Called at the beginning of each frame. Before the controllers call <code>update</code>. */

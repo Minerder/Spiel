@@ -1,18 +1,16 @@
 package core.systems;
 
 import com.badlogic.gdx.Gdx;
-
 import contrib.components.SkillComponent;
 import contrib.components.XPComponent;
 import contrib.configuration.KeyboardConfig;
 import contrib.utils.components.interaction.InteractionTool;
-import contrib.utils.components.item.items.InventoryVisuals;
-
 import core.Entity;
 import core.Game;
 import core.System;
 import core.components.PlayerComponent;
 import core.components.VelocityComponent;
+import core.hud.Inventory.InventoryGUI;
 import core.utils.components.MissingComponentException;
 
 /** Used to control the player */
@@ -69,8 +67,8 @@ public class PlayerSystem extends System {
         else if (Gdx.input.isKeyPressed(KeyboardConfig.SKILL_SLOT_2.get())
                 && ksd.sc.getSkillFromList(2) != null) ksd.sc.getSkillFromList(2).execute(ksd.e);
         // open inventory
-        if (Gdx.input.isKeyPressed(KeyboardConfig.INVENTORY_OPEN.get())) {
-            InventoryVisuals.print(ksd.e);
+        if (Gdx.input.isKeyJustPressed(KeyboardConfig.INVENTORY_OPEN.get())) {
+            InventoryGUI.getInstance().toggleInventory();
         }
     }
 
