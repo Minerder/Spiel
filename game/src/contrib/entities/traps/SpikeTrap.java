@@ -3,12 +3,12 @@ package contrib.entities.traps;
 import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
 
+import core.components.PlayerComponent;
 import core.utils.Point;
 
 public class SpikeTrap extends Trap {
 
     private boolean activated;
-    private boolean entered;
     private final Lever lever;
 
     /** Creates a new SpikeTrap which damages the player when he steps on it */
@@ -19,7 +19,6 @@ public class SpikeTrap extends Trap {
         setupPositionComponent();
         lever = new Lever(this);
         activated = false;
-        entered = false;
     }
 
     private void setupCollideComponent() {
@@ -28,33 +27,19 @@ public class SpikeTrap extends Trap {
                 CollideComponent.DEFAULT_OFFSET,
                 new Point(1, 1),
                 (a, b, from) -> {
-                    if (b.getComponent(HealthComponent.class).isPresent()) {
-                        if (!lever.getPressed()) {
-                            if (!activated && !entered) {
-                                b.getComponent(HealthComponent.class)
-                                        .ifPresent(
-                                                hc ->
-                                                        ((HealthComponent) hc)
-                                                                .setCurrentHealthpoints(
-                                                                        ((HealthComponent) hc)
-                                                                                        .getCurrentHealthpoints()
-                                                                                - 2));
-                            } else {
-                                b.getComponent(HealthComponent.class)
-                                        .ifPresent(
-                                                hc ->
-                                                        ((HealthComponent) hc)
-                                                                .setCurrentHealthpoints(
-                                                                        ((HealthComponent) hc)
-                                                                                        .getCurrentHealthpoints()
-                                                                                - 1));
-                            }
-                            entered = true;
-                            activated = true;
-                            setActivationAnimation();
-                        }
+                    if (b.getComponent(PlayerComponent.class).isEmpty()) return;
+                    if (b.getComponent(HealthComponent.class).isEmpty()) return;
+                    if (lever.getPressed()) return;
+                    HealthComponent hc =
+                            (HealthComponent) b.getComponent(HealthComponent.class).get();
+                    if (!activated) {
+                        hc.setCurrentHealthpoints(hc.getCurrentHealthpoints() - 2);
+                    } else {
+                        hc.setCurrentHealthpoints(hc.getCurrentHealthpoints() - 1);
                     }
+                    activated = true;
+                    setActivationAnimation();
                 },
-                (a, b, from) -> entered = false);
+                null);
     }
 }
