@@ -27,8 +27,8 @@ public class Skeleton extends Monster {
         setupVelocityComponent();
         setupHealthComponent();
         setupAIComponent();
-        setupAnimationComponent();
-        setupHitBoxComponent();
+        setupDrawComponent();
+        setupCollideComponent();
         setupXPComponent();
     }
 

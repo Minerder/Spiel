@@ -25,8 +25,8 @@ public class Imp extends Monster {
         setupVelocityComponent();
         setupHealthComponent();
         setupAIComponent();
-        setupAnimationComponent();
-        setupHitBoxComponent();
+        setupDrawComponent();
+        setupCollideComponent();
         setupXPComponent();
     }
 
