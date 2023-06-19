@@ -1,6 +1,7 @@
 package contrib.entities.monster;
 
 import contrib.components.AIComponent;
+import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
 import contrib.components.InteractionComponent;
 import contrib.entities.EntityFactory;
@@ -12,8 +13,10 @@ import contrib.utils.components.interaction.IInteraction;
 
 import core.Entity;
 import core.components.DrawComponent;
+import core.components.PlayerComponent;
 import core.components.PositionComponent;
 
+import core.utils.Point;
 import dslToGame.AnimationBuilder;
 
 public class MonsterChest extends Monster implements IOnDeathFunction, IInteraction {
@@ -49,6 +52,20 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
         HealthComponent hc =
                 (HealthComponent) this.getComponent(HealthComponent.class).orElseThrow();
         hc.setOnDeath(this);
+    }
+
+    @Override
+    protected void setupHitBoxComponent() {
+        new CollideComponent(this,
+            CollideComponent.DEFAULT_OFFSET,
+            new Point(0.75f, 0.75f),
+            ((a,b,from) -> {
+                if (b.getComponent(PlayerComponent.class).isEmpty()) return;
+                if (b.getComponent(HealthComponent.class).isEmpty()) return;
+                HealthComponent hc =
+                        (HealthComponent) b.getComponent(HealthComponent.class).get();
+                hc.setCurrentHealthpoints(hc.getCurrentHealthpoints() - 1);
+            }), null);
     }
 
     private void setupInteractionComponent() {
