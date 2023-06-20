@@ -1,5 +1,9 @@
 package contrib.entities.traps;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import contrib.components.InteractionComponent;
 
 import core.Entity;
@@ -10,8 +14,10 @@ import core.utils.components.draw.Animation;
 
 import dslToGame.AnimationBuilder;
 
-public class Lever extends Entity {
+import java.util.logging.Logger;
 
+public class Lever extends Entity {
+    private static final Logger LOGGER = Logger.getLogger(Lever.class.getName());
     private boolean pressed;
     private final Animation activated;
     private final DrawComponent dc;
@@ -39,6 +45,14 @@ public class Lever extends Entity {
 
     private void setActivated() {
         if (dc != null) dc.setCurrentAnimation(activated);
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(Gdx.files.internal("game/assets/sounds/traps/LEVER.mp3"));
+            sound.play(0.3f);
+            LOGGER.info("Sounds from Lever played successfully");
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
+        }
     }
 
     private void setupPositionComponent() {

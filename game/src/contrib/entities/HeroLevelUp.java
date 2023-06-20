@@ -1,5 +1,9 @@
 package contrib.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import contrib.components.HealthComponent;
 import contrib.components.SkillComponent;
 import contrib.utils.components.skill.Skill;
@@ -10,7 +14,10 @@ import contrib.utils.components.xp.ILevelUp;
 
 import core.Game;
 
+import java.util.logging.Logger;
+
 public class HeroLevelUp implements ILevelUp {
+    private static final Logger LOGGER = Logger.getLogger(HeroLevelUp.class.getName());
 
     @Override
     public void onLevelUp(long nexLevel) {
@@ -48,6 +55,15 @@ public class HeroLevelUp implements ILevelUp {
                                 30,
                                 5));
             }
+        }
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(
+                            Gdx.files.internal("game/assets/sounds/levelup/LEVELUP.mp3"));
+            sound.play(0.5f);
+            LOGGER.info("Levelup Sounds played successfully");
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
         }
     }
 }

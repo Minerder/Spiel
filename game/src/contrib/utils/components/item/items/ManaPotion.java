@@ -1,5 +1,9 @@
 package contrib.utils.components.item.items;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import contrib.components.InventoryComponent;
 import contrib.components.SkillComponent;
 import contrib.utils.components.item.IOnUse;
@@ -10,7 +14,10 @@ import core.Entity;
 
 import dslToGame.AnimationBuilder;
 
+import java.util.logging.Logger;
+
 public class ManaPotion extends ItemData implements IOnUse {
+    private static final Logger LOGGER = Logger.getLogger(ManaPotion.class.getName());
     private int recoverAmount;
 
     /**
@@ -47,5 +54,13 @@ public class ManaPotion extends ItemData implements IOnUse {
                         skillComponent.getCurrentMana() + recoverAmount,
                         skillComponent.getMaxMana()));
         inventoryComponent.removeItem(item);
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(Gdx.files.internal("game/assets/sounds/items/POTION-2.mp3"));
+            sound.play(0.5f);
+            LOGGER.info("Sounds from ManaPotion played successfully");
+        } catch (GdxRuntimeException g) {
+            LOGGER.warning("Sound file could not be found!");
+        }
     }
 }

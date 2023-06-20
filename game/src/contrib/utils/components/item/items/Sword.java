@@ -1,5 +1,9 @@
 package contrib.utils.components.item.items;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import contrib.components.InventoryComponent;
 import contrib.components.ItemComponent;
 import contrib.components.SkillComponent;
@@ -21,9 +25,10 @@ import core.utils.components.draw.Animation;
 import dslToGame.AnimationBuilder;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class Sword extends ItemData implements IOnCollect {
-
+    private static final Logger LOGGER = Logger.getLogger(Sword.class.getName());
     private int swordTypeNumber = -1;
 
     /**
@@ -125,5 +130,13 @@ public class Sword extends ItemData implements IOnCollect {
         WorldItemBuilder.buildWorldItem(
                 inventoryComponent.getEquipment(), positionComponent.getPosition());
         inventoryComponent.setEquipment(item.getItemData());
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(Gdx.files.internal("game/assets/sounds/items/COLLECT.mp3"));
+            sound.play(0.5f);
+            LOGGER.info("Sounds from Sword played successfully");
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
+        }
     }
 }

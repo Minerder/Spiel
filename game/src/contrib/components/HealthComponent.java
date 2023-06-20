@@ -1,14 +1,19 @@
 package contrib.components;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Null;
 
 import contrib.systems.HealthSystem;
 import contrib.utils.components.health.Damage;
 import contrib.utils.components.health.DamageType;
 import contrib.utils.components.health.IOnDeathFunction;
+import contrib.utils.components.skill.SkillTools;
 
 import core.Component;
 import core.Entity;
+import core.components.PositionComponent;
 import core.systems.DrawSystem;
 import core.utils.components.draw.Animation;
 import core.utils.logging.CustomLogLevel;
@@ -44,6 +49,7 @@ import java.util.logging.Logger;
  */
 @DSLType(name = "health_component")
 public class HealthComponent extends Component {
+    private static final Logger LOGGER = Logger.getLogger(HealthComponent.class.getName());
     private static final List<String> missingTexture = List.of("animation/missingTexture.png");
     private final List<Damage> damageToGet;
     private @DSLTypeMember(name = "maximal_health_points") int maximalHealthpoints;
@@ -112,6 +118,29 @@ public class HealthComponent extends Component {
     /** Triggers the onDeath Function */
     public void triggerOnDeath() {
         onDeath.onDeath(entity);
+        float heroX = SkillTools.getHeroPosition().x;
+        PositionComponent c =
+                (PositionComponent) entity.getComponent(PositionComponent.class).orElseThrow();
+        float entityX = c.getPosition().x;
+        float pan = calculatePan(entityX, heroX);
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(
+                            Gdx.files.internal("game/assets/sounds/entity/ENTITY DEATH2.mp3"));
+            sound.play(0.5f, 1, pan);
+            LOGGER.info("Sounds from Healthcomponent played successfully");
+
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
+        }
+    }
+
+    private float calculatePan(float heroX, float entityX) {
+        float maxX = 5;
+        float difference = heroX - entityX;
+        float pan = difference / maxX;
+        pan = Math.max(-1, Math.min(pan, 1));
+        return pan;
     }
 
     /**

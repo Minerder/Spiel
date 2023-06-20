@@ -1,5 +1,9 @@
 package contrib.utils.components.item;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import contrib.components.InventoryComponent;
 import contrib.components.ItemComponent;
 import contrib.configuration.ItemConfig;
@@ -14,6 +18,7 @@ import core.utils.Point;
 import core.utils.components.draw.Animation;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * A Class which contains the Information of a specific Item.
@@ -30,6 +35,7 @@ import java.util.List;
  * <p>Lastly it holds a {@link #damageModifier}
  */
 public class ItemData {
+    private static final Logger LOGGER = Logger.getLogger(ItemData.class.getName());
     private final ItemClassification itemClassification;
     private final ItemKind itemKind;
     private final Animation inventoryTexture;
@@ -258,6 +264,14 @@ public class ItemData {
                                                 });
                             }
                         });
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(Gdx.files.internal("game/assets/sounds/items/COLLECT.mp3"));
+            sound.play(0.5f);
+            LOGGER.info("Sounds from ItemData played successfully");
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
+        }
     }
 
     /**

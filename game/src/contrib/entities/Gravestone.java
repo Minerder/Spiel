@@ -1,5 +1,9 @@
 package contrib.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
 import contrib.components.XPComponent;
@@ -13,7 +17,11 @@ import core.components.PositionComponent;
 
 import dslToGame.AnimationBuilder;
 
+import java.util.logging.Logger;
+
 public class Gravestone extends Entity {
+    private Sound sound;
+    private static final Logger LOGGER = Logger.getLogger(Gravestone.class.getName());
     private static final Gravestone gravestone = new Gravestone();
     private final float detectionRange = 3f;
 
@@ -50,6 +58,16 @@ public class Gravestone extends Entity {
                                                                             .getMaximalHealthpoints()));
 
                             Game.removeEntity(this);
+                            try {
+                                sound =
+                                        Gdx.audio.newSound(
+                                                Gdx.files.internal(
+                                                        "game/assets/sounds/items/POTION-2.mp3"));
+                                sound.play(0.3f);
+                                LOGGER.info("Sounds from Gravestone played successfully");
+                            } catch (GdxRuntimeException e) {
+                                LOGGER.warning("Sound file could not be found!");
+                            }
                             Game.removeEntity(Ghost.getInstance());
                         }
                     }

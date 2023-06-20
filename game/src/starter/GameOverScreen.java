@@ -1,6 +1,8 @@
 package starter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import contrib.entities.EntityFactory;
 
@@ -13,10 +15,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.logging.Logger;
 
 import javax.swing.*;
 
 public class GameOverScreen implements ActionListener, WindowListener {
+    private static final Logger LOGGER = Logger.getLogger(GameOverScreen.class.getName());
 
     private final JButton btnQuit, btnRestart;
     private final JFrame frame;
@@ -61,6 +65,15 @@ public class GameOverScreen implements ActionListener, WindowListener {
         panel.add(panelButton, BorderLayout.SOUTH);
         frame.add(panel);
         frame.setVisible(true);
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(
+                            Gdx.files.internal("game/assets/sounds/gameover/GAMEOVER.mp3"));
+            sound.play(0.5f);
+            LOGGER.info("GameOverSounds played successfully");
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
+        }
     }
 
     @Override

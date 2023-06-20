@@ -1,5 +1,9 @@
 package contrib.utils.components.skill.skills;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import contrib.components.AIComponent;
 import contrib.components.CollideComponent;
 import contrib.components.UpdateComponent;
@@ -16,9 +20,10 @@ import core.components.VelocityComponent;
 import core.utils.Point;
 
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 public class FrostNovaSkill extends Entity implements ISkillFunction, IUpdateFunction {
-
+    private static final Logger LOGGER = Logger.getLogger(FrostNovaSkill.class.getName());
     private final ITargetSelection targetSelection;
     private static final HashMap<Integer, Entity> entities = new HashMap<>();
     private float holdingTimeInFrames;
@@ -44,6 +49,14 @@ public class FrostNovaSkill extends Entity implements ISkillFunction, IUpdateFun
                             .setTexturePath("dungeon/ice/floor/floor_1.png");
                 }
             }
+        }
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(Gdx.files.internal("game/assets/sounds/skills/ice.mp3"));
+            sound.play(0.5f);
+            LOGGER.info("Sounds from FrostNovaSkill played successfully");
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
         }
     }
 

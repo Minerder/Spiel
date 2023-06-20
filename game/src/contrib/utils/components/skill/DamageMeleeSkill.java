@@ -1,5 +1,9 @@
 package contrib.utils.components.skill;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
 import contrib.components.UpdateComponent;
@@ -17,8 +21,10 @@ import core.utils.components.draw.Animation;
 
 import dslToGame.AnimationBuilder;
 
-public class DamageMeleeSkill implements ISkillFunction, IUpdateFunction {
+import java.util.logging.Logger;
 
+public class DamageMeleeSkill implements ISkillFunction, IUpdateFunction {
+    private static final Logger LOGGER = Logger.getLogger(DamageMeleeSkill.class.getName());
     private final String pathToTexturesOfProjectile;
     private final Damage projectileDamage;
     private final Point projectileHitboxSize;
@@ -81,6 +87,15 @@ public class DamageMeleeSkill implements ISkillFunction, IUpdateFunction {
                                         });
                     }
                 };
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(
+                            Gdx.files.internal("game/assets/sounds/entity/ENTITY-HITTED-2.mp3"));
+            sound.play(0.5f);
+            LOGGER.info("Sounds from DamageMeleeSkill played successfully");
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
+        }
 
         new CollideComponent(
                 projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);

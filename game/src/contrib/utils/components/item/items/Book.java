@@ -1,5 +1,9 @@
 package contrib.utils.components.item.items;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import contrib.components.InventoryComponent;
 import contrib.components.ItemComponent;
 import contrib.components.SkillComponent;
@@ -24,9 +28,11 @@ import core.utils.components.draw.Animation;
 import dslToGame.AnimationBuilder;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class Book extends ItemData implements IOnDrop, IOnCollect {
 
+    private static final Logger LOGGER = Logger.getLogger(Book.class.getName());
     /**
      * Creates a new random book with respect to the current level of hero.
      *
@@ -133,6 +139,15 @@ public class Book extends ItemData implements IOnDrop, IOnCollect {
             inventory.setSkillslot2(item.getItemData());
             skillComponent.setSkill(item.getItemData().getSkill(), 2);
             Game.removeEntity(WorldItemEntity);
+        }
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(Gdx.files.internal("game/assets/sounds/items/COLLECT.mp3"));
+            sound.play(0.5f);
+            LOGGER.info("Sounds from Book played successfully");
+
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
         }
     }
 

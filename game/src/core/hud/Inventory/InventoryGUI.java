@@ -1,9 +1,12 @@
 package core.hud.Inventory;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import contrib.components.InventoryComponent;
 import contrib.utils.components.item.ItemData;
@@ -15,8 +18,10 @@ import core.utils.Constants;
 import core.utils.controller.ScreenController;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class InventoryGUI<T extends Actor> extends ScreenController<T> {
+    private static final Logger LOGGER = Logger.getLogger(InventoryGUI.class.getName());
 
     private static final InventoryGUI<Actor> instance = new InventoryGUI<>(new SpriteBatch());
     private final Window inventory;
@@ -200,6 +205,15 @@ public class InventoryGUI<T extends Actor> extends ScreenController<T> {
                     if (s instanceof PlayerSystem) return;
                     s.stop();
                 });
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(
+                            Gdx.files.internal("game/assets/sounds/items/OPEN INVENTORY.wav"));
+            sound.play(0.5f);
+            LOGGER.info("Sounds from InventoryGUI played successfully");
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
+        }
     }
 
     private void closeInventory() {

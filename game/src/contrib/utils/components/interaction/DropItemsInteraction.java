@@ -1,5 +1,9 @@
 package contrib.utils.components.interaction;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import contrib.components.InteractionComponent;
 import contrib.components.InventoryComponent;
 import contrib.utils.components.item.ItemData;
@@ -10,6 +14,7 @@ import core.utils.Point;
 import core.utils.components.MissingComponentException;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 /**
@@ -28,7 +33,7 @@ import java.util.stream.IntStream;
  * DrawComponent#idleRight} animation will be set as the current animation.
  */
 public class DropItemsInteraction implements IInteraction {
-
+    private static final Logger LOGGER = Logger.getLogger(DropItemsInteraction.class.getName());
     /**
      * Will drop all the items inside the {@link InventoryComponent} of the associated entity on the
      * floor.
@@ -72,6 +77,15 @@ public class DropItemsInteraction implements IInteraction {
         entity.getComponent(DrawComponent.class)
                 .map(DrawComponent.class::cast)
                 .ifPresent(x -> x.setCurrentAnimation(x.getIdleRight()));
+        try {
+            Sound sound =
+                    Gdx.audio.newSound(
+                            Gdx.files.internal("game/assets/sounds/items/OPEN INVENTORY.wav"));
+            sound.play(0.5f);
+            LOGGER.info("Sounds from DropItemsInteraction played successfully");
+        } catch (GdxRuntimeException e) {
+            LOGGER.warning("Sound file could not be found!");
+        }
     }
 
     /**
