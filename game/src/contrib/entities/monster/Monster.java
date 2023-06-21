@@ -25,6 +25,18 @@ public abstract class Monster extends Entity {
     protected String pathToIdleRight;
     protected String pathToIdleLeft;
 
+    /**
+     * Creates a new Monster with the given parameters
+     *
+     * @param hitpoints The amount of hitpoints the monster has
+     * @param xSpeed The speed of the monster in x direction
+     * @param ySpeed The speed of the monster in y direction
+     * @param lootXP The amount of XP the monster drops when killed
+     * @param pathToMoveRight The path to the animation for moving right
+     * @param pathToMoveLeft The path to the animation for moving left
+     * @param pathToIdleRight The path to the animation for idling right
+     * @param pathToIdleLeft The path to the animation for idling left
+     */
     public Monster(
             int hitpoints,
             float xSpeed,

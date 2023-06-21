@@ -3,6 +3,7 @@ package contrib.entities;
 import contrib.components.HealthComponent;
 import contrib.components.SkillComponent;
 import contrib.utils.components.xp.ILevelUp;
+
 import core.Game;
 
 public class HeroLevelUp implements ILevelUp {
