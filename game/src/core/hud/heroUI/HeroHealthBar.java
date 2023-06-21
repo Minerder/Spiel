@@ -35,7 +35,7 @@ public class HeroHealthBar extends ScreenImage {
         float healthPercentage =
                 (float) hc.getCurrentHealthpoints() / hc.getMaximalHealthpoints() * 100;
         if (healthPercentage <= 0) {
-            this.setTexture("hud/healthBar/healthBar_7.png");
+            this.setTexture("hud/bar_empty.png");
         } else if (healthPercentage <= 20) {
             this.setTexture("hud/healthBar/healthBar_6.png");
         } else if (healthPercentage <= 36) {
@@ -62,10 +62,10 @@ public class HeroHealthBar extends ScreenImage {
         ScreenText hpPopup =
                 new ScreenText(
                         "%+d HP".formatted(hpChange),
-                        new Point(Constants.WINDOW_WIDTH - 55, 30),
+                        new Point(Constants.WINDOW_WIDTH - 250, 46),
                         1,
                         new LabelStyleBuilder(font).setFontcolor(fontColor).build());
-        hpPopup.addAction(Actions.sequence(Actions.moveBy(0, 50, 1), Actions.removeActor()));
+        hpPopup.addAction(Actions.sequence(Actions.fadeOut(1.7f), Actions.removeActor()));
         HeroUI.getHeroUI().add(hpPopup);
     }
 }

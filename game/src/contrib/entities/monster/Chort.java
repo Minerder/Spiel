@@ -26,7 +26,7 @@ public class Chort extends Monster {
         setupHealthComponent();
         setupAIComponent();
         setupDrawComponent();
-        setupHitBoxComponent();
+        setupCollideComponent();
         setupXPComponent();
     }
 
@@ -40,21 +40,15 @@ public class Chort extends Monster {
     }
 
     @Override
-    protected void setupHitBoxComponent() {
-        new CollideComponent(
-                this,
+    protected void setupCollideComponent() {
+        CollideComponent cc = new CollideComponent(this);
+        cc.setiCollideEnter(
                 (a, b, from) -> {
-                    if (b.getComponent(PlayerComponent.class).isPresent()) {
-                        b.getComponent(HealthComponent.class)
-                                .ifPresent(
-                                        (hc) ->
-                                                ((HealthComponent) hc)
-                                                        .setCurrentHealthpoints(
-                                                                ((HealthComponent) hc)
-                                                                                .getCurrentHealthpoints()
-                                                                        - 2));
-                    }
-                },
-                null);
+                    if (b.getComponent(PlayerComponent.class).isEmpty()) return;
+                    if (b.getComponent(HealthComponent.class).isEmpty()) return;
+                    HealthComponent hc =
+                            (HealthComponent) b.getComponent(HealthComponent.class).get();
+                    hc.setCurrentHealthpoints(hc.getCurrentHealthpoints() - 2);
+                });
     }
 }

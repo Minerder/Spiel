@@ -35,7 +35,7 @@ public class HeroXPBar extends ScreenImage {
         float xpPercentage =
                 (float) xc.getCurrentXP() / (xc.getXPToNextLevel() + xc.getCurrentXP()) * 100;
         if (xpPercentage <= 10) {
-            this.setTexture("hud/xpBar/xpBar_7.png");
+            this.setTexture("hud/bar_empty.png");
         } else if (xpPercentage <= 20) {
             this.setTexture("hud/xpBar/xpBar_6.png");
         } else if (xpPercentage <= 36) {

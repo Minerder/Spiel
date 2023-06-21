@@ -44,10 +44,9 @@ public class ArrowTrap extends Trap implements ITargetSelection {
                 this.offset,
                 this.size,
                 (a, b, from) -> {
-                    if (b.getComponent(HealthComponent.class).isPresent()
-                            && b.getComponent(PlayerComponent.class).isPresent()) {
-                        sc.getSkillFromList(0).execute(a);
-                    }
+                    if (b.getComponent(PlayerComponent.class).isEmpty()) return;
+                    if (b.getComponent(HealthComponent.class).isEmpty()) return;
+                    sc.getSkillFromList(0).execute(a);
                 },
                 null);
     }

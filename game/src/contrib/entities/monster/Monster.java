@@ -68,7 +68,7 @@ public abstract class Monster extends Entity {
         new DrawComponent(this, idleLeft, idleRight);
     }
 
-    protected void setupHitBoxComponent() {
+    protected void setupCollideComponent() {
         new CollideComponent(this);
     }
 

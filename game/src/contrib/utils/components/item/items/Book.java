@@ -5,7 +5,10 @@ import contrib.components.ItemComponent;
 import contrib.components.SkillComponent;
 import contrib.components.XPComponent;
 import contrib.entities.WorldItemBuilder;
-import contrib.utils.components.item.*;
+import contrib.utils.components.item.IOnCollect;
+import contrib.utils.components.item.IOnDrop;
+import contrib.utils.components.item.ItemClassification;
+import contrib.utils.components.item.ItemData;
 import contrib.utils.components.skill.Skill;
 import contrib.utils.components.skill.SkillTools;
 import contrib.utils.components.skill.skills.FireballSkill;
@@ -21,9 +24,8 @@ import core.utils.components.draw.Animation;
 import dslToGame.AnimationBuilder;
 
 import java.util.Random;
-import java.util.Scanner;
 
-public class Book extends ItemData implements IOnUse, IOnDrop, IOnCollect {
+public class Book extends ItemData implements IOnDrop, IOnCollect {
 
     /**
      * Creates a new random book with respect to the current level of hero.
@@ -93,7 +95,7 @@ public class Book extends ItemData implements IOnUse, IOnDrop, IOnCollect {
         }
 
         return new ItemData(
-                ItemClassification.Active,
+                ItemClassification.Basic,
                 ItemKind.BOOK,
                 inventoryTexture,
                 worldTexture,
@@ -101,7 +103,7 @@ public class Book extends ItemData implements IOnUse, IOnDrop, IOnCollect {
                 itemDesc,
                 this,
                 this,
-                this,
+                null,
                 null,
                 skill);
     }
@@ -130,8 +132,6 @@ public class Book extends ItemData implements IOnUse, IOnDrop, IOnCollect {
         } else if (inventory.getSkillslot2() == null) {
             inventory.setSkillslot2(item.getItemData());
             skillComponent.setSkill(item.getItemData().getSkill(), 2);
-            Game.removeEntity(WorldItemEntity);
-        } else if (inventory.addItem(item.getItemData())) {
             Game.removeEntity(WorldItemEntity);
         }
     }
@@ -165,52 +165,5 @@ public class Book extends ItemData implements IOnUse, IOnDrop, IOnCollect {
             inventoryComponent.removeItem(which);
         }
         WorldItemBuilder.buildWorldItem(which, position);
-    }
-
-    /**
-     * Replaces the book in the skill slot with the book in the inventory using console input.
-     *
-     * @param e The entity that used the item.
-     * @param item The item that was used.
-     */
-    @Override
-    public void onUse(Entity e, ItemData item) {
-        InventoryComponent inventoryComponent =
-                (InventoryComponent) e.getComponent(InventoryComponent.class).orElseThrow();
-        SkillComponent skillComponent =
-                (SkillComponent) e.getComponent(SkillComponent.class).orElseThrow();
-
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Replace with Skill slot: ");
-
-        int skillSlotIndex;
-        try {
-            skillSlotIndex = Integer.parseInt(scan.next().replace("\n", ""));
-            if (skillSlotIndex > 1 || skillSlotIndex < 0) throw new NumberFormatException();
-        } catch (NumberFormatException exception) {
-            System.out.println("Falsche eingabe");
-            return;
-        }
-
-        inventoryComponent.removeItem(item);
-        if (skillSlotIndex == 0) {
-            if (inventoryComponent.getSkillslot1() != null) {
-                skillComponent.replaceSkill(
-                        inventoryComponent.getSkillslot1().getSkill(), item.getSkill());
-                inventoryComponent.addItem(inventoryComponent.getSkillslot1());
-            } else {
-                skillComponent.setSkill(item.getSkill(), 1);
-            }
-            inventoryComponent.setSkillslot1(item);
-        } else {
-            if (inventoryComponent.getSkillslot2() != null) {
-                skillComponent.replaceSkill(
-                        inventoryComponent.getSkillslot2().getSkill(), item.getSkill());
-                inventoryComponent.addItem(inventoryComponent.getSkillslot2());
-            } else {
-                skillComponent.setSkill(item.getSkill(), 2);
-            }
-            inventoryComponent.setSkillslot2(item);
-        }
     }
 }

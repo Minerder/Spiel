@@ -62,9 +62,9 @@ public class EntityFactory {
                 AnimationBuilder.buildAnimation("character/knight/hit"),
                 AnimationBuilder.buildAnimation("character/knight/hit"));
         new PlayerComponent(hero);
-        SkillComponent sc = new SkillComponent(hero, 5);
+        SkillComponent sc = new SkillComponent(hero, 6);
         new XPComponent(hero, new HeroLevelUp());
-        InventoryComponent invc = new InventoryComponent(hero, 20);
+        InventoryComponent invc = new InventoryComponent(hero, 24);
         ItemData sword = ItemFactory.getSpecificSword(0);
         invc.setEquipment(sword);
         sc.addSkill(sword.getSkill());

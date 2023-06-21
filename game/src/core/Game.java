@@ -26,6 +26,7 @@ import contrib.systems.*;
 
 import core.components.PositionComponent;
 import core.configuration.Configuration;
+import core.hud.Inventory.InventoryGUI;
 import core.hud.UITools;
 import core.hud.heroUI.HeroUI;
 import core.level.IOnLevelLoader;
@@ -165,6 +166,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         levelAPI.loadLevel(LEVELSIZE);
         controller.add(HeroUI.getHeroUI());
         createSystems();
+        controller.add(InventoryGUI.getInstance());
     }
 
     /** Called at the beginning of each frame. Before the controllers call <code>update</code>. */
