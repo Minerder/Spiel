@@ -7,6 +7,7 @@ import static core.utils.logging.LoggerConfig.initBaseLogger;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -43,6 +44,7 @@ import core.utils.Constants;
 import core.utils.DelayedSet;
 import core.utils.DungeonCamera;
 import core.utils.Point;
+import core.utils.SoundPlayer;
 import core.utils.components.MissingComponentException;
 import core.utils.components.draw.Painter;
 import core.utils.components.draw.TextureHandler;
@@ -58,7 +60,6 @@ import java.util.logging.Logger;
 
 /** The heart of the framework. From here all strings are pulled. */
 public class Game extends ScreenAdapter implements IOnLevelLoader {
-
     /** Currently used level-size configuration for generating new level */
     public static LevelSize LEVELSIZE = LevelSize.SMALL;
 
@@ -94,7 +95,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     private static Entity hero;
     private Logger gameLogger;
     private static int depth;
-
+    private static Sound backgroundMusic;
     private DebuggerSystem debugger;
     private static Game game;
 
@@ -211,12 +212,14 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     @Override
     public void onLevelLoad() {
         depth++;
+        playSound();
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
         spawnMonsters();
         entities.update();
         HeroUI.getHeroUI().createEnemyHealthBars();
+        if (depth > 1) SoundPlayer.play("sounds/ladder/climb.mp3");
     }
 
     private void spawnMonsters() {
@@ -431,5 +434,24 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
                     }
                 },
                 config);
+    }
+
+    private static void playSound() {
+        if (depth == 1) {
+            if (backgroundMusic != null) backgroundMusic.stop();
+            backgroundMusic = SoundPlayer.loop("sounds/music/depth_1.mp3");
+        }
+        if (depth == 5) {
+            if (backgroundMusic != null) backgroundMusic.stop();
+            backgroundMusic = SoundPlayer.loop("sounds/music/depth_2.mp3");
+        }
+        if (depth == 10) {
+            if (backgroundMusic != null) backgroundMusic.stop();
+            backgroundMusic = SoundPlayer.loop("sounds/music/depth_3.mp3");
+        }
+        if (depth == 15) {
+            if (backgroundMusic != null) backgroundMusic.stop();
+            backgroundMusic = SoundPlayer.loop("sounds/music/depth_4.mp3");
+        }
     }
 }

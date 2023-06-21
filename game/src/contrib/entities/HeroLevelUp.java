@@ -4,9 +4,9 @@ import contrib.components.HealthComponent;
 import contrib.components.SkillComponent;
 import contrib.utils.components.xp.ILevelUp;
 import core.Game;
+import core.utils.SoundPlayer;
 
 public class HeroLevelUp implements ILevelUp {
-
     @Override
     public void onLevelUp(long nexLevel) {
         System.out.println("Hero has reached Lvl " + nexLevel + "! You gained 1 extra hitpoint.");
@@ -33,5 +33,6 @@ public class HeroLevelUp implements ILevelUp {
             case 10 -> System.out.println(
                     "You have reached Lvl 10 now you can now find gray books!");
         }
+        SoundPlayer.play("sounds/levelup/levelup.mp3");
     }
 }
