@@ -38,7 +38,7 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
         setupVelocityComponent();
         setupHealthComponent();
         setupDrawComponent();
-        setupHitBoxComponent();
+        setupCollideComponent();
         setupXPComponent();
         setupInteractionComponent();
     }
@@ -58,7 +58,7 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
     }
 
     @Override
-    protected void setupHitBoxComponent() {
+    protected void setupCollideComponent() {
         new CollideComponent(
                 this,
                 CollideComponent.DEFAULT_OFFSET,
@@ -79,7 +79,8 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
     }
 
     /**
-     * Function that is performed when an entity dies. Creates a chest at the position of the entity.
+     * Function that is performed when an entity dies. Creates a chest at the position of the
+     * entity.
      *
      * @param entity Entity that has died
      */
