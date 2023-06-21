@@ -79,7 +79,7 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
     }
 
     /**
-     * Called when the entity dies. Creates a chest at the position of the entity.
+     * Function that is performed when an entity dies. Creates a chest at the position of the entity.
      *
      * @param entity Entity that has died
      */
