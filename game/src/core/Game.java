@@ -11,7 +11,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import contrib.components.HealthComponent;
 import contrib.components.SkillComponent;
@@ -48,6 +47,7 @@ import core.utils.Constants;
 import core.utils.DelayedSet;
 import core.utils.DungeonCamera;
 import core.utils.Point;
+import core.utils.SoundPlayer;
 import core.utils.components.MissingComponentException;
 import core.utils.components.draw.Painter;
 import core.utils.components.draw.TextureHandler;
@@ -63,8 +63,6 @@ import java.util.logging.Logger;
 
 /** The heart of the framework. From here all strings are pulled. */
 public class Game extends ScreenAdapter implements IOnLevelLoader {
-    private static boolean soundOn = false;
-    private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
     /** Currently used level-size configuration for generating new level */
     public static LevelSize LEVELSIZE = LevelSize.SMALL;
 
@@ -100,9 +98,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     private static Entity hero;
     private Logger gameLogger;
     private static int depth;
-
-    private static Sound sound;
-
+    private static Sound backgroundMusic;
     private DebuggerSystem debugger;
     private static Game game;
 
@@ -226,17 +222,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         spawnMonsters();
         entities.update();
         HeroUI.getHeroUI().createEnemyHealthBars();
-        if (depth > 1) {
-            try {
-                Sound sound2 =
-                        Gdx.audio.newSound(
-                                Gdx.files.internal("game/assets/sounds/ladder/climb.mp3"));
-                sound2.play(0.3f);
-                LOGGER.info("Sounds from onLevelLoad played successfully");
-            } catch (GdxRuntimeException e) {
-                LOGGER.warning("Soundfile cannot be found!");
-            }
-        }
+        if (depth > 1) SoundPlayer.play("sounds/ladder/climb.mp3");
     }
 
     private void spawnMonsters() {
@@ -450,64 +436,23 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
                 },
                 config);
     }
-    /** plays the main game music, dependent on the depth */
+
     private static void playSound() {
         if (depth == 1) {
-            if (soundOn) {
-                sound.stop();
-            }
-            try {
-                sound =
-                        Gdx.audio.newSound(
-                                Gdx.files.internal("game/assets/sounds/music/DEPTH-1.mp3"));
-                sound.loop(0.5f);
-                LOGGER.info("Sounds from MainGame played successfully");
-            } catch (GdxRuntimeException e) {
-                LOGGER.warning("Soundfile cannot be found!");
-            }
+            if (backgroundMusic != null) backgroundMusic.stop();
+            backgroundMusic = SoundPlayer.loop("sounds/music/depth_1.mp3");
         }
         if (depth == 5) {
-            if (soundOn) {
-                sound.stop();
-            }
-            try {
-                sound =
-                        Gdx.audio.newSound(
-                                Gdx.files.internal("game/assets/sounds/music/DEPTH-2.mp3"));
-                sound.loop(0.5f);
-                LOGGER.info("Sounds from MainGameplayed successfully");
-            } catch (GdxRuntimeException e) {
-                LOGGER.warning("Soundfile cannot be found!");
-            }
+            if (backgroundMusic != null) backgroundMusic.stop();
+            backgroundMusic = SoundPlayer.loop("sounds/music/depth_2.mp3");
         }
         if (depth == 10) {
-            if (soundOn) {
-                sound.stop();
-            }
-            try {
-                sound =
-                        Gdx.audio.newSound(
-                                Gdx.files.internal("game/assets/sounds/music/DEPTH-3.mp3"));
-                sound.loop(0.5f);
-                LOGGER.info("Sounds from MainGameplayed successfully");
-            } catch (GdxRuntimeException e) {
-                LOGGER.warning("Soundfile cannot be found!");
-            }
+            if (backgroundMusic != null) backgroundMusic.stop();
+            backgroundMusic = SoundPlayer.loop("sounds/music/depth_3.mp3");
         }
         if (depth == 15) {
-            if (soundOn) {
-                sound.stop();
-            }
-            try {
-                sound =
-                        Gdx.audio.newSound(
-                                Gdx.files.internal("game/assets/sounds/music/DEPTH-4.mp3"));
-                sound.loop(0.5f);
-                LOGGER.info("Sounds from MainGameplayed successfully");
-            } catch (GdxRuntimeException e) {
-                LOGGER.warning("Soundfile cannot be found!");
-            }
+            if (backgroundMusic != null) backgroundMusic.stop();
+            backgroundMusic = SoundPlayer.loop("sounds/music/depth_4.mp3");
         }
-        soundOn = true;
     }
 }

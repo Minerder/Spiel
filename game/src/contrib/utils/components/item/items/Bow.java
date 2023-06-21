@@ -1,9 +1,5 @@
 package contrib.utils.components.item.items;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-
 import contrib.components.InventoryComponent;
 import contrib.components.ItemComponent;
 import contrib.components.SkillComponent;
@@ -20,15 +16,14 @@ import contrib.utils.components.skill.skills.BouncingArrowSkill;
 import core.Entity;
 import core.Game;
 import core.components.PositionComponent;
+import core.utils.SoundPlayer;
 import core.utils.components.draw.Animation;
 
 import dslToGame.AnimationBuilder;
 
 import java.util.Random;
-import java.util.logging.Logger;
 
 public class Bow extends ItemData implements IOnCollect {
-    private static final Logger LOGGER = Logger.getLogger(Bow.class.getName());
     /**
      * Creates a new random bow.
      *
@@ -114,13 +109,6 @@ public class Bow extends ItemData implements IOnCollect {
         WorldItemBuilder.buildWorldItem(
                 inventoryComponent.getEquipment(), positionComponent.getPosition());
         inventoryComponent.setEquipment(item.getItemData());
-        try {
-            Sound sound =
-                    Gdx.audio.newSound(Gdx.files.internal("game/assets/sounds/items/COLLECT.mp3"));
-            sound.play(0.5f);
-            LOGGER.info("Sounds from Bow played successfully");
-        } catch (GdxRuntimeException e) {
-            LOGGER.warning("Sound file could not be found!");
-        }
+        SoundPlayer.play("sounds/items/collect.mp3");
     }
 }

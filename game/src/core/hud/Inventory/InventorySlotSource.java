@@ -1,21 +1,15 @@
 package core.hud.Inventory;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import core.Game;
 import core.components.PositionComponent;
-
-import java.util.logging.Logger;
+import core.utils.SoundPlayer;
 
 public class InventorySlotSource extends DragAndDrop.Source {
-    private Sound sound;
-    private static final Logger LOGGER = Logger.getLogger(InventorySlotSource.class.getName());
     private final InventorySlot inventorySlot;
     private final DragAndDrop dragAndDrop;
 
@@ -49,13 +43,7 @@ public class InventorySlotSource extends DragAndDrop.Source {
         // add the drag actor to the stage
         InventoryGUI.getInstance().getInventoryWindow().getParent().addActor(actor);
         dragAndDrop.setDragActorPosition(actor.getWidth() / 2, -actor.getHeight() / 2);
-        try {
-            sound = Gdx.audio.newSound(Gdx.files.internal("game/assets/sounds/items/COLLECT.mp3"));
-            sound.play(0.3f);
-            LOGGER.info("Sounds from InventorySlotSource played successfully");
-        } catch (GdxRuntimeException e) {
-            LOGGER.warning("Sound file could not be found!");
-        }
+        SoundPlayer.play("sounds/items/collect.mp3");
         return payload;
     }
 
@@ -88,15 +76,7 @@ public class InventorySlotSource extends DragAndDrop.Source {
             } else {
                 inventorySlot.add(payload.getDragActor());
             }
-            try {
-                sound =
-                        Gdx.audio.newSound(
-                                Gdx.files.internal("game/assets/sounds/items/COLLECT.mp3"));
-                sound.play(0.3f);
-                LOGGER.info("Sounds von InventorySlotSource wurden erfolgreich abgespielt");
-            } catch (GdxRuntimeException e) {
-                LOGGER.warning(" Sound file could not be found!");
-            }
+            SoundPlayer.play("sounds/items/collect.mp3");
         }
     }
 

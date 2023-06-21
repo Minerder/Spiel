@@ -1,21 +1,13 @@
 package contrib.entities.traps;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-
 import contrib.components.CollideComponent;
 import contrib.components.HealthComponent;
 
 import core.components.PlayerComponent;
 import core.utils.Point;
-
-import java.util.logging.Logger;
+import core.utils.SoundPlayer;
 
 public class SpikeTrap extends Trap {
-    private Sound sound;
-    private static final Logger LOGGER = Logger.getLogger(SpikeTrap.class.getName());
-
     private boolean activated;
     private final Lever lever;
 
@@ -47,15 +39,7 @@ public class SpikeTrap extends Trap {
                     }
                     activated = true;
                     setActivationAnimation();
-                    try {
-                        sound =
-                                Gdx.audio.newSound(
-                                        Gdx.files.internal("game/assets/sounds/traps/SPIKE.mp3"));
-                        sound.play(0.5f);
-                        LOGGER.info("Sounds from SpikeTrap played successfully");
-                    } catch (GdxRuntimeException e) {
-                        LOGGER.warning("Sound file could not be found!");
-                    }
+                    SoundPlayer.play("sounds/traps/spike.mp3");
                 },
                 null);
     }
