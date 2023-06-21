@@ -2,12 +2,7 @@ package contrib.entities;
 
 import contrib.components.HealthComponent;
 import contrib.components.SkillComponent;
-import contrib.utils.components.skill.Skill;
-import contrib.utils.components.skill.SkillTools;
-import contrib.utils.components.skill.skills.FrostNovaSkill;
-import contrib.utils.components.skill.skills.GravityStormSkill;
 import contrib.utils.components.xp.ILevelUp;
-
 import core.Game;
 
 public class HeroLevelUp implements ILevelUp {
@@ -34,20 +29,9 @@ public class HeroLevelUp implements ILevelUp {
         sc.setMaxMana(sc.getMaxMana() + 1);
 
         switch ((int) nexLevel) {
-            case 5 -> {
-                System.out.println(
-                        "You unlocked the Frost Nova Skill! Press '1' to create a Frost Nova that slows nearby enemies by 50%");
-                sc.addSkill(new Skill(new FrostNovaSkill(SkillTools::getHeroPosition), 10, 2));
-            }
-            case 10 -> {
-                System.out.println(
-                        "You unlocked the Gravity Storm Skill! Press '2' to shoot a Storm which pulls enemies towards it.");
-                sc.addSkill(
-                        new Skill(
-                                new GravityStormSkill(SkillTools::getCursorPositionAsPoint),
-                                30,
-                                5));
-            }
+            case 5 -> System.out.println("You have reached Lvl 5 now you can now find blue books!");
+            case 10 -> System.out.println(
+                    "You have reached Lvl 10 now you can now find gray books!");
         }
     }
 }
