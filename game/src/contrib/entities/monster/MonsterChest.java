@@ -17,7 +17,11 @@ import core.components.PositionComponent;
 import core.utils.Point;
 import dslToGame.AnimationBuilder;
 
+import java.util.logging.Logger;
+
 public class MonsterChest extends Monster implements IOnDeathFunction, IInteraction {
+
+    private static final Logger LOGGER = Logger.getLogger(Monster.class.getName());
 
     /**
      * Creates a new MonsterChest.
@@ -80,6 +84,7 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
      */
     @Override
     public void onDeath(Entity entity) {
+        LOGGER.info("MonsterChest died, creating chest at MonsterChest position");
         Entity chest = EntityFactory.getChest();
         PositionComponent chestPc =
                 (PositionComponent) chest.getComponent(PositionComponent.class).orElseThrow();
@@ -94,6 +99,7 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
      */
     @Override
     public void onInteraction(Entity entity) {
+        LOGGER.info("MonsterChest interacted with, adding AIComponent and changing drawComponent");
         setupAIComponent();
         this.removeComponent(DrawComponent.class);
         new DrawComponent(
