@@ -10,17 +10,18 @@ import contrib.utils.components.ai.idle.StaticRadiusWalk;
 import contrib.utils.components.ai.transition.RangeTransition;
 import contrib.utils.components.health.IOnDeathFunction;
 import contrib.utils.components.interaction.IInteraction;
-
 import core.Entity;
 import core.components.DrawComponent;
 import core.components.PlayerComponent;
 import core.components.PositionComponent;
-
 import core.utils.Point;
 import dslToGame.AnimationBuilder;
 
 public class MonsterChest extends Monster implements IOnDeathFunction, IInteraction {
 
+    /**
+     * Creates a new MonsterChest.
+     */
     public MonsterChest() {
         super(
                 5,
@@ -73,6 +74,10 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
         new InteractionComponent(this, defaultInteractionRadius, false, this);
     }
 
+    /**
+     * Called when the entity dies. Creates a chest at the position of the entity.
+     * @param entity Entity that has died
+     */
     @Override
     public void onDeath(Entity entity) {
         Entity chest = EntityFactory.getChest();
@@ -83,6 +88,10 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
         chestPc.setPosition(pc.getPosition());
     }
 
+    /**
+     * Called when the entity is interacted with. Gives the entity an AIComponent and changes the drawComponent.
+     * @param entity Entity that is interacted with
+     */
     @Override
     public void onInteraction(Entity entity) {
         setupAIComponent();
