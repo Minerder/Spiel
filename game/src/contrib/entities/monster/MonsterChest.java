@@ -23,9 +23,7 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
 
     private static final Logger LOGGER = Logger.getLogger(Monster.class.getName());
 
-    /**
-     * Creates a new MonsterChest.
-     */
+    /** Creates a new MonsterChest. */
     public MonsterChest() {
         super(
                 5,
@@ -61,16 +59,18 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
 
     @Override
     protected void setupHitBoxComponent() {
-        new CollideComponent(this,
-            CollideComponent.DEFAULT_OFFSET,
-            new Point(0.75f, 0.75f),
-            ((a,b,from) -> {
-                if (b.getComponent(PlayerComponent.class).isEmpty()) return;
-                if (b.getComponent(HealthComponent.class).isEmpty()) return;
-                HealthComponent hc =
-                        (HealthComponent) b.getComponent(HealthComponent.class).get();
-                hc.setCurrentHealthpoints(hc.getCurrentHealthpoints() - 1);
-            }), null);
+        new CollideComponent(
+                this,
+                CollideComponent.DEFAULT_OFFSET,
+                new Point(0.75f, 0.75f),
+                ((a, b, from) -> {
+                    if (b.getComponent(PlayerComponent.class).isEmpty()) return;
+                    if (b.getComponent(HealthComponent.class).isEmpty()) return;
+                    HealthComponent hc =
+                            (HealthComponent) b.getComponent(HealthComponent.class).get();
+                    hc.setCurrentHealthpoints(hc.getCurrentHealthpoints() - 1);
+                }),
+                null);
     }
 
     private void setupInteractionComponent() {
@@ -80,6 +80,7 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
 
     /**
      * Called when the entity dies. Creates a chest at the position of the entity.
+     *
      * @param entity Entity that has died
      */
     @Override
@@ -94,7 +95,9 @@ public class MonsterChest extends Monster implements IOnDeathFunction, IInteract
     }
 
     /**
-     * Called when the entity is interacted with. Gives the entity an AIComponent and changes the drawComponent.
+     * Called when the entity is interacted with. Gives the entity an AIComponent and changes the
+     * drawComponent.
+     *
      * @param entity Entity that is interacted with
      */
     @Override
